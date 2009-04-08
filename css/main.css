@@ -1,0 +1,34 @@
+form.classyform { margin: 0; padding: 0; width: 560px; }
+form.classyform fieldset { border: 1px solid black; padding: 10px; margin: 0; }
+form.classyform label { display: block; width: 6em; float: left; }
+form.classyform label:first-letter { text-decoration: underline; }
+form.classyform ul li { list-style: none; padding: 2px 0 2px 0; }
+form.classyform ol { margin: 0; }
+
+/* Sortable tables */
+table.sortable thead
+{
+    background-color: #eee;
+    color: #666666;
+    font-weight: bold;
+    cursor: default;
+}
+
+div#header { margin-top: 40px; }
+
+div#top_nav { position: absolute; top: 10px; right: 10px; }
+div#top_nav ul { margin: 0; }
+div#top_nav ul li { list-style: none; padding: 4px; display: inline; background: darkblue; }
+div#top_nav ul li a { color: white; font-weight: bold; text-decoration: none; }
+div#top_nav ul li a:hover { text-decoration: underline; }
+
+div#action_nav { position: absolute; top: 10px; left: 10px; }
+div#action_nav ul { margin: 0; text-indent: 0; padding: 0; }
+div#action_nav li { list-style: none; padding: 4px; display: inline; background: #BB0000; }
+div#action_nav ul li a { color: white; font-weight: bold; text-decoration: none; }
+div#action_nav ul li a:hover { text-decoration: underline; }
+
+
+div.page_nav { text-align: center; width: 18em; }
+
+span.accesskey { text-decoration: underline; }
