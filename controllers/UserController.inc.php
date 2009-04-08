@@ -26,7 +26,7 @@ class UserController
     {
         if (!isset($_POST['profile']))
         {
-            return;
+            return false;
         }
 
         /* --- Filter user input --- */
@@ -39,7 +39,7 @@ class UserController
 
         $result = $this->userManager->createProfile($username, $password, $confirm, $firstname, $lastname, $email);
         
-        if ($result = MY_USER_REGISTERED)
+        if ($result == MY_USER_REGISTERED)
         {
             $this->createUserSession();
         }
@@ -51,7 +51,7 @@ class UserController
     {
         if (!isset($_POST['login']))
         {
-            return;
+            return false;
         }
 
         if (!isset($_POST['password']))
@@ -83,7 +83,7 @@ class UserController
     {
         if (!isset($_POST['profile']))
         {
-            return;
+            return false;
         }
 
         /* --- Filter user input --- */
@@ -96,7 +96,7 @@ class UserController
 
         $result = $this->userManager->updateProfile($username, $password, $confirm, $firstName, $lastName, $email);
         
-        if ($result = MY_USER_PROFILE_UPDATED)
+        if ($result == MY_USER_PROFILE_UPDATED)
         {
             $this->createUserSession();
         }

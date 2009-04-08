@@ -31,7 +31,7 @@ class UserInfoStruct
 class UserManager
 {
     private $userInfo;
-    
+
     public function __construct($username = null)
     {
         $this->userInfo = new UserInfoStruct;
@@ -230,7 +230,7 @@ class UserManager
         
         
         $users = array();
-        while ($userInfo = $stmt->fetchObject('UserInfoStruct'))
+        while (($userInfo = $stmt->fetchObject('UserInfoStruct')))
         {
             $users[] = $userInfo;
         }
@@ -243,7 +243,7 @@ class UserManager
         $q1s = 'SELECT username, firstName, lastName, email FROM Profiles JOIN Users USING(userID)';
         $stmt = queryDB($q1s);
         
-        while ($userInfo = $stmt->fetchObject('UserInfoStruct'))
+        while (($userInfo = $stmt->fetchObject('UserInfoStruct')))
         {
             $users[] = $userInfo;
         }
