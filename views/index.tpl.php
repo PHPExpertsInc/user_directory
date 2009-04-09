@@ -4,6 +4,7 @@
  *
  * Copyright(c) 2008 Theodore R. Smith
  * License: Creative Commons */
+global $action, $login_status, $registration_status;
 
 if (!isset($login_status)) { $login_status = ''; }
 if (!isset($registration_status)) { $registration_status = ''; }
@@ -16,7 +17,7 @@ if (!isset($registration_status)) { $registration_status = ''; }
     }
 </script>
 <?php
-if ($login_status == MY_USER_LOGGED_IN)
+if ($login_status == UserManager::LOGGED_IN)
 {
 ?>
             <p>Hi, <?php echo $_SESSION['userInfo']->firstName; ?>. You are now logged in.</p>
@@ -25,16 +26,16 @@ if ($login_status == MY_USER_LOGGED_IN)
 ?>
             <p>Welcome to the Stargate user directory.</p>
 <?php
-if ($login_status != MY_USER_LOGGED_IN && $registration_status != MY_USER_REGISTERED)
+if ($login_status != UserManager::LOGGED_IN && $registration_status != UserManager::REGISTERED)
 {
     $instructions = 'Before you get started, be sure to ';
 
-    if ($login_status != MY_USER_LOGGED_IN)
+    if ($login_status != UserManager::LOGGED_IN)
     {
         $instructions .= '<a onclick="show(\'login\'); this.href=\'#\';" href="?view=login" accesskey="l"><strong>l</strong>og in</a>';
     }
 
-    if ($registration_status != MY_USER_REGISTERED)
+    if ($registration_status != UserManager::REGISTERED)
     {
         $instructions .= ' or <a onclick="show(\'registration\'); this.href=\'#\';" href="?view=profile" accesskey="r"><strong>r</strong>egister</a>';
     }
@@ -42,7 +43,7 @@ if ($login_status != MY_USER_LOGGED_IN && $registration_status != MY_USER_REGIST
             <p><?php echo $instructions; ?></p>
 <?php
 }
-    if (isset($login_status) && $login_status == MY_USER_LOGGED_IN)
+    if (isset($login_status) && $login_status == UserManager::LOGGED_IN)
     {
 ?>
             <p>You may either <a href="?view=browse" accesskey="b"><strong>b</strong>rowse</a> all of our users or <a href="?view=search" accesskey="s"><strong>s</strong>earch</a> for a specific user.</p>
@@ -59,12 +60,12 @@ if ($login_status != MY_USER_LOGGED_IN && $registration_status != MY_USER_REGIST
                 </ul>
             </div>
 <?php
-if ($login_status != MY_USER_LOGGED_IN)
+if ($login_status != UserManager::LOGGED_IN)
 {
     require 'views/login.tpl.php';
 }
 
-if ($login_status != MY_USER_LOGGED_IN && $registration_status != MY_USER_REGISTERED)
+if ($login_status != UserManager::LOGGED_IN && $registration_status != UserManager::REGISTERED)
 {
     require 'views/profile.tpl.php';
 }

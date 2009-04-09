@@ -8,27 +8,33 @@
 ?>
         <div id="profile">
 <?php
-    if (isset($_SESSION['userInfo']))
-    {
-        $username = $_SESSION['userInfo']->username;
-        $firstName = $_SESSION['userInfo']->firstName;
-        $lastName = $_SESSION['userInfo']->lastName;
-        $email = $_SESSION['userInfo']->email;
-    }
+global $action, $registration_status, $username;
 
-    $registration_potentials = array(MY_USER_REGISTERED => 'Successfully registered.',
-                                     MY_USER_PROFILE_UPDATED => 'Profile successfully updated.', 
-                                     MYE_USER_BLANK_PASS => 'Error: No password was entered.',
-                                     MYE_USER_EXISTS => 'Error: Username exists. Please try again.',
-                                     MYE_USER_PASS_NOMATCH => 'Error: The passwords do not match.');
+if (isset($_SESSION['userInfo']))
+{
+	$username = $_SESSION['userInfo']->username;
+	$firstName = $_SESSION['userInfo']->firstName;
+	$lastName = $_SESSION['userInfo']->lastName;
+	$email = $_SESSION['userInfo']->email;
+}
+
+$registration_potentials = array(UserManager::LOGGED_IN => 'Successfully registered.',
+                                 UserManager::UPDATED_PROFILE => 'Profile successfully updated.', 
+                                 UserManager::ERROR_BLANK_USER => 'A username is required.',
+                                 UserManager::ERROR_BLANK_PASS => 'Error: No password was entered.',
+                                 UserManager::ERROR_BLANK_FNAME => 'Error: First name is required.',
+                                 UserManager::ERROR_BLANK_LNAME => 'Error: Last name is required.',
+                                 UserManager::ERROR_BLANK_EMAIL => 'Error: Email is required.',
+                                 UserManager::ERROR_USER_EXISTS => 'Error: Username exists. Please try again.',
+                                 UserManager::ERROR_PASS_MISMATCH => 'Error: The passwords do not match.');
 
 
-    if ($registration_status != '')
-    {
+if ($registration_status != '')
+{
 ?>
             <h3><?php echo $registration_potentials[$registration_status]; ?></h3>
 <?php
-    }
+}
 ?>
             <form method="post" class="classyform" action="?action=<?php echo isset($action) && $action == 'edit_profile' ? $action : 'register'; ?>">
                 <fieldset>

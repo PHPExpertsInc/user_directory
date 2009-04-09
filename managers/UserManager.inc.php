@@ -23,18 +23,19 @@ class UserManager
 	// Successes
     const REGISTERED = 200;
 	const CORRECT_PASSWORD = 201;
+	const LOGGED_IN = 201;
 	const UPDATED_PROFILE = 202;
     
 	// Failures
-	const ERROR_BLANK_PASS = 203;
-	const ERROR_BLANK_USER = 204;
-	const ERROR_BLANK_FNAME = 205;
-	const ERROR_BLANK_LNAME = 206;
-	const ERROR_BLANK_EMAIL = 207; 
-	const ERROR_PASS_MISMATCH = 208;
-	const ERROR_USER_EXISTS = 209;
-	const ERROR_INCORRECT_PASS = 210;
-	const MISSING_USER_INFO = 211;
+	const ERROR_BLANK_PASS = 300;
+	const ERROR_BLANK_USER = 301;
+	const ERROR_BLANK_FNAME = 302;
+	const ERROR_BLANK_LNAME = 303;
+	const ERROR_BLANK_EMAIL = 304; 
+	const ERROR_PASS_MISMATCH = 305;
+	const ERROR_USER_EXISTS = 306;
+	const ERROR_INCORRECT_PASS = 307;
+	const MISSING_USER_INFO = 308;
 
 	public function __construct($username = null)
     {
@@ -210,7 +211,7 @@ class UserManager
     {
         if (is_null($this->userInfo->username))
         {
-            throw new Exception('Username was not set prior to password validation.', MYE_USER_NO_USER);
+            throw new Exception('Username was not set prior to password validation.', UserManager::ERROR_BLANK_USER);
         }
         
         $username = $this->userInfo->username;

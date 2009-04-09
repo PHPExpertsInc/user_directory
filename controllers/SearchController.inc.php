@@ -32,6 +32,8 @@ class SearchController
 
             return $this->userManager->searchUsers($searchParams);
         }
+        
+        return null;
     }
     
     public function getSearchQueryString()

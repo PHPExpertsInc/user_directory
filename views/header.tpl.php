@@ -14,8 +14,10 @@
     </head>
     <body>
 <?php
-    if (isset($login_status) && $login_status == MY_USER_LOGGED_IN)
-    {
+global $login_status;
+
+if (isset($login_status) && $login_status == UserManager::LOGGED_IN)
+{
 ?>
         <div id="action_nav">
             <ul>
@@ -24,7 +26,7 @@
             </ul>
         </div>
 <?php
-    }
+}
 ?>
         <div id="header">
             <h1>Stargate User Directory</h1>

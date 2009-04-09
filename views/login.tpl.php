@@ -5,9 +5,12 @@
  * Copyright(c) 2008 Theodore R. Smith
  * License: Creative Commons */
 
-    $login_potentials = array(MY_USER_LOGGED_IN => 'Successfully logged in.',
-                              MYE_USER_BLANK_PASS => 'Error: No password was entered.',
-                              MYE_USER_INVALID_USERPASS => 'Error: Invalid username or password.');
+	global $action, $login_status, $username;
+    
+	$login_potentials = array(UserManager::LOGGED_IN => 'Successfully logged in.',
+                              UserManager::ERROR_BLANK_PASS => 'Error: No password was entered.',
+                              UserManager::ERROR_INCORRECT_PASS => 'Error: Invalid username or password.');
+
 
     if ($login_status != '')
     {

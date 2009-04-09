@@ -4,6 +4,7 @@
  *
  * Copyright(c) 2008 Theodore R. Smith
  * License: Creative Commons */
+global $users;
 
 ?>
         <div id="search">
@@ -40,7 +41,7 @@
             </form>
         </div>
 <?php
-    if (isset($users))
-    {
-        require 'views/browse.tpl.php';
-    }
+if (isset($users))
+{
+	require 'views/browse.tpl.php';
+}

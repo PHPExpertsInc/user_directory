@@ -39,7 +39,7 @@ class UserController
 
         $result = $this->userManager->createProfile($username, $password, $confirm, $firstname, $lastname, $email);
         
-        if ($result == MY_USER_REGISTERED)
+        if ($result == UserManager::REGISTERED)
         {
             $this->createUserSession();
         }
@@ -56,7 +56,7 @@ class UserController
 
         if (!isset($_POST['password']))
         {
-            return MYE_USER_BLANK_PASS;
+            return UserManager::ERROR_BLANK_PASS;
         }
 
         /* --- Filter user input --- */
@@ -66,7 +66,7 @@ class UserController
         $this->userManager->setUsername($username);
         $status = $this->userManager->validatePassword($password);
         
-        if ($status == MY_USER_LOGGED_IN)
+        if ($status == UserManager::LOGGED_IN)
         {
             $this->createUserSession();
         }
@@ -96,7 +96,7 @@ class UserController
 
         $result = $this->userManager->updateProfile($username, $password, $confirm, $firstName, $lastName, $email);
         
-        if ($result == MY_USER_PROFILE_UPDATED)
+        if ($result == UserManager::UPDATED_PROFILE)
         {
             $this->createUserSession();
         }

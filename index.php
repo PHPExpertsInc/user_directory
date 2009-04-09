@@ -41,7 +41,7 @@ $userControl = new UserController;
 
 if (isset($_SESSION['userInfo']))
 {
-    $login_status = MY_USER_LOGGED_IN;
+    $login_status = UserManager::LOGGED_IN;
 }
 
 if ($action == 'login')
