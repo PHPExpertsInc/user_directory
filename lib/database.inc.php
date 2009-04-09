@@ -7,10 +7,15 @@
 
 define('MYE_BAD_SQL', 101);
 
-function getDBHandler()
+function getDBHandler($pdo_in = null)
 {
     static $pdo = null;
 
+    if (!is_null($pdo_in))
+    {
+    	$pdo = $pdo_in;
+    }
+    
     if (is_null($pdo))
     {
         // Never store passes in plaintext!!

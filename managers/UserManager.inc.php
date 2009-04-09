@@ -7,18 +7,6 @@
 
 require_once 'lib/database.inc.php';
 
-// Successes
-define('MY_USER_REGISTERED', 200);
-define('MY_USER_LOGGED_IN', 201);
-define('MY_USER_PROFILE_UPDATED', 202);
-
-// Failures
-define('MYE_USER_BLANK_PASS', 203);
-define('MYE_USER_PASS_NOMATCH', 204);
-define('MYE_USER_EXISTS', 205);
-define('MYE_USER_NO_USER', 206);
-define('MYE_USER_INVALID_USERPASS', 207);
-
 class UserInfoStruct
 {
     public $userID;
@@ -32,7 +20,23 @@ class UserManager
 {
     private $userInfo;
 
-    public function __construct($username = null)
+	// Successes
+    const REGISTERED = 200;
+	const LOGGED_IN = 201;
+	const UPDATED_PROFILE = 202;
+    
+	// Failures
+	const ERROR_BLANK_PASS = 203;
+	const ERROR_BLANK_USER = 204;
+	const ERROR_BLANK_FNAME = 205;
+	const ERROR_BLANK_LNAME = 206;
+	const ERROR_BLANK_EMAIL = 207; 
+	const ERROR_PASS_MISMATCH = 208;
+	const ERROR_USER_EXISTS = 209;
+	const INVALID_USERPASS = 210;
+	const MISSING_USER_INFO = 211;
+
+	public function __construct($username = null)
     {
         $this->userInfo = new UserInfoStruct;
         
@@ -47,13 +51,18 @@ class UserManager
         $this->userInfo->username = $username;
     }
     
+    /**
+     * Returns the private userInfo
+     *
+     * @return UserInfoStruct
+     */
     public function getUserInfo()
     {
         if ($this->userInfo->userID == null)
         {
             if (!isset($_SESSION['userInfo']))
             {
-                throw new Exception('_SESSION has no userInfo');
+                throw new Exception('_SESSION has no userInfo', self::MISSING_USER_INFO);
             }
 
             $this->userInfo = $_SESSION['userInfo'];
@@ -64,15 +73,21 @@ class UserManager
 
     public function createProfile($username, $password, $confirm, $firstName, $lastName, $email)
     {
+		// Make sure data isn't blank
+		if ($username == '') { return self::ERROR_BLANK_USER; }
         // 1. Make sure the passwords aren't blank and match.
         if ($password == '')
         {
-            return MYE_USER_BLANK_PASS;
+            return self::ERROR_BLANK_PASS;
         }
         else if ($password != $confirm)
         {
-            return MYE_USER_PASS_NOMATCH;
+            return self::ERROR_PASS_MISMATCH;
         }
+    	
+		if ($firstName == '') { return self::ERROR_BLANK_FNAME; }
+		if ($lastName == '') { return self::ERROR_BLANK_LNAME; }
+		if ($email == '') { return self::ERROR_BLANK_EMAIL; }
         
         // 2. Make sure we were given a unique username
         $q1s = 'SELECT COUNT(username) FROM Users WHERE username=?';
@@ -81,7 +96,7 @@ class UserManager
         
         if ($userExists == true)
         {
-            return MYE_USER_EXISTS;
+            return self::ERROR_USER_EXISTS;
         }
         
         // 3. We need to use transactions to ensure that a user is fully registered.
@@ -121,20 +136,26 @@ class UserManager
         $this->userInfo->lastName = $lastName;
         $this->userInfo->email = $email;
         
-        return MY_USER_REGISTERED;
+        return self::REGISTERED;
     }
     
     public function updateProfile($username, $password, $confirm, $firstName, $lastName, $email)
     {
-        // 1. Make sure the passwords aren't blank and match.
+		// Make sure data isn't blank
+		if ($username == '') { return self::ERROR_BLANK_USER; }
+    	// 1. Make sure the passwords aren't blank and match.
         if ($password == '')
         {
-            return MYE_USER_BLANK_PASS;
+        	return self::ERROR_BLANK_PASS;
         }
         else if ($password != $confirm)
         {
-            return MYE_USER_PASS_NOMATCH;
+        	return self::ERROR_PASS_MISMATCH;
         }
+        
+		if ($firstName == '') { return self::ERROR_BLANK_FNAME; }
+		if ($lastName == '') { return self::ERROR_BLANK_LNAME; }
+		if ($email == '') { return self::ERROR_BLANK_EMAIL; }
         
         // 2. Get the userID.
         $userInfo = $this->getUserInfo();
@@ -173,7 +194,7 @@ class UserManager
         $this->userInfo->lastName = $lastName;
         $this->userInfo->email = $email;
 
-        return MY_USER_PROFILE_UPDATED;
+        return self::UPDATED_PROFILE;
     }
     
     public function validatePassword($password)
@@ -202,7 +223,7 @@ class UserManager
         
         
         // Get profile data.
-        $q2s = 'SELECT userID, firstName, lastName, email FROM Profiles WHERE userID=?';
+        $q2s = 'SELECT * FROM vw_UserInfo WHERE userID=?';
         $stmt = queryDB($q2s, array($userID));
         $this->userInfo = $stmt->fetchObject('UserInfoStruct');
         $this->userInfo->username = $username;
@@ -223,11 +244,8 @@ class UserManager
             }
         }
         
-        $q1s = 'SELECT Profiles.userID, username, firstName, lastName, email ' .
-               'FROM Profiles JOIN Users USING(userID) ' .
-               'WHERE ' . join($where, ' AND ');
+        $q1s = 'SELECT * FROM vw_UserInfo WHERE ' . join($where, ' AND ') . ' ORDER BY username';
         $stmt = queryDB($q1s, $params);
-        
         
         $users = array();
         while (($userInfo = $stmt->fetchObject('UserInfoStruct')))
@@ -235,12 +253,12 @@ class UserManager
             $users[] = $userInfo;
         }
         
-        return $users;
+        return empty($users) ? null : $users;
     }
     
     public function getAllUsers()
     {
-        $q1s = 'SELECT username, firstName, lastName, email FROM Profiles JOIN Users USING(userID)';
+        $q1s = 'SELECT * FROM vw_UserInfo ORDER BY username';
         $stmt = queryDB($q1s);
         
         while (($userInfo = $stmt->fetchObject('UserInfoStruct')))
