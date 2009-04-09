@@ -5,7 +5,10 @@
  * Copyright(c) 2008 Theodore R. Smith
  * License: Creative Commons */
 
-define('MYE_BAD_SQL', 101);
+class MyDBException extends Exception 
+{
+	const ERROR_BAD_SQL = 101;	
+}
 
 function getDBHandler($pdo_in = null)
 {
@@ -40,7 +43,7 @@ function queryDB($sql, $params = null)
         error_log(sprintf('SQL error: (%s) - %s',
                           $errorInfo[1],
                           $errorInfo[2]));
-        throw new Exception('Caught an SQL error...see error log for more details.', MYE_BAD_SQL);
+        throw new MyDBException('Caught an SQL error...see error log for more details.', MyDBException::ERROR_BAD_SQL);
     }
 
     return $stmt;

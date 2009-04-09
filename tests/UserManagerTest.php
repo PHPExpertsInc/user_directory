@@ -7,7 +7,7 @@ require_once 'PHPUnit/Framework/TestCase.php';
 /**
  * UserManager test case.
  */
-class TestUserManager extends PHPUnit_Framework_TestCase {
+class UserManagerTest extends PHPUnit_Framework_TestCase {
 	
 	/**
 	 * @var UserManager
@@ -20,12 +20,6 @@ class TestUserManager extends PHPUnit_Framework_TestCase {
 	protected function setUp()
 	{
 		parent::setUp ();
-
-		// Load PDO
-		$db = array('host' => 'localhost', 'user' => 'ud_tester', 'pass' => 'PXhu6u6-)', 'db' => 'TEST_user_directory');
-		$dsn = sprintf('mysql:dbname=%s;host=%s;', $db['db'], $db['host']);
-        $pdo = new PDO($dsn, $db['user'], $db['pass']);        
-        getDBHandler($pdo);
 		
 		$this->UserManager = new UserManager(/* parameters */);
 	}
@@ -269,7 +263,18 @@ class TestUserManager extends PHPUnit_Framework_TestCase {
 	 * Tests UserManager->validatePassword()
 	 */
 	public function testValidatePassword()
-	{	
+	{
+		// Test validation without login attempt
+		try
+		{
+			$this->UserManager->validatePassword(uniqid());
+			$this->assertTrue('false', 'validating worked without login attempt');
+		}
+		catch (Exception $e)
+		{
+			$this->assertSame(UserManager::ERROR_BLANK_USER, $e->getCode(), 'Incorrect password validated');
+		}
+		
 		// Make sure we set the password
 		$password = uniqid();
 		$this->registerRandomUser($password);
