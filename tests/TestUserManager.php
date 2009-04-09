@@ -44,7 +44,10 @@ class TestUserManager extends PHPUnit_Framework_TestCase {
 		parent::tearDown ();
 	}
 	
-	// Helper functions
+	/**
+	 * Helper functions
+	 * @return UserInfoStruct
+	 */ 
 	private function getLastRegistered()
 	{
 		// Get last-inserted user
@@ -54,9 +57,9 @@ class TestUserManager extends PHPUnit_Framework_TestCase {
 		return $userInfo;
 	}
 
-	private function registerUser()
+	private function registerRandomUser($password = null)
 	{
-		$pass = uniqid();
+		$pass = is_null($password) ? uniqid() : $password;
 		$this->UserManager->createProfile(uniqid(), $pass, $pass, uniqid(), uniqid(), uniqid());
 	}
 	
@@ -157,7 +160,7 @@ class TestUserManager extends PHPUnit_Framework_TestCase {
 	public function testGetUserInfo()
 	{
 		// Must run this to register the user and set up the _SESSION for later.
-		$this->registerUser();
+		$this->registerRandomUser();
 		
 		$lastRegistered = $this->getLastRegistered();
 
@@ -176,7 +179,7 @@ class TestUserManager extends PHPUnit_Framework_TestCase {
 		$rand_count = rand(2, 10);
 		for ($a = 0; $a <= $rand_count; ++$a)
 		{
-			$this->registerUser();
+			$this->registerRandomUser();
 		}
 		
 		$lastRegistered = $this->getLastRegistered();
@@ -195,7 +198,7 @@ class TestUserManager extends PHPUnit_Framework_TestCase {
 	 */
 	public function testSearchUsers()
 	{
-		$this->registerUser();
+		$this->registerRandomUser();
 		$lastRegistered = $this->getLastRegistered();
 		
 		// Find something that we know exists (last registered username)
@@ -215,7 +218,7 @@ class TestUserManager extends PHPUnit_Framework_TestCase {
 	public function testSetUsername()
 	{
 		$username = 'Random User';
-		$this->registerUser();
+		$this->registerRandomUser();
 		$this->UserManager->setUsername($username);
 	
 		$userInfo = $this->UserManager->getUserInfo();
@@ -227,7 +230,7 @@ class TestUserManager extends PHPUnit_Framework_TestCase {
 	 */
 	public function testUpdateProfile()
 	{
-		$this->registerUser();
+		$this->registerRandomUser();
 		
 		// Test for blank username
 		$this->assertEquals($this->UserManager->updateProfile('', '', '', '', '', ''), UserManager::ERROR_BLANK_USER, 'Blank user test');
@@ -251,7 +254,7 @@ class TestUserManager extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($this->UserManager->updateProfile('tsmith', 'potato', 'potato', 'Ted', 'Smith', 'tsmith@brokertools.us'), UserManager::UPDATED_PROFILE, 'Successful registration test');
 		
 		// Test for duplicate registration
-		$this->registerUser();
+		$this->registerRandomUser();
 		try
 		{
 			$this->UserManager->updateProfile('tsmith', 'potato', 'potato', 'Ted', 'Smith', 'tsmith@brokertools.us');
@@ -265,12 +268,17 @@ class TestUserManager extends PHPUnit_Framework_TestCase {
 	/**
 	 * Tests UserManager->validatePassword()
 	 */
-	public function testValidatePassword() {
-		// TODO Auto-generated TestUserManager->testValidatePassword()
-		$this->markTestIncomplete ( "validatePassword test not implemented" );
+	public function testValidatePassword()
+	{	
+		// Make sure we set the password
+		$password = uniqid();
+		$this->registerRandomUser($password);
 		
-		$this->UserManager->validatePassword(/* parameters */);
-	
+		// Test incorrect password
+		$this->assertSame(UserManager::ERROR_INCORRECT_PASS, $this->UserManager->validatePassword(uniqid()), 'Incorrect password validated');
+
+		// Test correct password
+		$this->assertSame(UserManager::CORRECT_PASSWORD, $this->UserManager->validatePassword($password), 'Correct password did not validate');
 	}
 
 }
