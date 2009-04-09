@@ -22,7 +22,7 @@ class UserManager
 
 	// Successes
     const REGISTERED = 200;
-	const LOGGED_IN = 201;
+	const CORRECT_PASSWORD = 201;
 	const UPDATED_PROFILE = 202;
     
 	// Failures
@@ -33,7 +33,7 @@ class UserManager
 	const ERROR_BLANK_EMAIL = 207; 
 	const ERROR_PASS_MISMATCH = 208;
 	const ERROR_USER_EXISTS = 209;
-	const INVALID_USERPASS = 210;
+	const ERROR_INCORRECT_PASS = 210;
 	const MISSING_USER_INFO = 211;
 
 	public function __construct($username = null)
@@ -85,9 +85,18 @@ class UserManager
             return self::ERROR_PASS_MISMATCH;
         }
     	
-		if ($firstName == '') { return self::ERROR_BLANK_FNAME; }
-		if ($lastName == '') { return self::ERROR_BLANK_LNAME; }
-		if ($email == '') { return self::ERROR_BLANK_EMAIL; }
+		if ($firstName == '')
+		{ 
+			return self::ERROR_BLANK_FNAME; 
+		}
+		if ($lastName == '') 
+		{ 
+			return self::ERROR_BLANK_LNAME; 
+		}
+		if ($email == '') 
+		{ 
+			return self::ERROR_BLANK_EMAIL; 
+		}
         
         // 2. Make sure we were given a unique username
         $q1s = 'SELECT COUNT(username) FROM Users WHERE username=?';
@@ -211,15 +220,15 @@ class UserManager
         $q1s = 'SELECT userID FROM Users WHERE username=? AND password=PASSWORD(?)';
         $stmt = queryDB($q1s, array($username, $password));
         
-        if ($stmt === false)
-        {
-            return MYE_USER_INVALID_USERPASS;
-        }
-        
-        if (($userID = $stmt->fetchColumn()) === false)
-        {
-            return MYE_USER_INVALID_USERPASS;
-        }
+		if ($stmt === false)
+		{
+			return self::ERROR_INCORRECT_PASS;
+		}
+		
+		if (($userID = $stmt->fetchColumn()) === false)
+		{
+			return self::ERROR_INCORRECT_PASS;
+		}
         
         
         // Get profile data.
@@ -227,8 +236,8 @@ class UserManager
         $stmt = queryDB($q2s, array($userID));
         $this->userInfo = $stmt->fetchObject('UserInfoStruct');
         $this->userInfo->username = $username;
-        
-        return MY_USER_LOGGED_IN;
+
+        return self::CORRECT_PASSWORD;
     }
     
     public function searchUsers(array $searchParams)
