@@ -32,3 +32,4 @@ div#action_nav ul li a:hover { text-decoration: underline; }
 div.page_nav { text-align: center; width: 18em; }
 
 span.accesskey { text-decoration: underline; }
+a span.accesskey { font-weight: bold; padding: 1px; }
