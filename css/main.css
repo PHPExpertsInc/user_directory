@@ -16,13 +16,13 @@ table.sortable thead
 
 div#header { margin-top: 40px; }
 
-div#top_nav { position: absolute; top: 10px; right: 10px; }
-div#top_nav ul { margin: 0; }
-div#top_nav ul li { list-style: none; padding: 4px; display: inline; background: darkblue; }
+div#top_nav { position: absolute; top: 10px; right: 20px; width: 20em; text-align: right; }
+div#top_nav ul { margin: 0; text-indent: 0; padding: 0; }
+div#top_nav ul li { list-style: none; padding: 4px; width: 5em; display: inline; background: #00008B; }
 div#top_nav ul li a { color: white; font-weight: bold; text-decoration: none; }
 div#top_nav ul li a:hover { text-decoration: underline; }
 
-div#action_nav { position: absolute; top: 10px; left: 10px; }
+div#action_nav { position: absolute; top: 10px; left: 10px; width: 20em; }
 div#action_nav ul { margin: 0; text-indent: 0; padding: 0; }
 div#action_nav li { list-style: none; padding: 4px; display: inline; background: #BB0000; }
 div#action_nav ul li a { color: white; font-weight: bold; text-decoration: none; }
