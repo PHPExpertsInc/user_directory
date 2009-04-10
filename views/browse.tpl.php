@@ -38,7 +38,7 @@ if ($items_per_page < $users_count)
 
 $nav_div .= "\n";
 ?>
-        <script type="text/javascript" src="css/sorttable.js"></script>
+        <script type="text/javascript" src="js/sorttable.js"></script>
 
         <div id="browse">
             <?php echo $nav_div; ?>
