@@ -18,10 +18,10 @@ class UserInfoStruct
 
 class UserManager
 {
-    private $userInfo;
+	private $userInfo;
 
 	// Successes
-    const REGISTERED = 200;
+	const REGISTERED = 200;
 	const CORRECT_PASSWORD = 201;
 	const LOGGED_IN = 201;
 	const UPDATED_PROFILE = 202;
@@ -36,7 +36,7 @@ class UserManager
 	const ERROR_USER_EXISTS = 306;
 	const ERROR_INCORRECT_PASS = 307;
 	const MISSING_USER_INFO = 308;
-
+	
 	public function __construct($username = null)
     {
         $this->userInfo = new UserInfoStruct;
@@ -232,6 +232,8 @@ class UserManager
         $stmt = queryDB($q2s, array($userID));
         $this->userInfo = $stmt->fetchObject('UserInfoStruct');
         $this->userInfo->username = $username;
+        
+        $this->isLoggedIn = true;
 
         return self::CORRECT_PASSWORD;
     }

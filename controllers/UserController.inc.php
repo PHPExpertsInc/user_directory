@@ -9,6 +9,9 @@ require_once 'managers/UserManager.inc.php';
 
 class UserController
 {
+    /**
+     * @var UserManager
+     */
     private $userManager;
     
     public function __construct()
@@ -74,14 +77,24 @@ class UserController
         return $status;
     }
     
-    public function browse()
-    {
-        return $this->userManager->getAllUsers();
-    }
+	public function browse()
+	{
+		if ($this->isLoggedIn() === false)
+		{
+			header('Location: http://' . $_SERVER['HTTP_HOST'] . '/user_directory/');
+		}
+
+		return $this->userManager->getAllUsers();
+	}
     
     public function editProfile()
     {
-        if (!isset($_POST['profile']))
+		if ($this->isLoggedIn() === false)
+		{
+			header('Location: http://' . $_SERVER['HTTP_HOST'] . '/user_directory/');
+		}
+
+    	   if (!isset($_POST['profile']))
         {
             return false;
         }
@@ -103,4 +116,14 @@ class UserController
 
         return $result;
    }
+
+	public function isLoggedIn()
+	{
+		if (isset($_SESSION['userInfo']) && $_SESSION['userInfo'] instanceof UserInfoStruct)
+		{
+			return true;
+		}
+		
+		return false;
+	}
 }
