@@ -16,6 +16,7 @@ class MyDBException extends Exception
 class MyDBConfigStruct
 {
 	public $hostname;
+	public $port = 3306;
 	public $username;
 	public $password;
 	public $database;
@@ -191,7 +192,7 @@ class MyPDO implements MyDBI
 
 	public function __construct(MyDBConfigStruct $config)
 	{
-		$dsn = sprintf('mysql:dbname=%s;host=%s;', $config->database, $config->hostname);
+		$dsn = sprintf('mysql:dbname=%s;host=%s;port=%d;', $config->database, $config->hostname, $config->port);
 		$this->pdo = new PDO($dsn, $config->username, $config->password);		
 	}
 	
