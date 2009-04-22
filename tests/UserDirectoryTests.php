@@ -2,7 +2,7 @@
 
 require_once 'PHPUnit/Framework/TestSuite.php';
 
-require_once 'tests/DBFunctionsTest.php';
+require_once 'tests/MyDatabaseTest.php';
 require_once 'tests/SearchControllerTest.php';
 require_once 'tests/UserControllerTest.php';
 require_once 'tests/UserManagerTest.php';

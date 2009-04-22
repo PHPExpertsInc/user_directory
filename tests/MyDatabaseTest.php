@@ -2,7 +2,7 @@
 
 require_once 'PHPUnit/Framework/TestCase.php';
 
-require_once 'lib/database.inc.php';
+require_once 'lib/MyDatabase.inc.php';
 
 /**
  * queryDB() test case.
