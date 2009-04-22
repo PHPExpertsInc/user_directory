@@ -32,6 +32,9 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 	protected function tearDown()
 	{
 		// Clean up database
+		$config = MyDatabaseTest::getReplicatedPDOConfig();
+		getDBHandler($config);
+		
 		queryDB('TRUNCATE Users');
 		queryDB('TRUNCATE Profiles');
 

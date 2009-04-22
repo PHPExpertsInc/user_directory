@@ -29,13 +29,13 @@ class MyDatabaseTest extends PHPUnit_Framework_TestCase
 		$config = new stdClass;
 		$config->engine = 'PDO';
 		
-		$readDB = new MyDBConfigStruct;
+		$readDB = new stdClass;
 		$readDB->hostname = 'localhost';
 		$readDB->username = 'ud_testreader';
 		$readDB->password = 'PHxhu6u6-)r';
 		$readDB->database = 'TEST_user_directory';		
 
-		$writeDB = new MyDBConfigStruct;
+		$writeDB = new stdClass;
 		$writeDB->hostname = 'localhost';
 		$writeDB->username = 'ud_testwriter';
 		$writeDB->password = 'PHxhu6u6-)w';
