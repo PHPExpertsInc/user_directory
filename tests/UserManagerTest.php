@@ -30,8 +30,8 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 	protected function tearDown()
 	{
 		// Clean up database
-		queryDB('TRUNCATE users');
-		queryDB('TRUNCATE profiles');
+		queryDB('TRUNCATE Users');
+		queryDB('TRUNCATE Profiles');
 
 		$this->UserManager = null;
 		
