@@ -13,10 +13,10 @@ if (!file_exists($argv[1]))
 }
 
 $input = base64_decode(file_get_contents($argv[1]));
-//$output = file_get_contents($argv[1]);
-eval('$data = ' . $input .';');
-
 $filename = $argv[1] . '.plain';
+
+//print_r(json_decode($input));
+//exit;
 
 if (isset($argv[2]))
 {
@@ -24,5 +24,5 @@ if (isset($argv[2]))
 }
 
 $fh = fopen($filename, 'w');
-fwrite($fh, var_export($data, true));
+fwrite($fh, $input);
 fclose($fh);

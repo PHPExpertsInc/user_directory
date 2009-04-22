@@ -21,6 +21,8 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 	{
 		parent::setUp ();
 		
+		$config = MyDatabaseTest::getPDOConfig();
+		getDBHandler($config);
 		$this->UserManager = new UserManager(/* parameters */);
 	}
 	
@@ -67,6 +69,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * Tests UserManager->__construct()
 	 * 
+	 * @covers UserManager::__construct
 	 * @expectedException Exception
 	 */
 	public function test__construct()
@@ -89,7 +92,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 			{
 				throw $e;
 			}
-			
+
 			session_start();
 			$_SESSION['userInfo'] = new UserInfoStruct;
 			$_SESSION['userInfo']->username = 'unthesis';
@@ -108,6 +111,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * Tests UserManager->createProfile()
 	 * 
+	 * @covers UserManager::createProfile
 	 * @expectedException Exception
 	 */
 	public function testCreateProfile()
@@ -150,6 +154,8 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 	
 	/**
 	 * Tests UserManager->getUserInfo()
+	 * 
+	 * @covers UserManager::getUserInfo
 	 */
 	public function testGetUserInfo()
 	{
@@ -166,6 +172,8 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 	
 	/**
 	 * Tests UserManager->getAllUsers()
+	 * 
+	 * @covers UserManager::getAllUsers
 	 */
 	public function testGetAllUsers()
 	{
@@ -189,6 +197,8 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 	
 	/**
 	 * Tests UserManager->searchUsers()
+	 * 
+	 * @covers UserManager::searchUsers
 	 */
 	public function testSearchUsers()
 	{
@@ -208,6 +218,8 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 	
 	/**
 	 * Tests UserManager->setUsername()
+	 * 
+	 * @covers UserManager::setUsername
 	 */
 	public function testSetUsername()
 	{
@@ -221,6 +233,8 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 	
 	/**
 	 * Tests UserManager->updateProfile()
+	 * 
+	 * @covers UserManager::updateProfile
 	 */
 	public function testUpdateProfile()
 	{
@@ -261,6 +275,8 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 	
 	/**
 	 * Tests UserManager->validatePassword()
+	 * 
+	 * @covers UserManager::validatePassword
 	 */
 	public function testValidatePassword()
 	{

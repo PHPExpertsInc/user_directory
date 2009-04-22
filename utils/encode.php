@@ -14,15 +14,8 @@ if (!file_exists($argv[1]))
 
 // Load data
 $input = file_get_contents($argv[1]);
-$data = eval('return ' . $input . ';');
+$output = base64_encode($input);
 
-if ($data === false || is_null($data))
-{
-    echo 'Error: Couldn\'t parse config file.';
-    exit -1;
-}
-
-$output = base64_encode(var_export($data, true));
 $filename = basename($argv[1]) . '.enc';
 
 if (isset($argv[2]))

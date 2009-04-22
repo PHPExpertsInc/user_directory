@@ -7,23 +7,72 @@ require_once 'lib/MyDatabase.inc.php';
 /**
  * queryDB() test case.
  */
-class DBFunctionsTest extends PHPUnit_Framework_TestCase
+class MyDatabaseTest extends PHPUnit_Framework_TestCase
 {
+	/**
+	 * @return MyDBConfigStruct
+	 */
+	public static function getPDOConfig()
+	{
+		$config = new stdClass;
+		$config->engine = 'PDO';
+		$config->hostname = 'localhost';
+		$config->username = 'ud_tester';
+		$config->password = 'PHxhu6u6-)';
+		$config->database = 'TEST_user_directory';		
+		
+		return $config;
+	}
+
+	public static function getReplicatedPDOConfig()
+	{
+		$config = new stdClass;
+		$config->engine = 'PDO';
+		
+		$readDB = new MyDBConfigStruct;
+		$readDB->hostname = 'localhost';
+		$readDB->username = 'ud_testreader';
+		$readDB->password = 'PHxhu6u6-)r';
+		$readDB->database = 'TEST_user_directory';		
+
+		$writeDB = new MyDBConfigStruct;
+		$writeDB->hostname = 'localhost';
+		$writeDB->username = 'ud_testwriter';
+		$writeDB->password = 'PHxhu6u6-)w';
+		$writeDB->database = 'TEST_user_directory';
+
+		$config->useReplication = true;
+		$config->readDB = $readDB;
+		$config->writeDB = $writeDB;
+		
+		return $config;
+	}
+
 	/**
 	 * Tests getDBHandler()
 	 */
 	public function testGetDBHandler()
 	{
-		// Test create PDO from scratch
+		// Test with a missing config file
+		try
+		{
+			getDBHandler();
+		}
+		catch (MyDBException $e)
+		{
+			$this->assertEquals(MyDBException::CANT_LOAD_CONFIG_FILE, $e->getCode());
+		}
+
+		// Test create MyDB from scratch
 		// (change current directory to be able to find config path)
 		chdir(dirname(__FILE__) . '/..');
-		$cwd = getcwd();
 		$pdo = getDBHandler();
-		$this->assertType('PDO', $pdo, 'PDO object is not of type PDO');;
-		
-		// Test create PDO externally
-		$new_pdo = getDBHandler($pdo);
-		$this->assertSame($pdo, $new_pdo, 'PDO objects are not identical');
+		$this->assertType('MyDBI', $pdo, 'PDO object is not of type PDO');;
+
+		// Test with custom config
+		$config = self::getPDOConfig();
+		$new_pdo = getDBHandler($config);
+		$this->assertType('MyDBI', $new_pdo, 'PDO object is not of type PDO');;
 	}
 
 	/**
@@ -31,23 +80,21 @@ class DBFunctionsTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testQueryDB()
 	{
-		$db = array('host' => 'localhost', 'user' => 'ud_tester', 'pass' => 'PXhu6u6-)', 'db' => 'TEST_user_directory');
-		$dsn = sprintf('mysql:dbname=%s;host=%s;', $db['db'], $db['host']);
-        $pdo = new PDO($dsn, $db['user'], $db['pass']);        
-        getDBHandler($pdo);
+		$config = self::getPDOConfig();
+	     getDBHandler($config);
 
-        // Test insert
-        $username = uniqid();
+        	// Test insert
+		$username = uniqid();
 		queryDB('INSERT INTO users (username, password) VALUES (\'' . $username . '\', \'' . uniqid() . '\')');
 
 		// Test select w/o parameters
-		$stmt = queryDB('SELECT * FROM users WHERE username=\'' . $username . '\'');
+		$stmt = queryDB('SELECT * FROM Users WHERE username=\'' . $username . '\'');
 		$userInfo = $stmt->fetchObject();
 		$this->assertNotNull($userInfo, 'Unsuccessful query');
 		$this->assertSame($username, $userInfo->username);
 	
 		// Test select w/ parameters
-		$stmt = queryDB('SELECT * FROM users WHERE username=?', array($username));
+		$stmt = queryDB('SELECT * FROM Users WHERE username=?', array($username));
 		$userInfo = $stmt->fetchObject();
 		$this->assertNotNull($userInfo, 'Unsuccessful query');
 		$this->assertSame($username, $userInfo->username);

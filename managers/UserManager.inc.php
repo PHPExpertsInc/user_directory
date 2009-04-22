@@ -5,7 +5,7 @@
  * Copyright(c) 2008 Theodore R. Smith
  * License: Creative Commons */
 
-require_once 'lib/database.inc.php';
+require_once 'lib/MyDatabase.inc.php';
 
 class UserInfoStruct
 {
@@ -221,12 +221,7 @@ class UserManager
         $q1s = 'SELECT userID FROM Users WHERE username=? AND password=PASSWORD(?)';
         $stmt = queryDB($q1s, array($username, $password));
         
-		if ($stmt === false)
-		{
-			return self::ERROR_INCORRECT_PASS;
-		}
-		
-		if (($userID = $stmt->fetchColumn()) === false)
+		if ($stmt === false || ($userID = $stmt->fetchColumn()) === false)
 		{
 			return self::ERROR_INCORRECT_PASS;
 		}

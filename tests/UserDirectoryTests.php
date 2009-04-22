@@ -17,7 +17,7 @@ class UserDirectoryTests extends PHPUnit_Framework_TestSuite {
 	 */
 	public function __construct() {
 		$this->setName ( 'UserDirectoryTests' );
-		$this->addTestSuite('DBFunctionsTest');
+		$this->addTestSuite('MyDatabaseTest');
 /*
 		// Load PDO
 		$db = array('host' => 'localhost', 'user' => 'ud_tester', 'pass' => 'PXhu6u6-)', 'db' => 'TEST_user_directory');
