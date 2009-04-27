@@ -15,21 +15,23 @@ echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
         <script defer="defer" type="text/javascript" src="js/accesskeys.js"></script>
     </head>
     <body>
+        <div id="action_nav">
+            <ul>
+                <li><a href="http://7250mhz.brokertools.us/bzrweb/index.py/log/user_directory/head">View Source</a></li>
+                <li><a href="user_directory.tar.gz">Download</a></li>
 <?php
 global $login_status;
 
 if (isset($login_status) && $login_status == UserManager::LOGGED_IN)
 {
 ?>
-        <div id="action_nav">
-            <ul>
                 <li><a href="?view=browse" accesskey="h">browse</a></li>
                 <li><a href="?view=search" accesskey="s">search</a></li>
-            </ul>
-        </div>
 <?php
 }
 ?>
+            </ul>
+        </div>
         <div id="header">
             <h1>Stargate User Directory</h1>
             <h4>via server <?php echo $_SERVER['SERVER_ADDR']; ?></h4>
