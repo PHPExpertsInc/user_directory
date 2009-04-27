@@ -17,7 +17,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
     <body>
         <div id="action_nav">
             <ul>
-                <li><a href="http://7250mhz.brokertools.us/bzrweb/index.py/log/user_directory/head">View Source</a></li>
+                <li><a href="http://7250mhz.brokertools.us/bzrbrowse/">View Source</a></li>
                 <li><a href="user_directory.tar.gz">Download</a></li>
                 <li><a href="docs/">Docs</a>
 <?php
