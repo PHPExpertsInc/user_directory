@@ -32,5 +32,6 @@ if (isset($login_status) && $login_status == UserManager::LOGGED_IN)
 ?>
         <div id="header">
             <h1>Stargate User Directory</h1>
+            <h4>via server <?php echo $_SERVER['SERVER_ADDR']; ?></h4>
         </div>
         <div id="main_content">
