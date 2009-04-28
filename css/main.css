@@ -33,3 +33,5 @@ div.page_nav { text-align: center; width: 18em; }
 
 span.accesskey { text-decoration: underline; }
 a span.accesskey { font-weight: bold; padding: 1px; }
+
+body { background: #eee; }
