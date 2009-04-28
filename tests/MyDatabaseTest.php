@@ -85,7 +85,7 @@ class MyDatabaseTest extends PHPUnit_Framework_TestCase
 
         	// Test insert
 		$username = uniqid();
-		queryDB('INSERT INTO users (username, password) VALUES (\'' . $username . '\', \'' . uniqid() . '\')');
+		queryDB('INSERT INTO Users (username, password) VALUES (\'' . $username . '\', \'' . uniqid() . '\')');
 
 		// Test select w/o parameters
 		$stmt = queryDB('SELECT * FROM Users WHERE username=\'' . $username . '\'');
