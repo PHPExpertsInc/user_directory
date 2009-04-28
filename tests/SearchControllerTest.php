@@ -51,20 +51,7 @@ class SearchControllerTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function test__construct() {
 		// TODO Auto-generated SearchControllerTest->test__construct()
-		$this->markTestIncomplete ( "__construct test not implemented" );
-		
-		$this->SearchController->__construct(/* parameters */);
-	
-	}
-	
-	/**
-	 * Tests SearchController->getSearchQueryString()
-	 */
-	public function testGetSearchQueryString() {
-		// TODO Auto-generated SearchControllerTest->testGetSearchQueryString()
-		$this->markTestIncomplete ( "getSearchQueryString test not implemented" );
-		
-		$this->SearchController->getSearchQueryString(/* parameters */);
+		$this->SearchController->__construct();
 	
 	}
 	

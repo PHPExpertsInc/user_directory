@@ -35,14 +35,4 @@ class SearchController
         
         return null;
     }
-    
-    public function getSearchQueryString()
-    {
-        if (isset($_POST['search']) || isset($_GET['active']))
-        {
-            return http_build_query($this->searchParams);
-        }
-        
-        return null;
-    }
 }

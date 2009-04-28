@@ -60,7 +60,6 @@ else if ($action == 'search')
 {
     $searchControl = new SearchController;
     $users = $searchControl->search();
-    $searchQueryString = htmlspecialchars($searchControl->getSearchQueryString());
 }
 else if ($action == 'logout')
 {
