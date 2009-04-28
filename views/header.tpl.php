@@ -27,8 +27,8 @@ global $login_status;
 if (isset($login_status) && $login_status == UserManager::LOGGED_IN)
 {
 ?>
-                <li><a href="?view=browse" accesskey="h">browse</a></li>
-                <li><a href="?view=search" accesskey="s">search</a></li>
+                <li><a href="?view=browse" accesskey="b">Browse</a></li>
+                <li><a href="?view=search" accesskey="s">Search</a></li>
 <?php
 }
 ?>
