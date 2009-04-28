@@ -14,6 +14,8 @@ class UserInfoStruct
     public $firstName;
     public $lastName;
     public $email;
+
+    public function __construct() { }
 }
 
 class UserManager
@@ -37,14 +39,9 @@ class UserManager
 	const ERROR_INCORRECT_PASS = 307;
 	const MISSING_USER_INFO = 308;
 	
-	public function __construct($username = null)
+	public function __construct()
     {
         $this->userInfo = new UserInfoStruct;
-        
-        if (!is_null($username))
-        {
-            $this->userInfo->username = $username;
-        }
     }
     
     public function setUsername($username)

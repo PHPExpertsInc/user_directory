@@ -68,47 +68,27 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 	public function __construct()
 	{	
 	}
-	
+
+        /**
+         * Tests UserInfoStruct->__construct()
+         *
+         * @covers UserInfoStruct->__construct
+         */
+        public function test_userInfoStruct()
+        {
+            $userInfo = new UserInfoStruct;
+            $this->assertTrue(property_exists($userInfo, 'username'));
+        }
+
 	/**
 	 * Tests UserManager->__construct()
 	 * 
 	 * @covers UserManager::__construct
-	 * @expectedException Exception
 	 */
 	public function test__construct()
 	{
 		// Test without username
 		$this->UserManager->__construct();
-	
-		// Test with username and session
-		$this->UserManager->__construct('unthesis');
-		
-		try
-		{
-			// Since there's no sessio with user data, we expect the exception to be thrown.
-			$this->UserManager->getUserInfo();
-		}
-		catch (Exception $e)
-		{
-			// Handle expected exception
-			if ($e->getCode() != UserManager::MISSING_USER_INFO)
-			{
-				throw $e;
-			}
-
-			session_start();
-			$_SESSION['userInfo'] = new UserInfoStruct;
-			$_SESSION['userInfo']->username = 'unthesis';
-			
-			$userInfo = $this->UserManager->getUserInfo();
-			unset($_SESSION['userInfo']);
-			session_destroy();
-		}
-
-		$this->assertEquals($userInfo->username, 'unthesis');
-
-		// Test with username and no exception handling
-		$this->UserManager->getUserInfo();	
 	}
 	
 	/**
@@ -162,15 +142,37 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testGetUserInfo()
 	{
+                // Test when there's no _SESSION data.
+		try
+		{
+			// Since there's no sessio with user data, we expect the exception to be thrown.
+			$this->UserManager->getUserInfo();
+		}
+		catch (Exception $e)
+		{
+			// Handle expected exception
+			if ($e->getCode() != UserManager::MISSING_USER_INFO)
+			{
+				throw $e;
+			}
+                }
+
 		// Must run this to register the user and set up the _SESSION for later.
+       //         session_start();
 		$this->registerRandomUser();
 		
 		$lastRegistered = $this->getLastRegistered();
-
 		$userInfo = $this->UserManager->getUserInfo();
 		$this->assertType('UserInfoStruct', $userInfo);
 
 		$this->assertTrue(print_r($lastRegistered, true) == print_r($userInfo, true), 'getUserInfo() is not identical to last registration');
+
+                // Test getting userInfo from the session
+                $_SESSION['userInfo'] = $lastRegistered;
+
+                $userManager = new UserManager;
+                $newUserInfo = $userManager->getUserInfo();
+                $this->assertTrue(print_r($lastRegistered, true) == print_r($newUserInfo, true), 'getUserInfo() did not retrieve the last registration via the _SESSION data');
 	}
 	
 	/**
