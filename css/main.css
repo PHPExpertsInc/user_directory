@@ -1,7 +1,6 @@
 form.classyform { margin: 0; padding: 0; width: 560px; }
 form.classyform fieldset { border: 1px solid black; padding: 10px; margin: 0; }
 form.classyform label { display: block; width: 6em; float: left; }
-form.classyform label:first-letter { text-decoration: underline; }
 form.classyform ul li { list-style: none; padding: 2px 0 2px 0; }
 form.classyform ol { margin: 0; }
 
