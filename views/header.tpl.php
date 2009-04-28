@@ -10,7 +10,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
-        <title>Stargate User Directory</title>
+        <title>Portal User Directory</title>
         <link type="text/css" rel="stylesheet" media="all" href="css/main.css"/>
         <script defer="defer" type="text/javascript" src="js/accesskeys.js"></script>
     </head>
@@ -35,7 +35,7 @@ if (isset($login_status) && $login_status == UserManager::LOGGED_IN)
             </ul>
         </div>
         <div id="header">
-            <h1>Stargate User Directory</h1>
+            <h1>Portal User Directory</h1>
             <h4>via server <?php echo $_SERVER['SERVER_ADDR']; ?></h4>
         </div>
         <div id="main_content">

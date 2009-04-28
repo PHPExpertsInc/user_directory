@@ -24,7 +24,7 @@ if ($login_status == UserManager::LOGGED_IN)
 <?php
 }
 ?>
-            <p>Welcome to the Stargate user directory.</p>
+            <p>Welcome to the Portal user directory.</p>
 <?php
 if ($login_status != UserManager::LOGGED_IN && $registration_status != UserManager::REGISTERED)
 {
