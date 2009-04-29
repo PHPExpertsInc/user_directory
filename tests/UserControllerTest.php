@@ -49,11 +49,6 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 	}
 	
 	/**
-	 * Tests MyDBException->__construct()
-	 * 
-	 */
-	
-	/**
 	 * Tests UserController->__construct()
 	 * 
 	 * @covers UserController::__construct
@@ -67,6 +62,7 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 	 * Tests UserController->register()
 	 * 
 	 * @covers UserController::register
+         * @covers UserController::createUserSession
 	 */
 	public function testRegister()
 	{
@@ -179,7 +175,6 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 		// 2. Test with being logged in.
 		// Log in.
 		$_POST = $old_POST;
-                print_r($_POST);
 		$this->UserController->login();
 		
 		$users = $this->UserController->browse();

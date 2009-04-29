@@ -6,6 +6,9 @@ require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * UserManager test case.
+ *
+ * @covers MyReplicatedDB
+ * @covers MyReplicatedPDO
  */
 class UserManagerTest extends PHPUnit_Framework_TestCase {
 	
@@ -21,9 +24,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 	{
 		parent::setUp ();
 		
-		$config = MyDatabaseTest::getPDOConfig();
-		getDBHandler($config);
-		$this->UserManager = new UserManager(/* parameters */);
+		$this->UserManager = new UserManager;
 	}
 	
 	/**
@@ -32,11 +33,10 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 	protected function tearDown()
 	{
 		// Clean up database
-		$config = MyDatabaseTest::getReplicatedPDOConfig();
-		getDBHandler($config);
+		$DB = MyDB::loadDB(MyDatabaseTest::getPDOConfig());
 		
-		queryDB('TRUNCATE Users');
-		queryDB('TRUNCATE Profiles');
+		$DB->query('TRUNCATE Users');
+		$DB->query('TRUNCATE Profiles');
 
 		$this->UserManager = null;
 
@@ -50,8 +50,9 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 	public static function getLastRegistered()
 	{
 		// Get last-inserted user
-		$stmt = queryDB('SELECT * FROM vw_UserInfo ORDER BY userID DESC LIMIT 1');
-		$userInfo = $stmt->fetchObject('UserInfoStruct');
+		$DB = MyDB::loadDB(MyDatabaseTest::getReplicatedPDOConfig());
+		$DB->query('SELECT * FROM vw_UserInfo ORDER BY userID DESC LIMIT 1');
+		$userInfo = $DB->fetchObject('UserInfoStruct');
 		
 		return $userInfo;
 	}
