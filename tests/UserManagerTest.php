@@ -39,7 +39,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 		queryDB('TRUNCATE Profiles');
 
 		$this->UserManager = null;
-		
+
 		parent::tearDown ();
 	}
 	
@@ -47,7 +47,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 	 * Helper functions
 	 * @return UserInfoStruct
 	 */ 
-	private function getLastRegistered()
+	public static function getLastRegistered()
 	{
 		// Get last-inserted user
 		$stmt = queryDB('SELECT * FROM vw_UserInfo ORDER BY userID DESC LIMIT 1');
@@ -56,6 +56,13 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 		return $userInfo;
 	}
 
+	/**
+	 * Registers a totally random user
+	 *
+	 * @param string $password
+	 * @return UserInfoStruct
+	 */
+	
 	private function registerRandomUser($password = null)
 	{
 		$pass = is_null($password) ? uniqid() : $password;
@@ -65,20 +72,21 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * Constructs the test case.
 	 */
-	public function __construct()
-	{	
-	}
+	public function __construct() {}
 
-        /**
-         * Tests UserInfoStruct->__construct()
-         *
-         * @covers UserInfoStruct->__construct
-         */
-        public function test_userInfoStruct()
-        {
-            $userInfo = new UserInfoStruct;
-            $this->assertTrue(property_exists($userInfo, 'username'));
-        }
+	/**
+	 * Tests UserInfoStruct->__construct()
+	 *
+	 * @covers UserInfoStruct->__construct
+	 */
+	public function test_userInfoStruct()
+	{
+		$userInfo = new UserInfoStruct;
+		$this->assertTrue(property_exists($userInfo, 'userID'));
+		$this->assertTrue(property_exists($userInfo, 'email'));
+		$this->assertTrue(property_exists($userInfo, 'firstName'));
+		$this->assertTrue(property_exists($userInfo, 'lastName'));
+	}
 
 	/**
 	 * Tests UserManager->__construct()
@@ -90,7 +98,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 		// Test without username
 		$this->UserManager->__construct();
 	}
-	
+
 	/**
 	 * Tests UserManager->createProfile()
 	 * 
@@ -155,24 +163,23 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 			{
 				throw $e;
 			}
-                }
+		}
 
 		// Must run this to register the user and set up the _SESSION for later.
-       //         session_start();
 		$this->registerRandomUser();
 		
-		$lastRegistered = $this->getLastRegistered();
+		$lastRegistered = self::getLastRegistered();
 		$userInfo = $this->UserManager->getUserInfo();
 		$this->assertType('UserInfoStruct', $userInfo);
 
 		$this->assertTrue(print_r($lastRegistered, true) == print_r($userInfo, true), 'getUserInfo() is not identical to last registration');
 
-                // Test getting userInfo from the session
-                $_SESSION['userInfo'] = $lastRegistered;
+		// Test getting userInfo from the session
+		$_SESSION['userInfo'] = $lastRegistered;
 
-                $userManager = new UserManager;
-                $newUserInfo = $userManager->getUserInfo();
-                $this->assertTrue(print_r($lastRegistered, true) == print_r($newUserInfo, true), 'getUserInfo() did not retrieve the last registration via the _SESSION data');
+		$userManager = new UserManager;
+		$newUserInfo = $userManager->getUserInfo();
+		$this->assertTrue(print_r($lastRegistered, true) == print_r($newUserInfo, true), 'getUserInfo() did not retrieve the last registration via the _SESSION data');
 	}
 	
 	/**
@@ -189,7 +196,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 			$this->registerRandomUser();
 		}
 		
-		$lastRegistered = $this->getLastRegistered();
+		$lastRegistered = self::getLastRegistered();
 		
 		$info = $this->UserManager->getAllUsers();
 
@@ -208,7 +215,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 	public function testSearchUsers()
 	{
 		$this->registerRandomUser();
-		$lastRegistered = $this->getLastRegistered();
+		$lastRegistered = self::getLastRegistered();
 		
 		// Find something that we know exists (last registered username)
 		$userInfoArray = $this->UserManager->searchUsers(array('username' => $lastRegistered->username));
@@ -259,13 +266,13 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 
 		// Test for blank last name
 		$this->assertEquals($this->UserManager->updateProfile('tsmith', 'potato', 'potato', 'Ted', '', ''), UserManager::ERROR_BLANK_LNAME, 'Blank last name test');
-								
+
 		// Test for blank email
 		$this->assertEquals($this->UserManager->updateProfile('tsmith', 'potato', 'potato', 'Ted', 'Smith', ''), UserManager::ERROR_BLANK_EMAIL, 'Blank email test');
-		
+
 		// Test for succesful registration
 		$this->assertEquals($this->UserManager->updateProfile('tsmith', 'potato', 'potato', 'Ted', 'Smith', 'tsmith@brokertools.us'), UserManager::UPDATED_PROFILE, 'Successful registration test');
-		
+
 		// Test for duplicate registration
 		$this->registerRandomUser();
 		try
@@ -289,7 +296,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 		try
 		{
 			$this->UserManager->validatePassword(uniqid());
-			$this->assertTrue('false', 'validating worked without login attempt');
+			$this->assertTrue(false, 'validating worked without login attempt');
 		}
 		catch (Exception $e)
 		{

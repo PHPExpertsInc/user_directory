@@ -9,25 +9,31 @@ require_once 'lib/MyDatabase.inc.php';
 
 class UserInfoStruct
 {
-    public $userID;
-    public $username;
-    public $firstName;
-    public $lastName;
-    public $email;
-
-    public function __construct() { }
+	public $userID;
+	public $username;
+	public $firstName;
+	public $lastName;
+	public $email;
+	
+	public function __construct()
+	{
+	}
 }
 
 class UserManager
 {
 	private $userInfo;
 
+	// Status
+	const NOT_LOGGED_IN = 100;
+	const MISSING_USER_INFO = 101;
+
 	// Successes
 	const REGISTERED = 200;
 	const CORRECT_PASSWORD = 201;
 	const LOGGED_IN = 201;
 	const UPDATED_PROFILE = 202;
-    
+
 	// Failures
 	const ERROR_BLANK_PASS = 300;
 	const ERROR_BLANK_USER = 301;
@@ -37,7 +43,6 @@ class UserManager
 	const ERROR_PASS_MISMATCH = 305;
 	const ERROR_USER_EXISTS = 306;
 	const ERROR_INCORRECT_PASS = 307;
-	const MISSING_USER_INFO = 308;
 	
 	public function __construct()
     {
@@ -228,7 +233,6 @@ class UserManager
         $q2s = 'SELECT * FROM vw_UserInfo WHERE userID=?';
         $stmt = queryDB($q2s, array($userID));
         $this->userInfo = $stmt->fetchObject('UserInfoStruct');
-        $this->userInfo->username = $username;
         
         $this->isLoggedIn = true;
 
