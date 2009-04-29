@@ -50,6 +50,8 @@ class MyDatabaseTest extends PHPUnit_Framework_TestCase
 
 	/**
 	 * Tests getDBHandler()
+         * 
+         * @covers MyDBException
 	 */
 	public function testGetDBHandler()
 	{

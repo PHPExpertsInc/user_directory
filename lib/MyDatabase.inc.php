@@ -11,6 +11,11 @@ class MyDBException extends Exception
 	const CANT_LOAD_CONFIG_FILE = 102;
 	const BAD_CONFIG_FILE = 103;
 	const NO_DB_ENGINE = 104;
+
+        public function __construct()
+        {
+            return parent::__construct();
+        }
 }
 
 class MyDBConfigStruct
