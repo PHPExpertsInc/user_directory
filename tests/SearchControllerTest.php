@@ -20,9 +20,6 @@ class SearchControllerTest extends PHPUnit_Framework_TestCase {
 	protected function setUp() {
 		parent::setUp ();
 		
-		// TODO Auto-generated SearchControllerTest::setUp()
-		
-
 		$this->SearchController = new SearchController(/* parameters */);
 	
 	}
@@ -31,7 +28,6 @@ class SearchControllerTest extends PHPUnit_Framework_TestCase {
 	 * Cleans up the environment after running a test.
 	 */
 	protected function tearDown() {
-		// TODO Auto-generated SearchControllerTest::tearDown()
 		
 
 		$this->SearchController = null;
@@ -42,17 +38,17 @@ class SearchControllerTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * Constructs the test case.
 	 */
-	public function __construct() {
-		// TODO Auto-generated constructor
+	public function __construct()
+	{
 	}
 	
 	/**
 	 * Tests SearchController->__construct()
 	 */
-	public function test__construct() {
-		// TODO Auto-generated SearchControllerTest->test__construct()
+	public function test__construct()
+	{
+		// just make sure nothing goes wrong
 		$this->SearchController->__construct();
-	
 	}
 	
 	/**

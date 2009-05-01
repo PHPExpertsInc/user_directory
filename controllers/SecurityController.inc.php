@@ -3,7 +3,9 @@
 class SecurityController
 {
 	// Singleton
+	// @codeCoverageIgnoreStart
 	private function __construct() { }
+	// @codeCoverageIgnoreStop
 
 	public static function isLoggedIn()
 	{
@@ -14,7 +16,7 @@ class SecurityController
 		
 		return false;
 	}
-	
+
 	public static function ensureHasAccess()
 	{
 		if (self::isLoggedIn() === false)

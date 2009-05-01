@@ -29,7 +29,7 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 	{
 		parent::setUp();
 
-                ob_start();
+          ob_start();
 		session_start();
 		
 		unset($_SESSION);
@@ -110,38 +110,28 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 		// Test login with missing password
 		$_POST = $old_POST;
 		$_POST['password'] = '';
-		$this->assertSame(UserManager::ERROR_BLANK_PASS, $this->UserController->login(), 'logged in without a password.');
+		$this->assertEquals(UserManager::ERROR_BLANK_PASS, $this->UserController->login(), 'logged in without a password.');
 		
 		// Test login with bad password
 		$_POST['password'] = uniqid();
-		$this->assertSame(UserManager::ERROR_INCORRECT_PASS, $this->UserController->login(), 'logged in with a bad password.');
+		$this->assertEquals(UserManager::ERROR_INCORRECT_PASS, $this->UserController->login(), 'logged in with a bad password.');
 		
 		// Test login via SQL inject
 		$_POST['password'] = '\' OR 1=1; -- ';
-		$this->assertSame(UserManager::ERROR_INCORRECT_PASS, $this->UserController->login(), 'logged in with a bad password.');
+		$this->assertEquals(UserManager::ERROR_INCORRECT_PASS, $this->UserController->login(), 'logged in with a bad password.');
 		
 		// Test valid login
 		$_POST = $old_POST;
-		$this->assertSame(UserManager::LOGGED_IN, $this->UserController->login(), 'would not log in with right info.');
+		$this->assertEquals(UserManager::LOGGED_IN, $this->UserController->login(), 'would not log in with right info.');
 
+		// Test with session created
 		$this->myCreateUserSessionTest();
-	}
-	
-	/**
-	 * Tests UserController->isLoggedIn
-	 * 
-	 * @covers UserController::isLoggedIn
-	 */
-	public function testIsLoggedIn()
-	{
-		session_destroy();
-
-		// Test while being logged out
-		$this->assertFalse($this->UserController->isLoggedIn(), 'returned true when logged out');
 		
-		// Test while being logged in
-		$this->UserController->login();
-		$this->assertTrue($this->UserController->isLoggedIn(), 'returned false when logged in');
+		// Test with no session created
+		session_destroy();
+		$this->assertEquals(UserManager::LOGGED_IN, $this->UserController->login(), 'would not log in with right info.');
+		$this->myCreateUserSessionTest();
+
 	}
 	
 	/**
