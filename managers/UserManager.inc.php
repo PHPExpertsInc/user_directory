@@ -190,10 +190,12 @@ class UserManager
         }
         catch(Exception $e)
         {
-            // All we can really do is rollback the transaction and rethrow it.
-            $pdo->rollback();
+			// All we can really do is rollback the transaction and rethrow it.
+			// @codeCoverageIgnoreStart
+			$pdo->rollback();
             
-            throw $e;
+			throw $e;
+			// @codeCoverageIgnoreStop
         }
         
         // If we have gotten this far, it means that we were successful; woohoo!
@@ -234,8 +236,6 @@ class UserManager
         $stmt = queryDB($q2s, array($userID));
         $this->userInfo = $stmt->fetchObject('UserInfoStruct');
         
-        $this->isLoggedIn = true;
-
         return self::CORRECT_PASSWORD;
     }
     

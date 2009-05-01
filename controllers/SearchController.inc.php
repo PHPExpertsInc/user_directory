@@ -19,6 +19,7 @@ class SearchController
     
     public function search()
     {
+    	
         if (isset($_POST['search']) || isset($_GET['active']))
         {
             /* --- Filter user input --- */

@@ -5,6 +5,7 @@
  * Copyright(c) 2008 Theodore R. Smith
  * License: Creative Commons */
 
+require_once 'controllers/SecurityController.inc.php';
 require_once 'managers/UserManager.inc.php';
 
 class UserController
@@ -82,35 +83,16 @@ class UserController
         return $status;
     }
 
-	public function isLoggedIn()
-	{
-		if (isset($_SESSION['userInfo']) && $_SESSION['userInfo'] instanceof UserInfoStruct)
-		{
-			return true;
-		}
-		
-		return false;
-	}
-	
-	private function ensureHasAccess()
-	{
-		if ($this->isLoggedIn() === false)
-		{
-			header('Location: http://' . $_SERVER['HTTP_HOST'] . '/user_directory/');
-			throw new Exception('User is not logged in', UserManager::NOT_LOGGED_IN);
-		}		
-	}
-
 	public function browse()
 	{
-		$this->ensureHasAccess();
+		SecurityController::ensureHasAccess();
 
 		return $this->userManager->getAllUsers();
 	}
     
     public function editProfile()
     {
-		$this->ensureHasAccess();
+		SecurityController::ensureHasAccess();
 
     	   if (!isset($_POST['profile']))
         {
