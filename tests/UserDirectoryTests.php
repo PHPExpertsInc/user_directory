@@ -10,12 +10,14 @@ require_once 'tests/UserManagerTest.php';
 /**
  * Static test suite.
  */
+// @codeCoverageIgnoreStart
 class UserDirectoryTests extends PHPUnit_Framework_TestSuite {
-	
+	 protected $topTestSuite = true;
 	/**
 	 * Constructs the test suite handler.
 	 */
 	public function __construct() {
+		ob_start();
 		$this->setName ( 'UserDirectoryTests' );
 		$this->addTestSuite('MyDatabaseTest');
 /*
@@ -28,6 +30,7 @@ class UserDirectoryTests extends PHPUnit_Framework_TestSuite {
 		$this->addTestSuite('UserManagerTest');
 		$this->addTestSuite('UserControllerTest');
 		$this->addTestSuite('SearchControllerTest');
+		PHPUnit_Util_Filter::removeDirectoryFromWhitelist('tests');
 	}
 	
 	/**
@@ -37,4 +40,4 @@ class UserDirectoryTests extends PHPUnit_Framework_TestSuite {
 		return new self ( );
 	}
 }
-
+// @codeCoverageIgnoreStop

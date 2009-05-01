@@ -12,9 +12,9 @@ class MyDBException extends Exception
 	const BAD_CONFIG_FILE = 103;
 	const NO_DB_ENGINE = 104;
 
-        public function __construct()
+        public function __construct($message = null, $code = 0)
         {
-            return parent::__construct();
+            return parent::__construct($message, $code);
         }
 }
 
@@ -77,6 +77,11 @@ class MyDB
 		// Never store passes in plaintext!!
 		if (is_null($config))
 		{
+			if (!file_exists('database.config'))
+			{
+				throw new MyDBException('Couldn\'t find database.config.', MyDBException::CANT_LOAD_CONFIG_FILE);
+			}
+
 			$data = file_get_contents('database.config');
 			
 			if ($data === false)

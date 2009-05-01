@@ -13,7 +13,7 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 	 * @var UserController
 	 */
 	private $UserController;
-        protected $backupGlobals = false;
+	protected $backupGlobals = false;
 
 	private function myCreateUserSessionTest()
 	{
@@ -62,7 +62,7 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 	 * Tests UserController->register()
 	 * 
 	 * @covers UserController::register
-         * @covers UserController::createUserSession
+	 * @covers UserController::createUserSession
 	 */
 	public function testRegister()
 	{
@@ -148,6 +148,7 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 	 * Tests UserController->browse()
 	 * 
 	 * @covers UserController::browse
+	 * @covers UserController::ensureHasAccess
 	 */
 	public function testBrowse()
 	{
@@ -165,18 +166,18 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 		{
 			$this->assertSame(UserManager::NOT_LOGGED_IN, $e->getCode(), 'Didn\'t expect exception "' . $e->getMessage() . '".');
 		}
-		
-                $headers_list = headers_list();
-                if (!empty($headers_list))
-                {
-		    $this->assertContains('Location: http://' . $_SERVER['HTTP_HOST'] . '/user_directory/', $headers_list);
-                }
-		
+
+		$headers_list = headers_list();
+		if (!empty($headers_list))
+		{
+			$this->assertContains('Location: http://' . $_SERVER['HTTP_HOST'] . '/user_directory/', $headers_list);
+		}
+
 		// 2. Test with being logged in.
 		// Log in.
 		$_POST = $old_POST;
 		$this->UserController->login();
-		
+
 		$users = $this->UserController->browse();
 		$lastRegistered = UserManagerTest::getLastRegistered();
 		$this->assertType('array', $users, 'result was not an array');
@@ -187,10 +188,10 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 	 * Tests UserController->editProfile()
 	 * 
 	 * @covers UserController::editProfile
+	 * @covers UserController::ensureHasAccess
 	 */
 	public function testEditProfile()
 	{
-		// TODO Auto-generated UserControllerTest->editProfile()
 		// 1. Test without being logged in.
 		// Save old user details.
 		$old_POST = $_POST;
@@ -206,19 +207,27 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 			$this->assertSame(UserManager::NOT_LOGGED_IN, $e->getCode(), 'Didn\'t expect exception "' . $e->getMessage() . '".');
 		}
 		
-                $headers_list = headers_list();
-                if (!empty($headers_list))
-                {
-		    $this->assertContains('Location: http://' . $_SERVER['HTTP_HOST'] . '/user_directory/', $headers_list);
-                }
+		$headers_list = headers_list();
+		if (!empty($headers_list))
+		{
+			$this->assertContains('Location: http://' . $_SERVER['HTTP_HOST'] . '/user_directory/', $headers_list);
+		}
 		
 		// 2. Test with being logged in.
 		$_POST = $old_POST;
 		$this->UserController->login();
 		
+		// 2a. Test with no input
+		unset($_POST['profile']);
+		unset($_POST['username']);
+		unset($_POST['password']);
+		$this->assertFalse($this->UserController->editProfile(), 'worked with no input.');
+		
+		$_POST = $old_POST;
+		
 		// 2b. with bad input.
 		$_POST['password'] = uniqid();
-		$this->assertSame(UserManager::ERROR_PASS_MISMATCH, $this->UserController->editProfile(), 'worked with bad input.');
+		$this->assertEquals(UserManager::ERROR_PASS_MISMATCH, $this->UserController->editProfile(), 'worked with bad input.');
 		
 		// 2c. with correct input
 		$_POST['password'] = $_POST['confirm'];

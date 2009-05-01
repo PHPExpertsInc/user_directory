@@ -58,7 +58,7 @@ class MyDatabaseTest extends PHPUnit_Framework_TestCase
 		// Test with a missing config file
 		try
 		{
-			@getDBHandler();
+			getDBHandler();
 		}
 		catch (MyDBException $e)
 		{
