@@ -74,7 +74,7 @@ class MyDBHelperFunctionsTest extends PHPUnit_Framework_TestCase
 	 * 
 	 * @covers MyDBException
 	 */
-	public function testGetDBHandler()
+	public function testGetDbHandler()
 	{
 		// Test with a missing config file
 		try
@@ -103,7 +103,7 @@ class MyDBHelperFunctionsTest extends PHPUnit_Framework_TestCase
 	 * 
 	 * @covers getQueryDB
 	 */
-	public function testQueryDB()
+	public function testQueryDb()
 	{
 		$config = MyDatabaseTest::getPDOConfig();
 	     getDBHandler($config);
@@ -135,7 +135,7 @@ class MyDBTest extends PHPUnit_Framework_TestCase
 	/**
 	 * @covers MyDB::loadDB
 	 */
-	public function testLoad_PDO_DB()
+	public function testLoadAPdoDB()
 	{
 		$config = MyDatabaseTest::getPDOConfig();
 		$this->assertType('MyPDO', MyDB::loadDB($config));
@@ -144,7 +144,7 @@ class MyDBTest extends PHPUnit_Framework_TestCase
 	/**
 	 * @covers MyDB::loadDB
 	 */
-	public function testLoad_ReplicatedPDO_DB()
+	public function testLoadAReplicatedPdoDb()
 	{
 		$config = MyDatabaseTest::getReplicatedPDOConfig();
 		$this->assertType('MyReplicatedPDO', MyDB::loadDB($config));
@@ -172,7 +172,7 @@ class MyPDOTest extends PHPUnit_Framework_TestCase
 	/**
 	 * @covers MyPDODB::query
 	 */
-	public function testQueryInsert()
+	public function testCanInsertData()
 	{
 		$user['name'] = uniqid();
 		$user['pass'] = uniqid();
@@ -186,7 +186,7 @@ class MyPDOTest extends PHPUnit_Framework_TestCase
 	/**
 	 * @covers MyPDODB::query
 	 */
-	public function testQuerySelect()
+	public function testCanReadData()
 	{
 		$user = $GLOBALS['user'];
 		$qs = 'SELECT * FROM Users WHERE username=?';
@@ -202,7 +202,7 @@ class MyPDOTest extends PHPUnit_Framework_TestCase
 	/**
 	 * @covers MyPDODB::query
 	 */
-	public function testQueryUpdate()
+	public function testCanUpdateData()
 	{
 		$user = $GLOBALS['user'];
 		$user['pass'] = uniqid();
@@ -212,13 +212,13 @@ class MyPDOTest extends PHPUnit_Framework_TestCase
 		$this->assertType('PDOStatement', $this->MyPDO->query($qs, array($user['name'], $user['pass'])));
 
 		// Verify
-		$this->testQuerySelect();
+		$this->testCanReadData();
 	}
 
 	/**
 	 * @covers MyPDODB::fetchArray
 	 */
-	public function testFetchArray()
+	public function testCanFetchAnArray()
 	{
 		$user = $GLOBALS['user'];
 
@@ -233,7 +233,7 @@ class MyPDOTest extends PHPUnit_Framework_TestCase
 	/**
 	 * @covers MyPDODB::fetchObject
 	 */
-	public function testFetchObject()
+	public function testCanFetchAnObject()
 	{
 		$user = $GLOBALS['user'];
 
@@ -263,40 +263,40 @@ class MyReplicatedDBTest extends MyPDOTest
 	/**
 	 * @covers MyReplicatedDB::query
 	 */
-	public function testQueryInsert()
+	public function testCanInsertData()
 	{
-		parent::testQueryInsert();
+		parent::testCanInsertData();
 	}
 
 	/**
 	 * @covers MyReplicatedDB::query
 	 */
-	public function testQuerySelect()
+	public function testCanReadData()
 	{
-		parent::testQuerySelect();
+		parent::testCanReadData();
 	}
 
 	/**
 	 * @covers MyReplicatedDB::query
 	 */
-	public function testQueryUpdate()
+	public function testCanUpdateData()
 	{
-		parent::testQueryUpdate();
+		parent::testCanUpdateData();
 	}
 
 	/**
 	 * @covers MyReplicatedDB::fetchArray
 	 */
-	public function testFetchArray()
+	public function testCanFetchAnArray()
 	{
-		parent::testFetchArray();
+		parent::testCanFetchAnArray();
 	}
 
 	/**
 	 * @covers MyReplicatedDB::fetchObject
 	 */
-	public function testFetchObject()
+	public function testCanFetchAnObject()
 	{
-		parent::testFetchObject();
+		parent::testCanFetchAnObject();
 	}
 }
