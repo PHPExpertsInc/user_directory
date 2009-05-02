@@ -9,7 +9,11 @@ require_once 'PHPUnit/Framework/TestCase.php';
  * SecurityController test case.
  */
 class SecurityControllerTest extends PHPUnit_Framework_TestCase {
-	
+	public static function simulateLogin()
+	{
+		$_SESSION['userInfo'] = new UserInfoStruct;
+	}
+
 	/**
 	 * Prepares the environment before running a test.
 	 */
@@ -34,7 +38,7 @@ class SecurityControllerTest extends PHPUnit_Framework_TestCase {
 	public function __construct()
 	{
 	}
-	
+
 	/**
 	 * Tests SecurityController::isLoggedIn()
 	 * 
@@ -50,8 +54,7 @@ class SecurityControllerTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse(SecurityController::isLoggedIn(), 'worked with bad input.');
 		
 		// 3. Test with good input
-		// Simulate login
-		$_SESSION['userInfo'] = new UserInfoStruct;
+		self::simulateLogin();
 		$this->assertTrue(SecurityController::isLoggedIn(), 'didn\'t work with good input.');
 	}
 
@@ -80,7 +83,7 @@ class SecurityControllerTest extends PHPUnit_Framework_TestCase {
 		}
 		
 		// 2. Test while being logged in
-		$_SESSION['userInfo'] = new UserInfoStruct;
+		self::simulateLogin();
 		$this->assertEquals(null, SecurityController::ensureHasAccess());
 	}
 	

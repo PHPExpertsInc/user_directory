@@ -1,6 +1,8 @@
 <?php
 
 require_once 'controllers/SearchController.inc.php';
+require_once 'controllers/UserController.inc.php';
+require_once 'tests/SecurityControllerTest.php';
 
 require_once 'PHPUnit/Framework/TestCase.php';
 
@@ -17,22 +19,29 @@ class SearchControllerTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * Prepares the environment before running a test.
 	 */
-	protected function setUp() {
-		parent::setUp ();
+	protected function setUp()
+	{
+		parent::setUp();
+
+		ob_start();
+		session_start();
 		
-		$this->SearchController = new SearchController(/* parameters */);
+		unset($_SESSION);
+		$_SERVER['HTTP_HOST'] = 'localhost';
+		
+		$this->SearchController = new SearchController();
 	
 	}
 	
 	/**
 	 * Cleans up the environment after running a test.
 	 */
-	protected function tearDown() {
-		
-
+	protected function tearDown()
+	{
+		if (session_id() != '') { session_destroy(); }
 		$this->SearchController = null;
 		
-		parent::tearDown ();
+		parent::tearDown();
 	}
 	
 	/**
@@ -44,6 +53,8 @@ class SearchControllerTest extends PHPUnit_Framework_TestCase {
 	
 	/**
 	 * Tests SearchController->__construct()
+	 * 
+	 * @covers SearchController::__construct
 	 */
 	public function test__construct()
 	{
@@ -53,14 +64,77 @@ class SearchControllerTest extends PHPUnit_Framework_TestCase {
 	
 	/**
 	 * Tests SearchController->search()
+	 * 
+	 * @covers SearchController::search
 	 */
-	public function testSearch() {
-		// TODO Auto-generated SearchControllerTest->testSearch()
-		$this->markTestIncomplete ( "search test not implemented" );
-		
-		$this->SearchController->search(/* parameters */);
-	
-	}
+	public function testSearch()
+	{
+		// 1. Test without being logged in
+		$old_POST = $_POST;
+		$_POST = array();
 
+		try
+		{
+			$this->SearchController->search();
+			$this->assertTrue(false, 'worked without being logged in.');
+		}
+		catch(Exception $e)
+		{
+			$this->assertSame(UserManager::NOT_LOGGED_IN, $e->getCode(), 'Didn\'t expect exception "' . $e->getMessage() . '".');
+		}
+		
+		$headers_list = headers_list();
+		if (!empty($headers_list))
+		{
+			$this->assertContains('Location: http://' . $_SERVER['HTTP_HOST'] . '/user_directory/', $headers_list);
+		}
+		
+		// 2. Test with being logged in
+		$_POST = $old_POST;
+		$userController = new UserController;
+		$userController->login();
+		
+		// 2a. Test with no input
+		$this->assertFalse($this->SearchController->search(), 'worked with no input.');
+		
+		// 2b. Test with bad input
+		$_POST['search'] = true;
+		$old_user = $_POST['username'];
+		$_POST['username'] = uniqid();
+		$_REQUEST = $_POST;
+		
+		$this->assertNull($this->SearchController->search(), 'worked with bad input.');
+		
+		// 2c. Test with good input
+		$_REQUEST['username'] = $old_user;
+		$users = $this->SearchController->search();
+		$this->assertType('array', $users);
+		$this->assertType('UserInfoStruct', $users[0]);
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
