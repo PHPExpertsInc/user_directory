@@ -97,6 +97,8 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 	 * Tests UserController->login()
 	 * 
 	 * @covers UserController::login
+	 * @covers UserController::createUserSession
+	 * 
 	 */
 	public function testLogin()
 	{
@@ -105,6 +107,7 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 		$_POST = array();
 		
 		// Test login wihout data
+		if (session_id() != '') { session_destroy(); }
 		$this->assertFalse($this->UserController->login(), 'logged in without any input.');
 		
 		// Test login with missing password
