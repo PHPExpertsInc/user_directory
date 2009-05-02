@@ -41,7 +41,7 @@ global $users;
             </form>
         </div>
 <?php
-if (isset($users))
+if (!empty($users))
 {
 	require 'views/browse.tpl.php';
 }
