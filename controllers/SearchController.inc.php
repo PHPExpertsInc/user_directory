@@ -12,7 +12,7 @@ class SearchController
 {
 	private $userManager;
 	private $searchParams;
-    
+
 	public function __construct()
 	{
 		$this->userManager = new UserManager;
@@ -37,5 +37,15 @@ class SearchController
 		//$this->searchParams['active'] = 1;
 
 		return $this->userManager->searchUsers($searchParams);
+	}
+
+	public function getSearchQueryString()
+	{
+		if (isset($_POST['search']) || isset($_GET['active']))
+		{
+			return http_build_query($this->searchParams);
+		}
+		
+			return null;
 	}
 }
