@@ -17,15 +17,15 @@ class UserDirectoryTests extends PHPUnit_Framework_TestSuite {
 	/**
 	 * Constructs the test suite handler.
 	 */
-	public function __construct() {
+	public function __construct()
+	{
 		ob_start();
-		$this->setName ( 'UserDirectoryTests' );
+		$this->setName('UserDirectoryTests');
 		$this->addTestSuite('MyDatabaseTest');
 		$this->addTestSuite('UserManagerTest');
 		$this->addTestSuite('SecurityControllerTest');
 		$this->addTestSuite('UserControllerTest');
 		$this->addTestSuite('SearchControllerTest');
-		PHPUnit_Util_Filter::removeDirectoryFromWhitelist('tests');
 	}
 	
 	/**

@@ -12,10 +12,10 @@ class MyDBException extends Exception
 	const BAD_CONFIG_FILE = 103;
 	const NO_DB_ENGINE = 104;
 
-        public function __construct($message = null, $code = 0)
-        {
-            return parent::__construct($message, $code);
-        }
+	public function __construct($message = null, $code = 0)
+	{
+		return parent::__construct($message, $code);
+	}
 }
 
 class MyDBConfigStruct
@@ -70,7 +70,9 @@ interface MyDBI
 // Factory pattern
 class MyDB
 {
+	// @codeCoverageIgnoreStart
 	private function __construct() { }
+	// @codeCoverageIgnoreStop
 
 	public static function loadDB(stdClass $config = null)
 	{
@@ -120,6 +122,8 @@ class MyDB
 				return new MyPDO($dbConfig);
 			}
 		}
+
+		return null;
 	}
 }
 
@@ -139,6 +143,11 @@ abstract class MyReplicatedDB implements MyDBI
 	 */
 	protected $dbWriter;
 
+	/**
+	 * @param string $sql
+	 * @param array $params
+	 * @return PDOStatement
+	 */
 	public function query($sql, array $params = null)
 	{
 		$operation = strtoupper(substr($sql, 0, 6));
@@ -193,7 +202,7 @@ class MyPDO implements MyDBI
 {
 	/** 
 	 * @var PDO
-	 */
+c	 */
 	private $pdo;
 	/** 
 	 * @var PDOStatement
@@ -212,6 +221,13 @@ class MyPDO implements MyDBI
 		return $this->pdo;
 	}
 
+	/**
+	 * Queries the database
+	 * 
+	 * @param string $sql
+	 * @param array $params
+	 * @return PDOStatement
+	 */
 	public function query($sql, array $params = null)
 	{
 		$stmt = $this->pdo->prepare($sql);
