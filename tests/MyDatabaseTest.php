@@ -9,6 +9,8 @@ require_once 'lib/MyDatabase.inc.php';
  */
 class MyDatabaseTest extends PHPUnit_Framework_TestSuite
 {
+	protected $backupGlobals = false;
+
 	public function __construct()
 	{
 		ob_start();
