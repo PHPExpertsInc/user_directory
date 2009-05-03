@@ -170,7 +170,7 @@ class MyPDOTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * @covers MyPDODB::query
+	 * @covers MyPDO::query
 	 */
 	public function testCanInsertData()
 	{
@@ -184,7 +184,7 @@ class MyPDOTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * @covers MyPDODB::query
+	 * @covers MyPDO::query
 	 */
 	public function testCanReadData()
 	{
@@ -200,7 +200,7 @@ class MyPDOTest extends PHPUnit_Framework_TestCase
 	}
 	
 	/**
-	 * @covers MyPDODB::query
+	 * @covers MyPDO::query
 	 */
 	public function testCanUpdateData()
 	{
@@ -216,7 +216,7 @@ class MyPDOTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * @covers MyPDODB::fetchArray
+	 * @covers MyPDO::fetchArray
 	 */
 	public function testCanFetchAnArray()
 	{
@@ -231,7 +231,7 @@ class MyPDOTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * @covers MyPDODB::fetchObject
+	 * @covers MyPDO::fetchObject
 	 */
 	public function testCanFetchAnObject()
 	{
