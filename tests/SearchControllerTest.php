@@ -61,7 +61,7 @@ class SearchControllerTest extends PHPUnit_Framework_TestCase {
 		// just make sure nothing goes wrong
 		$this->SearchController->__construct();
 	}
-	
+
 	/**
 	 * Tests SearchController->search()
 	 * 
@@ -111,30 +111,25 @@ class SearchControllerTest extends PHPUnit_Framework_TestCase {
 		$this->assertType('array', $users);
 		$this->assertType('UserInfoStruct', $users[0]);
 	}
+
+	/**
+	 * @covers SearchController::getSearchQueryString
+	 */
+	public function testGetSearchQueryString()
+	{
+		// 1. Test in an improper context.
+		$this->assertNull($this->SearchController->getSearchQueryString());
+
+		// 2. Test in a proper context.
+		$_GET['page'] = 1;
+		$_REQUEST['firstName'] = 'Ted';
+		$_POST['firstName'] = 'Ted';
+
+		$userController = new UserController;
+		$userController->login();
+
+		$this->SearchController->search();
+		$this->assertEquals('username=&firstName=Ted&lastName=&email=', $this->SearchController->getSearchQueryString());
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
