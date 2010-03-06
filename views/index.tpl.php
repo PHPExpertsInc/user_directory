@@ -13,7 +13,13 @@ if (!isset($registration_status)) { $registration_status = ''; }
     function show(name)
     {
         element = document.getElementById(name);
-        element.style.display = 'block';
+
+        if (element.style.display == 'none')
+        {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
     }
 </script>
 <?php
@@ -37,7 +43,7 @@ if ($login_status != UserManager::LOGGED_IN && $registration_status != UserManag
 
     if ($registration_status != UserManager::REGISTERED)
     {
-        $instructions .= ' or <a onclick="show(\'registration\'); this.href=\'#\';" href="?view=profile" accesskey="r">register</a>';
+        $instructions .= ' or <a onclick="show(\'profile\'); this.href=\'#\';" href="?view=profile" accesskey="r">register</a>';
     }
 ?>
             <p><?php echo $instructions; ?></p>
@@ -76,6 +82,7 @@ if ($action != 'login')
         <script type="text/javascript">
             // default action:
             document.getElementById('login').style.display = 'none';
+            document.getElementById('profile').style.display = 'none';
         </script>
 <?php
 }
