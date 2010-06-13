@@ -76,6 +76,14 @@ class MyDB
 
 	public static function loadDB(stdClass $config = null)
 	{
+		static $_config;
+
+		// Auto-return the last config
+		if (is_null($config) && !is_null($_config))
+		{
+			$config = $_config;
+		}
+		
 		// Never store passes in plaintext!!
 		if (is_null($config))
 		{
@@ -99,6 +107,8 @@ class MyDB
 				throw new MyDBException('Couldn\'t successfully parse database.config.', MyDBException::BAD_CONFIG_FILE);
 			}
 		}
+		
+		$_config = $config;
 
 		if (!isset($config->engine))
 		{
