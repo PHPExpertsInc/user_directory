@@ -34,7 +34,6 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 	{
 		// Clean up database
 		$DB = MyDB::loadDB(MyDatabaseTest::getPDOConfig());
-		
 		$DB->query('TRUNCATE Users');
 		$DB->query('TRUNCATE Profiles');
 

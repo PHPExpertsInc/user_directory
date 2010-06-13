@@ -2,6 +2,10 @@
 
 require_once 'PHPUnit/Framework/TestSuite.php';
 
+require_once 'lib/MyDB.inc.php';
+require_once 'lib/UserInfoStruct.inc.php';
+require_once 'lib/ViewCommandFactory.inc.php';
+
 require_once 'tests/MyDatabaseTest.php';
 require_once 'tests/SearchControllerTest.php';
 require_once 'tests/SecurityControllerTest.php';

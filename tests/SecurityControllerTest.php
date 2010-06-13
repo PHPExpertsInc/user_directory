@@ -19,6 +19,7 @@ class SecurityControllerTest extends PHPUnit_Framework_TestCase {
 	 */
 	protected function setUp()
 	{
+		$_SERVER['HTTP_HOST'] = 'localhost';
 		session_start();
 		parent::setUp();
 	}

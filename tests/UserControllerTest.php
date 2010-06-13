@@ -71,6 +71,7 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 	
 		$_POST['profile'] = true;
 		// Test empty input
+		$_POST['username'] = $_POST['password'] = $_POST['confirm'] = $_POST['firstName'] = $_POST['lastName'] = $_POST['email'] = '';
 		$this->assertSame(UserManager::ERROR_BLANK_USER, $this->UserController->register(), 'worked with blank input');
 		
 		// Set up most data
