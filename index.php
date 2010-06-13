@@ -39,9 +39,9 @@ $result = $username = $password = $confirm = $firstName = $lastName = $email = '
 session_start();
 $userControl = new UserController;
 
-if (isset($_SESSION['userInfo']))
+if (SecurityController::isLoggedIn())
 {
-    $login_status = UserManager::LOGGED_IN;
+	$login_status = UserManager::LOGGED_IN;
 }
 
 if ($action == 'login')
