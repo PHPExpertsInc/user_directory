@@ -5,7 +5,7 @@
  * Copyright(c) 2008 Theodore R. Smith
  * License: Creative Commons */
 
-class UserController
+class UserController implements ViewCommandI
 {
     /**
      * @var UserManager
@@ -113,4 +113,35 @@ class UserController
 
         return $result;
    }
+   
+   	public function execute($action)
+   	{
+   		$data = false;
+		if ($action == 'login')
+		{
+			$login_status = $this->login();
+			$data['login_status'] = $login_status;
+		}
+		else if ($action == 'register')
+		{
+			$registration_status = $this->register();
+			$data['registration_status'] = $registration_status;
+		}
+		else if ($action == 'browse')
+		{
+			$data['users'] = $this->browse();
+		}
+		else if ($action == 'logout')
+		{
+		    session_destroy();
+		    $data['login_status'] = $data['registration_status'] = '';
+		}
+		else if ($action == 'edit_profile')
+		{
+		    $data['view_file'] = 'views/profile.tpl.php';
+		    $data['registration_status'] = $this->editProfile();
+		}
+
+		return $data;
+	}
 }

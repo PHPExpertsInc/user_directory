@@ -25,4 +25,9 @@ class SecurityController
 			throw new Exception('User is not logged in', UserManager::NOT_LOGGED_IN);
 		}
 	}
+
+   	public function execute($action)
+   	{
+   		return false;
+	}
 }

@@ -5,7 +5,7 @@
  * Copyright(c) 2008 Theodore R. Smith
  * License: Creative Commons */
 
-class SearchController
+class SearchController implements ViewCommandI
 {
 	private $userManager;
 	private $searchParams;
@@ -42,5 +42,18 @@ class SearchController
 		}
 		
 	        return null;
+	}
+
+   	public function execute($action)
+   	{
+   		$data = false;
+
+		if ($action == 'search')
+		{
+			$data['users'] = $this->search();
+			$data['searchQueryString'] = htmlspecialchars($this->getSearchQueryString());
+		}
+		
+		return $data;
 	}
 }

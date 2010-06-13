@@ -11,6 +11,8 @@
  * Copyright(c) 2008 Theodore R. Smith
  * License: Creative Commons */
 
+require 'lib/MyDB.inc.php';
+ 
 function __autoload($name)
 {
 	if (strpos($name, 'Controller') !== false)
@@ -30,7 +32,7 @@ function __autoload($name)
 	}
 }
  
-$action = isset($_GET['action']) ? $_GET['action'] : '';
+$action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
 $view = isset($_GET['view']) ? $_GET['view'] : 'index';
 
 $view_file = 'views/' . $view . '.tpl.php';
@@ -53,43 +55,16 @@ else if ($view == 'search')
 $result = $username = $password = $confirm = $firstName = $lastName = $email = '';
 
 session_start();
-$userControl = new UserController;
 
 if (SecurityController::isLoggedIn())
 {
 	$login_status = UserManager::LOGGED_IN;
 }
 
-if ($action == 'login')
-{
-    $login_status = $userControl->login();
-}
-else if ($action == 'register')
-{
-    $registration_status = $userControl->register();
-}
-else if ($action == 'browse')
-{
-    $users = $userControl->browse();
-}
-else if ($action == 'search')
-{
-    $searchControl = new SearchController;
-    $users = $searchControl->search();
-    $searchQueryString = htmlspecialchars($searchControl->getSearchQueryString());
-}
-else if ($action == 'logout')
-{
-    session_destroy();
-    $login_status = $registration_status = '';
-}
-else if ($action == 'edit_profile')
-{
-    $view_file = 'views/profile.tpl.php';
-    $registration_status = $userControl->editProfile();
-}
+$data = ViewCommandFactory::execute($action);
 
-
+// Extract $data to global namespace.
+if (!is_null($data)) { extract($data); }
 require 'views/header.tpl.php';
 require $view_file;
 require 'views/footer.tpl.php';
