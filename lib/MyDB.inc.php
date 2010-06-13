@@ -76,12 +76,12 @@ class MyDB
 
 	public static function loadDB(stdClass $config = null)
 	{
-		static $_config;
+		static $_db;
 
 		// Auto-return the last config
-		if (is_null($config) && !is_null($_config))
+		if (!is_null($_db))
 		{
-			$config = $_config;
+			return $_db;
 		}
 		
 		// Never store passes in plaintext!!
@@ -107,8 +107,6 @@ class MyDB
 				throw new MyDBException('Couldn\'t successfully parse database.config.', MyDBException::BAD_CONFIG_FILE);
 			}
 		}
-		
-		$_config = $config;
 
 		if (!isset($config->engine))
 		{
@@ -121,7 +119,7 @@ class MyDB
 		{
 			if ($config->engine == 'PDO')
 			{
-				return new MyReplicatedPDO($config);
+				$_db = new MyReplicatedPDO($config);
 			}
 		}
 		else
@@ -129,11 +127,11 @@ class MyDB
 			if ($config->engine == 'PDO')
 			{
 				$dbConfig = MyDBConfigStruct::fromStd($config);
-				return new MyPDO($dbConfig);
+				$_db = new MyPDO($dbConfig);
 			}
 		}
 
-		return null;
+		return $_db;
 	}
 }
 
