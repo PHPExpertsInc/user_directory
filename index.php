@@ -11,6 +11,25 @@
  * Copyright(c) 2008 Theodore R. Smith
  * License: Creative Commons */
 
+function __autoload($name)
+{
+	if (strpos($name, 'Controller') !== false)
+	{
+		require 'controllers/' . $name . '.inc.php';
+	}
+	else if (strpos($name, 'Manager') !== false)
+	{
+		require 'managers/' . $name . '.inc.php';
+	}
+	else
+	{
+		if (file_exists('lib/' . $name . '.inc.php'))
+		{
+			require 'lib/' . $name . '.inc.php';
+		}
+	}
+}
+ 
 $action = isset($_GET['action']) ? $_GET['action'] : '';
 $view = isset($_GET['view']) ? $_GET['view'] : 'index';
 
@@ -29,9 +48,6 @@ else if ($view == 'search')
 {
     $action = 'search';
 }
-
-require 'controllers/UserController.inc.php';
-require 'controllers/SearchController.inc.php';
 
 // Initialize form variables
 $result = $username = $password = $confirm = $firstName = $lastName = $email = '';

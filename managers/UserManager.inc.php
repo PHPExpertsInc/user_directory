@@ -5,21 +5,6 @@
  * Copyright(c) 2008 Theodore R. Smith
  * License: Creative Commons */
 
-require_once 'lib/MyDatabase.inc.php';
-
-class UserInfoStruct
-{
-	public $userID;
-	public $username;
-	public $firstName;
-	public $lastName;
-	public $email;
-	
-	public function __construct()
-	{
-	}
-}
-
 class UserManager
 {
 	private $userInfo;

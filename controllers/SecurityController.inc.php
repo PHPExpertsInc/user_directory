@@ -23,6 +23,6 @@ class SecurityController
 		{
 			header('Location: http://' . $_SERVER['HTTP_HOST'] . '/user_directory/');
 			throw new Exception('User is not logged in', UserManager::NOT_LOGGED_IN);
-		}		
+		}
 	}
 }

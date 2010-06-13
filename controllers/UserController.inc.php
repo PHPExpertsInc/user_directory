@@ -5,9 +5,6 @@
  * Copyright(c) 2008 Theodore R. Smith
  * License: Creative Commons */
 
-require_once 'controllers/SecurityController.inc.php';
-require_once 'managers/UserManager.inc.php';
-
 class UserController
 {
     /**
