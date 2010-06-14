@@ -47,7 +47,6 @@ class SearchController implements ControllerCommand
    	public function execute($action)
    	{
    		$data = false;
-
 		if ($action == 'search')
 		{
 			$data['users'] = $this->search();

@@ -142,7 +142,6 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 	 * Tests UserController->browse()
 	 * 
 	 * @covers UserController::browse
-	 * @covers UserController::ensureHasAccess
 	 */
 	public function testBrowse()
 	{
@@ -182,7 +181,6 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 	 * Tests UserController->editProfile()
 	 * 
 	 * @covers UserController::editProfile
-	 * @covers UserController::ensureHasAccess
 	 */
 	public function testEditProfile()
 	{
@@ -227,5 +225,64 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 		$_POST['password'] = $_POST['confirm'];
 		$this->assertSame(UserManager::UPDATED_PROFILE, $this->UserController->editProfile(), 'did not work with correct input');
 	}
-}
+	
+	/**
+	 * @covers UserController::execute
+	 */
+	public function testHooksIntoControllerCommandPattern()
+	{
+		$this->assertFalse($this->UserController->execute('non-existing action'));
+	}
+	
+	/**
+	 * @covers UserController::execute
+	 */
+	public function testHandlesRegisterAction()
+	{
+		$data = $this->UserController->execute('register');
+		$this->assertType('array', $data);
+	}
+	
+	/**
+	 * @covers UserController::execute
+	 */
+	public function testHandlesLoginAction()
+	{
+		$data = $this->UserController->execute('login');
+		$this->assertType('array', $data);
+		$this->assertEquals(UserManager::LOGGED_IN, $data['login_status']);
+	}
+	
+	/**
+	 * @covers UserController::execute
+	 */
+	public function testHandlesBrowseAction()
+	{
+		$this->UserController->login();
+		$data = $this->UserController->execute('browse');
+		$this->assertType('array', $data);
+		$this->assertFalse(empty($data['users']));
+		$this->assertTrue($data['users'][0]->username == $_POST['username']);
+	}
+	
+	/**
+	 * @covers UserController::execute
+	 */
+	public function testHandlesEditProfileAction()
+	{
+		$this->UserController->login();
+		$data = $this->UserController->execute('edit_profile');
 
+		$this->assertType('array', $data);
+		$this->assertTrue(UserManager::UPDATED_PROFILE == $data['registration_status']);
+		
+	}
+	
+	/**
+	 * @covers UserController::execute
+	 */
+	public function testHandlesLogoutAction()
+	{
+		$data = $this->UserController->execute('logout');
+	}
+}

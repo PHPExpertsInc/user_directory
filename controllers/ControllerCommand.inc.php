@@ -7,8 +7,12 @@ interface ControllerCommand
 
 class ControllerCommandFactory
 {
-	private function __construct() { }
+	const ERROR_INVALID_ACTION = 601;
 	
+	// @codeCoverageIgnoreStart
+	private function __construct() { }
+	// @codeCoverageIgnoreStop
+
 	public static function execute($action)
 	{
 		if ($action == '') { return null; }
@@ -22,6 +26,6 @@ class ControllerCommandFactory
 			}
 		}
 
-		throw new Exception('No implementation found for ' . $action);
+		throw new Exception('No implementation found for ' . $action, self::ERROR_INVALID_ACTION);
 	}
 }

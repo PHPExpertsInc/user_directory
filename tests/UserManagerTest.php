@@ -1,5 +1,6 @@
 <?php
 
+require_once 'lib/UserInfoStruct.inc.php';
 require_once 'managers/UserManager.inc.php';
 
 require_once 'PHPUnit/Framework/TestCase.php';
@@ -73,20 +74,6 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 	 * Constructs the test case.
 	 */
 	public function __construct() {}
-
-	/**
-	 * Tests UserInfoStruct->__construct()
-	 *
-	 * @covers UserInfoStruct->__construct
-	 */
-	public function test_userInfoStruct()
-	{
-		$userInfo = new UserInfoStruct;
-		$this->assertTrue(property_exists($userInfo, 'userID'));
-		$this->assertTrue(property_exists($userInfo, 'email'));
-		$this->assertTrue(property_exists($userInfo, 'firstName'));
-		$this->assertTrue(property_exists($userInfo, 'lastName'));
-	}
 
 	/**
 	 * Tests UserManager->__construct()

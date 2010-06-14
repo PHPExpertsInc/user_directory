@@ -131,5 +131,27 @@ class SearchControllerTest extends PHPUnit_Framework_TestCase {
 		$this->SearchController->search();
 		$this->assertEquals('username=&firstName=Ted&lastName=&email=', $this->SearchController->getSearchQueryString());
 	}
+
+	/**
+	 * @covers SearchController::execute
+	 */
+	public function testHooksIntoControllerCommandPattern()
+	{
+		$this->assertFalse($this->SearchController->execute('non-existing action'));
+	}
+
+
+	/**
+	 * @covers SearchController::execute
+	 */
+	public function testHandlesSearchAction()
+	{
+		$_REQUEST['username'] = $_POST['username'];
+		$userController = new UserController;
+		$userController->login();
+
+		$data = $this->SearchController->execute('search');
+		$this->assertType('array', $data);
+	}
 }
 

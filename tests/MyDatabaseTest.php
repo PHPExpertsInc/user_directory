@@ -98,8 +98,6 @@ class MyDBHelperFunctionsTest extends PHPUnit_Framework_TestCase
 
 	/**
 	 * Tests queryDB()
-	 * 
-	 * @covers getQueryDB
 	 */
 	public function testQueryDb()
 	{
@@ -133,7 +131,7 @@ class MyDBTest extends PHPUnit_Framework_TestCase
 	/**
 	 * @covers MyDB::loadDB
 	 */
-	public function testLoadAPdoDB()
+	public function testLoadAPdoDb()
 	{
 		$config = MyDatabaseTest::getPDOConfig();
 		$this->assertType('MyPDO', MyDB::loadDB($config));

@@ -4,8 +4,8 @@ require_once 'PHPUnit/Framework/TestSuite.php';
 
 require_once 'lib/MyDB.inc.php';
 require_once 'lib/UserInfoStruct.inc.php';
-require_once 'lib/ViewCommandFactory.inc.php';
 
+require_once 'tests/ControllerCommandTest.php';
 require_once 'tests/MyDatabaseTest.php';
 require_once 'tests/SearchControllerTest.php';
 require_once 'tests/SecurityControllerTest.php';
@@ -26,6 +26,7 @@ class UserDirectoryTests extends PHPUnit_Framework_TestSuite {
 		ob_start();
 		$this->setName('UserDirectoryTests');
 		$this->addTestSuite('MyDatabaseTest');
+		$this->addTestSuite('ControllerCommandTest');
 		$this->addTestSuite('UserManagerTest');
 		$this->addTestSuite('SecurityControllerTest');
 		$this->addTestSuite('UserControllerTest');
