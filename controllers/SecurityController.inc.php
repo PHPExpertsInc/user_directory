@@ -1,6 +1,6 @@
 <?php
 
-class SecurityController
+class SecurityController implements ControllerCommand
 {
 	// Singleton
 	// @codeCoverageIgnoreStart

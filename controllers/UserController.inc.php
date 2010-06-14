@@ -5,7 +5,7 @@
  * Copyright(c) 2008 Theodore R. Smith
  * License: Creative Commons */
 
-class UserController implements ViewCommandI
+class UserController implements ControllerCommand
 {
     /**
      * @var UserManager

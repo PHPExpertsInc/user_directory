@@ -61,7 +61,7 @@ if (SecurityController::isLoggedIn())
 	$login_status = UserManager::LOGGED_IN;
 }
 
-$data = ViewCommandFactory::execute($action);
+$data = ControllerCommandFactory::execute($action);
 
 // Extract $data to global namespace.
 if (!is_null($data)) { extract($data); }

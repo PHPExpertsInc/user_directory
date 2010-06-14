@@ -5,7 +5,7 @@
  * Copyright(c) 2008 Theodore R. Smith
  * License: Creative Commons */
 
-class SearchController implements ViewCommandI
+class SearchController implements ControllerCommand
 {
 	private $userManager;
 	private $searchParams;

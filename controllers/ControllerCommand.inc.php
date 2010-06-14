@@ -1,11 +1,11 @@
 <?php
 
-interface ViewCommandI
+interface ControllerCommand
 {
 	public function execute($action);
 }
 
-class ViewCommandFactory
+class ControllerCommandFactory
 {
 	private function __construct() { }
 	
