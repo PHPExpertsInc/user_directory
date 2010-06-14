@@ -11,6 +11,10 @@
  * Copyright(c) 2008 Theodore R. Smith
  * License: Creative Commons */
 
+// Change root directory
+chdir('..');
+ 
+// Required for queryDB()
 require 'lib/MyDB.inc.php';
  
 function __autoload($name)
