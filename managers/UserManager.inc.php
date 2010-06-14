@@ -101,27 +101,17 @@ class UserManager
         $pdo->beginTransaction();
 
         // 4. Looks good to go; let's insert to the DB.
-        try
-        {
-            // 4.b. Let's salt the password for even better security.
-            // NOTE: Storing passwords as plaintext is *evil*.
-            $password = substr($password, 0, 2) . $password;
-            $q2s = 'INSERT INTO Users (username, password) VALUES (?, PASSWORD(?))';
-            // The only way this could fail is due to unexpected SQL queries; assume success.
-            queryDB($q2s, array($username, $password));
-            
-            // 5. Insert their profile.
-            $userID = $pdo->lastInsertId();
-            $q3s = 'INSERT INTO Profiles (userID, firstName, lastName, email) VALUES (' . $userID . ', ?, ?, ?)';
-            queryDB($q3s, array($firstName, $lastName, $email));
-        }
-        catch(Exception $e)
-        {
-            // All we can really do is rollback the transaction and rethrow it.
-            $pdo->rollback();
-            
-            throw $e;
-        }
+        // a. Let's salt the password for even better security.
+        // NOTE: Storing passwords as plaintext is *evil*.
+        $password = substr($password, 0, 2) . $password;
+        $q2s = 'INSERT INTO Users (username, password) VALUES (?, PASSWORD(?))';
+        // b. The only way this could fail is due to unexpected SQL queries; assume success.
+        queryDB($q2s, array($username, $password));
+        
+        // 5. Insert their profile.
+        $userID = $pdo->lastInsertId();
+        $q3s = 'INSERT INTO Profiles (userID, firstName, lastName, email) VALUES (' . $userID . ', ?, ?, ?)';
+        queryDB($q3s, array($firstName, $lastName, $email));
         
         // If we have gotten this far, it means that we were successful; woohoo!
         // 6. Commit the transaction to the database.
