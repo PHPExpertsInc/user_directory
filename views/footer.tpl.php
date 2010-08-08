@@ -20,7 +20,7 @@ global $login_status, $registration_status;
 if (isset($login_status) && $login_status == UserManager::LOGGED_IN)
 {
 ?>
-                <li><a href="?action=edit_profile" accesskey="t">Edit Profile</a></li>
+                <li><a href="?action=edit_profile" accesskey="e">Edit Profile</a></li>
                 <li><a href="?action=logout" accesskey="l">Logout</a></li>
 <?php
 }

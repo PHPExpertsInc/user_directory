@@ -6,7 +6,7 @@
  * License: Creative Commons */
 
 $page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 0;
-$items_per_page = isset($_GET['page']) && $_GET['page'] == 'all' ? 10000000 : 5;
+$items_per_page = isset($_GET['page']) && $_GET['page'] == 'all' ? 10000000 : 10;
 $searchQueryString = isset($searchQueryString) ? '&amp;' . $searchQueryString : '';
 $users_count = count($users);
 

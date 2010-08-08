@@ -5,6 +5,8 @@ form.classyform ul li { list-style: none; padding: 2px 0 2px 0; }
 form.classyform ol { margin: 0; }
 
 /* Sortable tables */
+table.sortable { font-family: sans-serif; }
+table.sortable td { padding: 0 15px 0 15px; }
 table.sortable thead
 {
     background-color: #eee;
