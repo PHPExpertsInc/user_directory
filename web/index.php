@@ -1,15 +1,19 @@
 <?php
-/************************************
- * User Directory Live Tutorial
- * Goal: Create a PHP site that has user registration.
- * User details should include first and last name and email.
- * Login, forget password, and update your account. When you
- * are logged in you should be able to search or list users
- * with result pagination. The user should be able to sort
- * results by any of the fields.
- *
- * Copyright(c) 2008 Theodore R. Smith
- * License: Creative Commons */
+/**
+* User Directory
+*   Copyright © 2008 Theodore R. Smith <theodore@phpexperts.pro>
+* 
+* The following code is licensed under a modified BSD License.
+* All of the terms and conditions of the BSD License apply with one
+* exception:
+*
+* 1. Every one who has not been a registered student of the "PHPExperts
+*    From Beginner To Pro" course (http://www.phpexperts.pro/) is forbidden
+*    from modifing this code or using in an another project, either as a
+*    deritvative work or stand-alone.
+*
+* BSD License: http://www.opensource.org/licenses/bsd-license.php
+**/
 
 // Change root directory
 chdir('..');
