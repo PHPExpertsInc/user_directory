@@ -15,9 +15,9 @@
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
 
-require_once 'controllers/SearchController.inc.php';
-require_once 'controllers/UserController.inc.php';
-require_once 'tests/SecurityControllerTest.php';
+require_once dirname(__FILE__) . '/../controllers/SearchController.inc.php';
+require_once dirname(__FILE__) . '/../controllers/UserController.inc.php';
+require_once dirname(__FILE__) . '/../tests/SecurityControllerTest.php';
 
 require_once 'PHPUnit/Framework/TestCase.php';
 

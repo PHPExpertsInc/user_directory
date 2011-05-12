@@ -15,8 +15,8 @@
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
 
-require_once 'controllers/UserController.inc.php';
-require_once 'UserManagerTest.php';
+require_once dirname(__FILE__) . '/../controllers/UserController.inc.php';
+require_once dirname(__FILE__) . '/../tests/UserManagerTest.php';
 require_once 'PHPUnit/Framework/TestCase.php';
 
 /**

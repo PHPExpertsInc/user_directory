@@ -14,18 +14,18 @@
 *
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
-
+define('APP_PATH', realpath(dirname(__FILE__) . '/../'));
 require_once 'PHPUnit/Framework/TestSuite.php';
 
-require_once 'lib/MyDB.inc.php';
-require_once 'lib/UserInfoStruct.inc.php';
+require_once APP_PATH . '/lib/MyDB.inc.php';
+require_once APP_PATH . '/lib/UserInfoStruct.inc.php';
 
-require_once 'tests/ControllerCommandTest.php';
-require_once 'tests/MyDatabaseTest.php';
-require_once 'tests/SearchControllerTest.php';
-require_once 'tests/SecurityControllerTest.php';
-require_once 'tests/UserControllerTest.php';
-require_once 'tests/UserManagerTest.php';
+require_once APP_PATH . '/tests/ControllerCommandTest.php';
+require_once APP_PATH . '/tests/MyDatabaseTest.php';
+require_once APP_PATH . '/tests/SearchControllerTest.php';
+require_once APP_PATH . '/tests/SecurityControllerTest.php';
+require_once APP_PATH . '/tests/UserControllerTest.php';
+require_once APP_PATH . '/tests/UserManagerTest.php';
 
 /**
  * Static test suite.

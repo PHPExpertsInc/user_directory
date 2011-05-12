@@ -16,6 +16,7 @@
 **/
 
 require_once 'PHPUnit/Framework/TestCase.php';
+require_once dirname(__FILE__) . '/../lib/MyDB.inc.php';
 
 /**
  * queryDB() test case.
