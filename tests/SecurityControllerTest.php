@@ -15,6 +15,7 @@
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
 
+require_once dirname(__FILE__) . '/../controllers/ControllerCommand.inc.php';
 require_once dirname(__FILE__) . '/../managers/UserManager.inc.php';
 require_once dirname(__FILE__) . '/../controllers/SecurityController.inc.php';
 
@@ -45,6 +46,7 @@ class SecurityControllerTest extends PHPUnit_Framework_TestCase {
 	protected function tearDown()
 	{
 		session_destroy();
+		header_remove();
 		parent::tearDown();
 	}
 	

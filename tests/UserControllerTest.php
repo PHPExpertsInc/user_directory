@@ -59,6 +59,7 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 	{
 		if (session_id() != '') { session_destroy(); }
 		$this->UserController = null;
+		header_remove();
 
 		parent::tearDown ();
 	}

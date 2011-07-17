@@ -55,6 +55,7 @@ class SearchControllerTest extends PHPUnit_Framework_TestCase {
 	{
 		if (session_id() != '') { session_destroy(); }
 		$this->SearchController = null;
+		header_remove();
 		
 		parent::tearDown();
 	}
