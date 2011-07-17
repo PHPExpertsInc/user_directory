@@ -1,7 +1,7 @@
 <?php
 /**
 * User Directory
-*   Copyright © 2008 Theodore R. Smith <theodore@phpexperts.pro>
+*   Copyright(c) 2008 Theodore R. Smith <theodore@phpexperts.pro>
 * 
 * The following code is licensed under a modified BSD License.
 * All of the terms and conditions of the BSD License apply with one
@@ -46,7 +46,7 @@ class ControllerCommandTest extends PHPUnit_Framework_TestCase
 	public function testExecuteValidCommand()
 	{
 		$data = ControllerCommandFactory::execute('login');
-		$this->assertType('array', $data);
+		$this->assertInternalType('array', $data);
 		$this->assertTrue(isset($data['login_status']));
 		$this->assertEquals($data['login_status'], false);
 	}

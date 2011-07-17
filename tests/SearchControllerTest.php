@@ -1,7 +1,7 @@
 <?php
 /**
 * User Directory
-*   Copyright © 2008 Theodore R. Smith <theodore@phpexperts.pro>
+*   Copyright(c) 2008, 2011 Theodore R. Smith <theodore@phpexperts.pro>
 * 
 * The following code is licensed under a modified BSD License.
 * All of the terms and conditions of the BSD License apply with one
@@ -124,8 +124,8 @@ class SearchControllerTest extends PHPUnit_Framework_TestCase {
 		// 2c. Test with good input
 		$_REQUEST['username'] = $old_user;
 		$users = $this->SearchController->search();
-		$this->assertType('array', $users);
-		$this->assertType('UserInfoStruct', $users[0]);
+		$this->assertInternalType('array', $users);
+		$this->assertInstanceOf('UserInfoStruct', $users[0]);
 	}
 
 	/**
@@ -167,7 +167,7 @@ class SearchControllerTest extends PHPUnit_Framework_TestCase {
 		$userController->login();
 
 		$data = $this->SearchController->execute('search');
-		$this->assertType('array', $data);
+		$this->assertInternalType('array', $data);
 	}
 }
 

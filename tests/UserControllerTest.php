@@ -1,7 +1,7 @@
 <?php
 /**
 * User Directory
-*   Copyright © 2008 Theodore R. Smith <theodore@phpexperts.pro>
+*   Copyright(c) 2008 Theodore R. Smith <theodore@phpexperts.pro>
 * 
 * The following code is licensed under a modified BSD License.
 * All of the terms and conditions of the BSD License apply with one
@@ -34,7 +34,7 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 	{
 		$this->assertTrue(session_id() != '', 'session was not created after successful registration');
 		$this->assertArrayHasKey('userInfo', $_SESSION, 'userInfo is not set in $_SESSION');
-		$this->assertType('UserInfoStruct', $_SESSION['userInfo'], '$_SESSION[\'userInfo\'] is not a UserInfoStruct object');
+		$this->assertInstanceOf('UserInfoStruct', $_SESSION['userInfo'], '$_SESSION[\'userInfo\'] is not a UserInfoStruct object');
 	}
 	
 	/**
@@ -189,7 +189,7 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 
 		$users = $this->UserController->browse();
 		$lastRegistered = UserManagerTest::getLastRegistered();
-		$this->assertType('array', $users, 'result was not an array');
+		$this->assertInternalType('array', $users, 'result was not an array');
 		$this->assertTrue(print_r($lastRegistered, true) == print_r($users[0], true), 'returned incorrect results');
 	}
 	
@@ -256,7 +256,7 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 	public function testHandlesRegisterAction()
 	{
 		$data = $this->UserController->execute('register');
-		$this->assertType('array', $data);
+		$this->assertInternalType('array', $data);
 	}
 	
 	/**
@@ -265,7 +265,7 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 	public function testHandlesLoginAction()
 	{
 		$data = $this->UserController->execute('login');
-		$this->assertType('array', $data);
+		$this->assertInternalType('array', $data);
 		$this->assertEquals(UserManager::LOGGED_IN, $data['login_status']);
 	}
 	
@@ -276,7 +276,7 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 	{
 		$this->UserController->login();
 		$data = $this->UserController->execute('browse');
-		$this->assertType('array', $data);
+		$this->assertInternalType('array', $data);
 		$this->assertFalse(empty($data['users']));
 		$this->assertTrue($data['users'][0]->username == $_POST['username']);
 	}
@@ -289,7 +289,7 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 		$this->UserController->login();
 		$data = $this->UserController->execute('edit_profile');
 
-		$this->assertType('array', $data);
+		$this->assertInternalType('array', $data);
 		$this->assertTrue(UserManager::UPDATED_PROFILE == $data['registration_status']);
 		
 	}

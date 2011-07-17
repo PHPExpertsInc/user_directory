@@ -1,7 +1,7 @@
 <?php
 /**
 * User Directory
-*   Copyright © 2008 Theodore R. Smith <theodore@phpexperts.pro>
+*   Copyright(c) 2008 Theodore R. Smith <theodore@phpexperts.pro>
 * 
 * The following code is licensed under a modified BSD License.
 * All of the terms and conditions of the BSD License apply with one
@@ -172,7 +172,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 		
 		$lastRegistered = self::getLastRegistered();
 		$userInfo = $this->UserManager->getUserInfo();
-		$this->assertType('UserInfoStruct', $userInfo);
+		$this->assertInstanceOf('UserInfoStruct', $userInfo);
 
 		$this->assertTrue(print_r($lastRegistered, true) == print_r($userInfo, true), 'getUserInfo() is not identical to last registration');
 
@@ -205,7 +205,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue(is_array($info), 'UserInfo is not an array');
 		$count = count($info);
 		$this->assertTrue($count > 0, 'UserInfo is empty');
-		$this->assertType('UserInfoStruct', $info[$count - 1], 'Last UserInfo item is not an UserInfoStruct object');
+		$this->assertInstanceOf('UserInfoStruct', $info[$count - 1], 'Last UserInfo item is not an UserInfoStruct object');
 		$this->assertTrue(print_r($lastRegistered, true) == print_r($info[$count - 1], true), 'Last UserInfo item is not the same as the registered user');
 	}
 	

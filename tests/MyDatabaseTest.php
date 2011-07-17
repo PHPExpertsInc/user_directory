@@ -1,7 +1,7 @@
 <?php
 /**
 * User Directory
-*   Copyright © 2008 Theodore R. Smith <theodore@phpexperts.pro>
+*   Copyright(c) 2008 Theodore R. Smith <theodore@phpexperts.pro>
 * 
 * The following code is licensed under a modified BSD License.
 * All of the terms and conditions of the BSD License apply with one
@@ -104,12 +104,12 @@ class MyDBHelperFunctionsTest extends PHPUnit_Framework_TestCase
 		// (change current directory to be able to find config path)
 		chdir(dirname(__FILE__) . '/..');
 		$pdo = getDBHandler();
-		$this->assertType('MyDBI', $pdo, 'PDO object is not of type PDO');;
+		$this->assertInstanceOf('MyDBI', $pdo, 'PDO object is not of type PDO');;
 
 		// Test with custom config
 		$config = MyDatabaseTest::getPDOConfig();
 		$new_pdo = getDBHandler($config);
-		$this->assertType('MyDBI', $new_pdo, 'PDO object is not of type PDO');;
+		$this->assertInstanceOf('MyDBI', $new_pdo, 'PDO object is not of type PDO');;
 	}
 
 	/**
@@ -150,7 +150,7 @@ class MyDBTest extends PHPUnit_Framework_TestCase
 	public function testLoadAPdoDb()
 	{
 		$config = MyDatabaseTest::getPDOConfig();
-		$this->assertType('MyPDO', MyDB::loadDB($config));
+		$this->assertInstanceOf('MyPDO', MyDB::loadDB($config));
 	}
 
 	/**
@@ -159,7 +159,7 @@ class MyDBTest extends PHPUnit_Framework_TestCase
 	public function testLoadAReplicatedPdoDb()
 	{
 		$config = MyDatabaseTest::getReplicatedPDOConfig();
-		$this->assertType('MyReplicatedPDO', MyDB::loadDB($config));
+		$this->assertInstanceOf('MyReplicatedPDO', MyDB::loadDB($config));
 	}
 }
 
@@ -192,7 +192,7 @@ class MyPDOTest extends PHPUnit_Framework_TestCase
 		$GLOBALS['user'] = $user;
 
 		$qs = 'INSERT INTO Users (username, password) VALUES (?, ?)';
-		$this->assertType('PDOStatement', $this->MyPDO->query($qs, array($user['name'], $user['pass'])));
+		$this->assertInstanceOf('PDOStatement', $this->MyPDO->query($qs, array($user['name'], $user['pass'])));
 	}
 
 	/**
@@ -203,10 +203,10 @@ class MyPDOTest extends PHPUnit_Framework_TestCase
 		$user = $GLOBALS['user'];
 		$qs = 'SELECT * FROM Users WHERE username=?';
 		$stmt = $this->MyPDO->query($qs, array($user['name']));
-		$this->assertType('PDOStatement', $stmt);
+		$this->assertInstanceOf('PDOStatement', $stmt);
 
 		$userInfo = $stmt->fetchObject();
-		$this->assertType('stdClass', $userInfo);
+		$this->assertInstanceOf('stdClass', $userInfo);
 		$this->assertObjectHasAttribute('username', $userInfo);
 		$this->assertEquals($user['name'], $userInfo->username);
 	}
@@ -221,7 +221,7 @@ class MyPDOTest extends PHPUnit_Framework_TestCase
 		$GLOBALS['users'] = $user['pass'];
 
 		$qs = 'UPDATE Users SET password=? WHERE username=?';
-		$this->assertType('PDOStatement', $this->MyPDO->query($qs, array($user['name'], $user['pass'])));
+		$this->assertInstanceOf('PDOStatement', $this->MyPDO->query($qs, array($user['name'], $user['pass'])));
 
 		// Verify
 		$this->testCanReadData();
@@ -238,7 +238,7 @@ class MyPDOTest extends PHPUnit_Framework_TestCase
 		$this->MyPDO->query($qs, array($user['name']));
 
 		$userInfo = $this->MyPDO->fetchArray();
-		$this->assertType('array', $userInfo);
+		$this->assertInternalType('array', $userInfo);
 		$this->assertEquals($user['name'], $userInfo['username']);
 	}
 
@@ -253,7 +253,7 @@ class MyPDOTest extends PHPUnit_Framework_TestCase
 		$this->MyPDO->query($qs, array($user['name']));
 
 		$userInfo = $this->MyPDO->fetchObject();
-		$this->assertType('stdClass', $userInfo);
+		$this->assertInstanceOf('stdClass', $userInfo);
 		$this->assertEquals($user['name'], $userInfo->username);
 	}
 }
