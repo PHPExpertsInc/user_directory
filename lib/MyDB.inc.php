@@ -1,7 +1,7 @@
 <?php
 /**
 * User Directory
-*   Copyright © 2008 Theodore R. Smith <theodore@phpexperts.pro>
+*   Copyright(c) 2008 Theodore R. Smith <theodore@phpexperts.pro>
 * 
 * The following code is licensed under a modified BSD License.
 * All of the terms and conditions of the BSD License apply with one
@@ -46,7 +46,7 @@ class MyDBConfigStruct
 	{
 		$dbConfig = new MyDBConfigStruct;
 		$params = get_object_vars($config);
-		
+
 		unset($config);
 
 		foreach ($params as $param => $value)
@@ -220,19 +220,16 @@ abstract class MyReplicatedDB implements MyDBI
  */
 class MyPDO implements MyDBI
 {
-	/** 
-	 * @var PDO
-c	 */
+	/** @var PDO **/
 	private $pdo;
-	/** 
-	 * @var PDOStatement
-	*/
+
+	/** @var PDOStatement **/
 	private $stmt;
 
 	public function __construct(MyDBConfigStruct $config)
 	{
 		$dsn = sprintf('mysql:dbname=%s;host=%s;port=%d;', $config->database, $config->hostname, $config->port);
-		$this->pdo = new PDO($dsn, $config->username, $config->password);		
+		$this->pdo = new PDO($dsn, $config->username, $config->password);	
 	}
 	
 	// Accessors

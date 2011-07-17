@@ -138,7 +138,7 @@ class MyDBHelperFunctionsTest extends PHPUnit_Framework_TestCase
 		
 		// Test select w/ malformed SQL
 		$this->setExpectedException('MyDBException');
-		$stmt = queryDB('SELECT * FROM usersasdf WHERE username=?', array($username));
+		$stmt = @queryDB('SELECT * FROM usersasdf WHERE username=?', array($username));
 	}
 }
 
