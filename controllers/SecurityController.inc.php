@@ -17,7 +17,7 @@
 
 class SecurityController implements ControllerCommand
 {
-	public static function isLoggedIn()
+	public function isLoggedIn()
 	{
 		if (isset($_SESSION['userInfo']) && $_SESSION['userInfo'] instanceof UserInfoStruct)
 		{
@@ -27,17 +27,17 @@ class SecurityController implements ControllerCommand
 		return false;
 	}
 
-	public static function ensureHasAccess()
+	public function ensureHasAccess()
 	{
 		if (self::isLoggedIn() === false)
 		{
 			header('Location: http://' . $_SERVER['HTTP_HOST'] . '/user_directory/');
-			throw new Exception('User is not logged in', UserManager::NOT_LOGGED_IN);
+			throw new RuntimeException('User is not logged in', UserManager::NOT_LOGGED_IN);
 		}
 	}
 
-   	public function execute($action)
-   	{
-   		return false;
+	public function execute($action)
+	{
+		return false;
 	}
 }

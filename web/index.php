@@ -64,10 +64,12 @@ $result = $username = $password = $confirm = $firstName = $lastName = $email = '
 
 session_start();
 
-if (SecurityController::isLoggedIn())
+$guard = new SecurityController;
+if ($guard->isLoggedIn())
 {
 	$login_status = UserManager::LOGGED_IN;
 }
+unset($guard);
 
 $data = ControllerCommandFactory::execute($action);
 

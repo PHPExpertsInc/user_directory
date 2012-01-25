@@ -24,7 +24,11 @@ require_once 'PHPUnit/Framework/TestCase.php';
 /**
  * SecurityController test case.
  */
-class SecurityControllerTest extends PHPUnit_Framework_TestCase {
+class SecurityControllerTest extends PHPUnit_Framework_TestCase
+{
+	/** @var SecurityController **/
+	protected $guard;
+
 	public static function simulateLogin()
 	{
 		$_SESSION['userInfo'] = new UserInfoStruct;
@@ -38,6 +42,8 @@ class SecurityControllerTest extends PHPUnit_Framework_TestCase {
 		$_SERVER['HTTP_HOST'] = 'localhost';
 		session_start();
 		parent::setUp();
+
+		$this->guard = new SecurityController;
 	}
 	
 	/**
@@ -58,35 +64,35 @@ class SecurityControllerTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Tests SecurityController::isLoggedIn()
+	 * Tests $this->guard->isLoggedIn()
 	 * 
-	 * @covers SecurityController::isLoggedIn
+	 * @covers $this->guard->isLoggedIn
 	 */
 	public function testIsLoggedIn()
 	{
 		// 1. Test with no input
-		$this->assertFalse(SecurityController::isLoggedIn(), 'worked with no input.');
+		$this->assertFalse($this->guard->isLoggedIn(), 'worked with no input.');
 		
 		// 2. Test with bad input
 		$_SESSION['userInfo'] = uniqid();
-		$this->assertFalse(SecurityController::isLoggedIn(), 'worked with bad input.');
+		$this->assertFalse($this->guard->isLoggedIn(), 'worked with bad input.');
 		
 		// 3. Test with good input
 		self::simulateLogin();
-		$this->assertTrue(SecurityController::isLoggedIn(), 'didn\'t work with good input.');
+		$this->assertTrue($this->guard->isLoggedIn(), 'didn\'t work with good input.');
 	}
 
 	/**
-	 * Tests SecurityController::ensureHasAccess()
+	 * Tests $this->guard->ensureHasAccess()
 	 * 
-	 * @covers SecurityController::ensureHasAccess
+	 * @covers $this->guard->ensureHasAccess
 	 */
 	public function testEnsureHasAccess()
 	{
 		// 1. Test while not being logged in
 		try
 		{
-			SecurityController::ensureHasAccess();
+			$this->guard->ensureHasAccess();
 			$this->assertTrue(false, 'worked without being logged in.');
 		}
 		catch(Exception $e)
@@ -102,7 +108,7 @@ class SecurityControllerTest extends PHPUnit_Framework_TestCase {
 		
 		// 2. Test while being logged in
 		self::simulateLogin();
-		$this->assertEquals(null, SecurityController::ensureHasAccess());
+		$this->assertEquals(null, $this->guard->ensureHasAccess());
 	}
 	
 }

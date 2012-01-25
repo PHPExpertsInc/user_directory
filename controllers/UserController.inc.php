@@ -22,9 +22,15 @@ class UserController implements ControllerCommand
      */
     private $userManager;
     
-    public function __construct()
+	/** @var SecurityController **/
+	protected $guard;
+
+    public function __construct(SecurityController $guard = null)
     {
         $this->userManager = new UserManager;
+
+		if ($guard === null) { $guard = new SecurityController; }
+		$this->guard = $guard;
     }
     
 	protected function createUserSession()
@@ -92,14 +98,14 @@ class UserController implements ControllerCommand
 
 	public function browse()
 	{
-		SecurityController::ensureHasAccess();
+		$this->guard->ensureHasAccess();
 
 		return $this->userManager->getAllUsers();
 	}
     
     public function editProfile()
     {
-		SecurityController::ensureHasAccess();
+		$this->guard->ensureHasAccess();
 
     	   if (!isset($_POST['profile']))
         {
