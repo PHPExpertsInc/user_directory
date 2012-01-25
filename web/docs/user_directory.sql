@@ -28,7 +28,7 @@ CREATE TABLE `Profiles` (
   UNIQUE KEY `userID` (`userID`),
   KEY `lastName` (`lastName`),
   KEY `email` (`email`),
-  CONSTRAINT `Profiles_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `Profiles_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `Users` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
 --
