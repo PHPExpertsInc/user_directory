@@ -108,7 +108,6 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 	 * Tests UserManager->createProfile()
 	 * 
 	 * @covers UserManager::createProfile
-	 * @expectedException Exception
 	 */
 	public function testCreateProfile()
 	{
