@@ -142,9 +142,6 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 		
 		// Test for duplicate registration
 		$this->assertEquals($this->UserManager->createProfile($ui->username, $ui->password, $ui->password, $ui->firstName, $ui->lastName, $ui->email), UserManager::ERROR_USER_EXISTS, 'Duplicate registration test');
-
-		// Test for duplicate email
-		$this->assertEquals($this->UserManager->createProfile(uniqid(), $ui->password, $ui->password, $ui->firstName, $ui->lastName, $ui->email), UserManager::ERROR_USER_EXISTS, 'Duplicate registration test');
 	}
 	
 	/**
