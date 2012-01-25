@@ -101,7 +101,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 	public function test__construct()
 	{
 		// Test without username
-		$this->UserManager->__construct();
+		$this->assertInstanceOf('UserManager', new UserManager());
 	}
 
 	/**

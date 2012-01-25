@@ -61,13 +61,6 @@ class SearchControllerTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	/**
-	 * Constructs the test case.
-	 */
-	public function __construct()
-	{
-	}
-	
-	/**
 	 * Tests SearchController->__construct()
 	 * 
 	 * @covers SearchController::__construct
@@ -75,7 +68,7 @@ class SearchControllerTest extends PHPUnit_Framework_TestCase {
 	public function test__construct()
 	{
 		// just make sure nothing goes wrong
-		$this->SearchController->__construct();
+		$this->assertInstanceOf('SearchController', new SearchController());
 	}
 
 	/**

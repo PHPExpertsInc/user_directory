@@ -71,7 +71,7 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 	 */
 	public function test__construct()
 	{
-		$this->UserController->__construct();	
+		$this->assertInstanceOf('UserController', new UserController());
 	}
 
 	/**
@@ -300,5 +300,6 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 	public function testHandlesLogoutAction()
 	{
 		$data = $this->UserController->execute('logout');
+		$this->assertEmpty(session_id());
 	}
 }
