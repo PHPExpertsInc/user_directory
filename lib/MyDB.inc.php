@@ -145,6 +145,29 @@ class MyDB
 
 		return null;
 	}
+
+	public static function printQuery($query, $params)
+	{
+		$keys = array();
+
+		# build a regular expression for each parameter
+		foreach ($params as $key => &$value) {
+			if (is_string($key)) {
+				$keys[] = '/:'.$key.'/';
+			} else {
+				$keys[] = '/[?]/';
+			}
+
+            if (is_string($value)) {
+                $value = "'$value'";
+            }
+		}
+
+		$query = preg_replace($keys, $params, $query, 1, $count);
+        if (substr($query, -1) != ';') { $query .= ';'; }
+
+		return $query;
+	}
 }
 
 abstract class MyReplicatedDB implements MyDBI 
