@@ -6,7 +6,7 @@ require_once APP_PATH . '/lib/UserInfoStruct.inc.php';
 //require_once 'MyDB/MyDBTest_Helper.inc.php';
 require_once 'MyDatabaseTest.php';
 
-function __autoload($name)
+function autoload($name)
 {
 	if (strpos($name, 'Controller') !== false)
 	{
@@ -24,6 +24,8 @@ function __autoload($name)
 		}
 	}
 }
+
+spl_autoload_register('autoload');
 
 // Necessary for sessions to work.
 ob_start();
