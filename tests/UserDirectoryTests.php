@@ -14,8 +14,9 @@
 *
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
-define('APP_PATH', realpath(dirname(__FILE__) . '/../'));
+require_once realpath(dirname(__FILE__) . '/../lib/bootstrap.inc.php');
 require_once 'PHPUnit/Framework/TestSuite.php';
+
 
 require_once APP_PATH . '/lib/MyDB.inc.php';
 require_once APP_PATH . '/lib/UserInfoStruct.inc.php';

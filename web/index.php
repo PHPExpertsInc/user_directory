@@ -18,7 +18,7 @@
 // Change root directory
 
 
-require '../lib/autoload.inc.php';
+require '../lib/bootstrap.inc.php';
 
  
 $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);

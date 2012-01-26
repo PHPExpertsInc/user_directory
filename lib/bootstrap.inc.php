@@ -3,8 +3,6 @@ define('APP_PATH', realpath(dirname(__FILE__) . '/../'));
  
 require_once APP_PATH . '/lib/MyDB.inc.php';
 require_once APP_PATH . '/lib/UserInfoStruct.inc.php';
-//require_once 'MyDB/MyDBTest_Helper.inc.php';
-require_once 'MyDatabaseTest.php';
 
 function autoload($name)
 {
