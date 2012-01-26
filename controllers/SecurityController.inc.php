@@ -29,7 +29,7 @@ class SecurityController implements ControllerCommand
 
 	public function ensureHasAccess()
 	{
-		if (self::isLoggedIn() === false)
+		if ($this->isLoggedIn() === false)
 		{
 			header('Location: http://' . $_SERVER['HTTP_HOST'] . '/user_directory/');
 			throw new RuntimeException('User is not logged in', UserManager::NOT_LOGGED_IN);
