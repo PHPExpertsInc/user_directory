@@ -16,29 +16,10 @@
 **/
 
 // Change root directory
-chdir('..');
- 
-// Required for queryDB()
-require 'lib/MyDB.inc.php';
- 
-function __autoload($name)
-{
-	if (strpos($name, 'Controller') !== false)
-	{
-		require 'controllers/' . $name . '.inc.php';
-	}
-	else if (strpos($name, 'Manager') !== false)
-	{
-		require 'managers/' . $name . '.inc.php';
-	}
-	else
-	{
-		if (file_exists('lib/' . $name . '.inc.php'))
-		{
-			require 'lib/' . $name . '.inc.php';
-		}
-	}
-}
+
+
+require '../lib/autoload.inc.php';
+
  
 $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
 $view = isset($_GET['view']) ? $_GET['view'] : 'index';
