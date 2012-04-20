@@ -16,15 +16,17 @@
 **/
 class SearchController implements ControllerCommand
 {
-	private $userManager;
-	private $searchParams;
+	protected $searchParams = array();
 
 	/** @var SecurityController **/
 	protected $guard;
+	/** @var UserManager **/
+	protected $userManager;
 
-	public function __construct(SecurityController $guard = null)
+	public function __construct(SecurityControllerI $guard = null, UserManagerI $userManager = null)
 	{
-		$this->userManager = new UserManager;
+		if ($userManager === null) { $userManager = new UserManager; }
+		$this->userManager = $userManager;
 
 		if ($guard === null) { $guard = new SecurityController; }
 		$this->guard = $guard;
@@ -60,7 +62,7 @@ class SearchController implements ControllerCommand
 			return http_build_query($this->searchParams);
 		}
 		
-	        return null;
+	    return null;
 	}
 
    	public function execute($action)

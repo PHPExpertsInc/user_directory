@@ -15,7 +15,14 @@
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
 
-class SecurityController implements ControllerCommand
+interface SecurityControllerI
+{
+	public function isLoggedIn();
+	public function ensureHasAccess();
+	public function execute($action);
+}
+
+class SecurityController implements ControllerCommand, SecurityControllerI
 {
 	public function isLoggedIn()
 	{

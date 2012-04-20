@@ -15,7 +15,7 @@
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
 
-require_once dirname(__FILE__) . '/../controllers/ControllerCommand.inc.php';
+require_once dirname(__FILE__) . '/../controllers/ControllerCommandFactory.inc.php';
 require_once 'PHPUnit/Framework/TestCase.php';
 
 /**

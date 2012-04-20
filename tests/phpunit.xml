@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phpunit backupGlobals="false"
+         bootstrap="bootstrap.inc.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertWarningsToExceptions="true"
+         forceCoversAnnotation="false"
+         mapTestClassNameToCoveredClassName="true"
+         processIsolation="false"
+         stopOnError="false"
+         stopOnFailure="false"
+         stopOnIncomplete="false"
+         stopOnSkipped="false"
+         syntaxCheck="true"
+         testSuiteLoaderClass="PHPUnit_Runner_StandardTestSuiteLoader"
+         strict="true"
+         verbose="false">
+	<testsuites>
+		<testsuite name="User Direcotry Test Suite">
+			<directory>.</directory>
+		</testsuite>
+	</testsuites>
+<!--
+	<filter>
+		<blacklist>
+			<directory>.</directory>
+			<file>../Market.php</file>
+			<directory>../views</directory>
+			<directory>../../lib</directory>
+		</blacklist>
+	</filter>
+-->
+</phpunit>
+

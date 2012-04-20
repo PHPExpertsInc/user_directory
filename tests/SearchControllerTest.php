@@ -16,9 +16,13 @@
 **/
 
 require_once dirname(__FILE__) . '/../controllers/SearchController.inc.php';
+require_once dirname(__FILE__) . '/../managers/UserManager.inc.php';
+
 require_once dirname(__FILE__) . '/../tests/SecurityControllerTest.php';
-require_once 'SecurityControllerMock.php';
+require_once 'mocks.php';
 require_once 'PHPUnit/Framework/TestCase.php';
+
+
 
 /**
  * SearchController test case.
@@ -45,7 +49,8 @@ class SearchControllerTest extends PHPUnit_Framework_TestCase {
 		$_SERVER['HTTP_HOST'] = 'localhost';
 
 		$this->guard = new SecurityControllerMock;
-		$this->SearchController = new SearchController($this->guard);
+		$userManager = new UserManagerMock;
+		$this->SearchController = new SearchController($this->guard, $userManager);
 	}
 	
 	/**
@@ -82,7 +87,6 @@ class SearchControllerTest extends PHPUnit_Framework_TestCase {
 		// 1a. Simulate a user being logged out.
 		$this->guard->isLoggedIn = false;
 
-		$old_POST = $_POST;
 		$_POST = array();
 
 		try
@@ -102,7 +106,6 @@ class SearchControllerTest extends PHPUnit_Framework_TestCase {
 		}
 		
 		// 2. Test with being logged in
-		$_POST = $old_POST;
 		// 2a. Simulate a user being logged out.
 		$this->guard->isLoggedIn = true;
 
@@ -112,14 +115,13 @@ class SearchControllerTest extends PHPUnit_Framework_TestCase {
 		
 		// 2b. Test with bad input
 		$_POST['search'] = true;
-		$old_user = $_POST['username'];
 		$_POST['username'] = uniqid();
 		$_REQUEST = $_POST;
 		
 		$this->assertNull($this->SearchController->search(), 'worked with bad input.');
 		
 		// 2c. Test with good input
-		$_REQUEST['username'] = $old_user;
+		$_REQUEST['username'] = 'testuser';
 		$users = $this->SearchController->search();
 		$this->assertInternalType('array', $users);
 		$this->assertInstanceOf('UserInfoStruct', $users[0]);
@@ -131,7 +133,7 @@ class SearchControllerTest extends PHPUnit_Framework_TestCase {
 	public function testGetSearchQueryString()
 	{
 		// 1. Test in an improper context.
-		$this->assertNull($this->SearchController->getSearchQueryString());
+		$this->assertEmpty($this->SearchController->getSearchQueryString());
 
 		// 2. Test in a proper context.
 		$_GET['page'] = 1;
@@ -139,7 +141,7 @@ class SearchControllerTest extends PHPUnit_Framework_TestCase {
 		$_POST['firstName'] = 'Ted';
 
 		$this->SearchController->search();
-		$this->assertEquals('username=&firstName=Ted&lastName=&email=', $this->SearchController->getSearchQueryString());
+		$this->assertEquals('username=testuser&firstName=Ted', $this->SearchController->getSearchQueryString());
 	}
 
 	/**

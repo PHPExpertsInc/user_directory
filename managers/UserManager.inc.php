@@ -15,7 +15,18 @@
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
 
-class UserManager
+interface UserManagerI
+{
+	public function setUsername($username);
+	public function getUserInfo();
+	public function createProfile($username, $password, $confirm, $firstName, $lastName, $email);
+	public function updateProfile($username, $password, $confirm, $firstName, $lastName, $email);
+	public function validatePassword($password);
+	public function searchUsers(array $searchParams);
+	public function getAllUsers();
+}
+
+class UserManager implements UserManagerI
 {
 	private $userInfo;
 

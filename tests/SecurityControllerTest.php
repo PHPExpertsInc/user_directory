@@ -15,6 +15,7 @@
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
 
+require_once dirname(__FILE__) . '/../lib/UserInfoStruct.inc.php';
 require_once dirname(__FILE__) . '/../controllers/ControllerCommand.inc.php';
 require_once dirname(__FILE__) . '/../managers/UserManager.inc.php';
 require_once dirname(__FILE__) . '/../controllers/SecurityController.inc.php';
@@ -40,6 +41,7 @@ class SecurityControllerTest extends PHPUnit_Framework_TestCase
 	protected function setUp()
 	{
 		$_SERVER['HTTP_HOST'] = 'localhost';
+		//ob_start();
 		session_start();
 		parent::setUp();
 
