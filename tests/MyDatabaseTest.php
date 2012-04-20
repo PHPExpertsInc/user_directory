@@ -46,11 +46,7 @@ class MyDatabaseTest extends PHPUnit_Framework_TestSuite
 	public static function getPDOConfig()
 	{
 		$config = new stdClass;
-		$config->engine = 'PDO';
-		$config->hostname = 'localhost';
-		$config->username = 'ud_tester';
-		$config->password = 'PHxhu6u6-)';
-		$config->database = 'TEST_user_directory';		
+		$config->engine = 'Mock';
 		
 		return $config;
 	}

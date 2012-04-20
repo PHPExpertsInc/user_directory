@@ -127,23 +127,22 @@ class MyDB
 
 		$useReplication = isset($config->useReplication) ? $config->useReplication : false;
 
+		$className = '';
 		if ($useReplication)
 		{
-			if ($config->engine == 'PDO')
-			{
-				return new MyReplicatedPDO($config);
-			}
+			$className = 'MyReplicated' . $config->engine;
 		}
 		else
 		{
-			if ($config->engine == 'PDO')
-			{
-				$dbConfig = MyDBConfigStruct::fromStd($config);
-				return new MyPDO($dbConfig);
-			}
+			$className = 'MyDB_Engine_' . $config->engine;
 		}
 
-		return null;
+		if (!class_exists($className))
+		{
+			throw new MyDBException('database.config: Could not find the DB Engine ' . $className . '.', MyDBException::NO_DB_ENGINE);
+		}
+
+		return new $className($dbConfig);
 	}
 
 	public static function printQuery($query, $params)
@@ -241,7 +240,7 @@ abstract class MyReplicatedDB implements MyDBI
 /**
  * MyDB interface for PDO 
  */
-class MyPDO implements MyDBI
+class My_Engine_PDO implements MyDBI
 {
 	/** @var PDO **/
 	private $pdo;

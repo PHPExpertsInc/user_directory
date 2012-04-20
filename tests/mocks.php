@@ -15,6 +15,10 @@
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
 
+require_once dirname(__FILE__) . '/../controllers/SearchController.inc.php';
+require_once dirname(__FILE__) . '/../controllers/SecurityController.inc.php';
+require_once dirname(__FILE__) . '/../managers/UserManager.inc.php';
+
 class SecurityControllerMock implements SecurityControllerI
 {
 	public $isLoggedIn = true;
@@ -87,5 +91,47 @@ class UserManagerMock implements UserManagerI
 	public function getAllUsers()
 	{
 		throw new Exception("Hit " . __METHOD__);
+	}
+}
+
+class MyDB_Engine_Mock implements MyDBI
+{
+	// Basic SQL functions
+	public function query($sql, array $params = null)
+	{
+		throw new Exception('Hit ' . __METHOD__);
+	}
+
+	public function fetchArray()
+	{
+		throw new Exception('Hit ' . __METHOD__);
+	}
+
+	public function fetchObject($objectType = 'stdClass')
+	{
+		throw new Exception('Hit ' . __METHOD__);
+	}
+
+	
+	// Transactional SQL functions
+	public function beginTransaction()
+	{
+		throw new Exception('Hit ' . __METHOD__);
+	}
+
+	public function commit()
+	{
+		throw new Exception('Hit ' . __METHOD__);
+	}
+
+	public function rollback()
+	{
+		throw new Exception('Hit ' . __METHOD__);
+	}
+	
+	// Write SQL functions
+	public function lastInsertId()
+	{
+		throw new Exception('Hit ' . __METHOD__);
 	}
 }

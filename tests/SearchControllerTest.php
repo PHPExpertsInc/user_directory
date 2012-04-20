@@ -15,11 +15,7 @@
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
 
-require_once dirname(__FILE__) . '/../controllers/SearchController.inc.php';
-require_once dirname(__FILE__) . '/../managers/UserManager.inc.php';
-
 require_once dirname(__FILE__) . '/../tests/SecurityControllerTest.php';
-require_once 'mocks.php';
 require_once 'PHPUnit/Framework/TestCase.php';
 
 
@@ -137,6 +133,8 @@ class SearchControllerTest extends PHPUnit_Framework_TestCase {
 
 		// 2. Test in a proper context.
 		$_GET['page'] = 1;
+		$_REQUEST['username'] = 'testuser';
+		$_POST['username'] = 'testuser';
 		$_REQUEST['firstName'] = 'Ted';
 		$_POST['firstName'] = 'Ted';
 
