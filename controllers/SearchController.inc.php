@@ -39,11 +39,15 @@ class SearchController implements ControllerCommand
 			return false;
 		}
 
-		/* --- Filter user input --- */
-		$searchParams['username'] = isset($_REQUEST['username']) ? strip_tags($_REQUEST['username']) : '';
-		$searchParams['firstName'] = isset($_REQUEST['firstName']) ? strip_tags($_REQUEST['firstName']) : '';
-		$searchParams['lastName'] = isset($_REQUEST['lastName']) ? strip_tags($_REQUEST['lastName']) : '';
-		$searchParams['email'] = isset($_REQUEST['email']) ? strip_tags($_REQUEST['email']) : '';
+		/* --- Get user input --- */
+		foreach (array('username', 'firstName', 'lastName', 'email') as $field)
+		{
+			if (isset($_REQUEST[$field]))
+			{
+				$searchParams[$field] = $_REQUEST[$field];
+			}
+		}
+
 		$this->searchParams = $searchParams;
 
 		return $this->userManager->searchUsers($searchParams);
