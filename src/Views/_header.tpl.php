@@ -28,10 +28,9 @@ echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
     <body>
         <div id="action_nav">
             <ul>
-                <li><a href="http://7250mhz.brokertools.us/bzrbrowse/" accesskey="v">View Source</a></li>
-                <li><a href="user_directory.tar.gz" accesskey="s">Source code</a></li>
+                <li><a href="https://github.com/phpexpertsinc/user_directory" accesskey="v">View Source</a></li>
                 <li><a href="docs/" accesskey="d">Docs</a></li>
-                <li><a href="http://7250mhz.brokertools.us/user_directory/tests/" accesskey="t">Tests</a></li>
+                <li><a href="tests/" accesskey="t">Tests</a></li>
 <?php
 global $login_status;
 
