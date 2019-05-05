@@ -15,15 +15,15 @@
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
 
-require_once dirname(__FILE__) . '/../tests/SecurityControllerTest.php';
-require_once 'PHPUnit/Framework/TestCase.php';
+//require_once dirname(__FILE__) . '/../tests/SecurityControllerTest.php';
+//require_once 'PHPUnit/Framework/TestCase.php';
 
 
 
 /**
  * SearchController test case.
  */
-class SearchControllerTest extends PHPUnit_Framework_TestCase {
+class SearchControllerTest extends \PHPUnit\Framework\TestCase {
 	
 	/** @var SearchController */
 	private $SearchController;
@@ -38,7 +38,6 @@ class SearchControllerTest extends PHPUnit_Framework_TestCase {
 	{
 		parent::setUp();
 
-		ob_start();
 		session_start();
 		
 		unset($_SESSION);

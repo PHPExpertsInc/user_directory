@@ -15,30 +15,15 @@
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
 
-require_once 'PHPUnit/Framework/TestCase.php';
+//require_once 'PHPUnit/Framework/TestCase.php';
 require_once dirname(__FILE__) . '/../lib/MyDB.inc.php';
 
 /**
  * queryDB() test case.
  */
-class MyDatabaseTest extends PHPUnit_Framework_TestSuite
+class MyDatabaseTestSuite extends \PHPUnit\Framework\TestCase
 {
 	protected $backupGlobals = false;
-
-	public function __construct()
-	{
-		ob_start();
-		$this->setName('MyDatabaseTest');
-		$this->addTestSuite('MyDBHelperFunctionsTest');
-		$this->addTestSuite('MyDBTest');
-		$this->addTestSuite('MyPDOTest');
-		$this->addTestSuite('MyReplicatedDBTest');
-	}
-
-	public static function suite()
-	{
-		return new self();
-	}
 
 	/**
 	 * @return MyDBConfigStruct
@@ -51,21 +36,34 @@ class MyDatabaseTest extends PHPUnit_Framework_TestSuite
 		return $config;
 	}
 
+    /**
+     * @return MyDBConfigStruct
+     */
+    public static function getRealPDOConfig()
+    {
+        $configData = json_decode(base64_decode(file_get_contents(__DIR__ . '/../database.config')));
+        $configData->database = 'TEST_' . $configData->database;
+
+        return $configData;
+    }
+
 	public static function getReplicatedPDOConfig()
 	{
+	    $basicConfig = self::getRealPDOConfig();
+
 		$config = new stdClass;
 		$config->engine = 'PDO';
 		
 		$readDB = new stdClass;
-		$readDB->hostname = 'localhost';
-		$readDB->username = 'ud_testreader';
-		$readDB->password = 'PHxhu6u6-)r';
+		$readDB->hostname = $basicConfig->hostname;
+		$readDB->username = $basicConfig->username;
+		$readDB->password = $basicConfig->password;
 		$readDB->database = 'TEST_user_directory';		
 
 		$writeDB = new stdClass;
-		$writeDB->hostname = 'localhost';
-		$writeDB->username = 'ud_testwriter';
-		$writeDB->password = 'PHxhu6u6-)w';
+		$writeDB->hostname = $basicConfig->hostname;
+		$writeDB->username = $basicConfig->username;
+		$writeDB->password = $basicConfig->password;
 		$writeDB->database = 'TEST_user_directory';
 
 		$config->useReplication = true;
@@ -77,7 +75,7 @@ class MyDatabaseTest extends PHPUnit_Framework_TestSuite
 
 }
 
-class MyDBHelperFunctionsTest extends PHPUnit_Framework_TestCase
+class MyDBHelperFunctionsTest extends \PHPUnit\Framework\TestCase
 {
 	/**
 	 * Tests getDBHandler()
@@ -103,7 +101,7 @@ class MyDBHelperFunctionsTest extends PHPUnit_Framework_TestCase
 		$this->assertInstanceOf('MyDBI', $pdo, 'PDO object is not of type PDO');;
 
 		// Test with custom config
-		$config = MyDatabaseTest::getPDOConfig();
+		$config = MyDatabaseTestSuite::getPDOConfig();
 		$new_pdo = getDBHandler($config);
 		$this->assertInstanceOf('MyDBI', $new_pdo, 'PDO object is not of type PDO');;
 	}
@@ -113,7 +111,7 @@ class MyDBHelperFunctionsTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testQueryDb()
 	{
-		$config = MyDatabaseTest::getPDOConfig();
+		$config = MyDatabaseTestSuite::getRealPDOConfig();
 	     getDBHandler($config);
 
         	// Test insert
@@ -133,19 +131,19 @@ class MyDBHelperFunctionsTest extends PHPUnit_Framework_TestCase
 		$this->assertSame($username, $userInfo->username);
 		
 		// Test select w/ malformed SQL
-		$this->setExpectedException('MyDBException');
+		$this->expectException('MyDBException');
 		$stmt = @queryDB('SELECT * FROM usersasdf WHERE username=?', array($username));
 	}
 }
 
-class MyDBTest extends PHPUnit_Framework_TestCase
+class MyDBTest extends \PHPUnit\Framework\TestCase
 {
 	/**
 	 * @covers MyDB::loadDB
 	 */
 	public function testLoadAPdoDb()
 	{
-		$config = MyDatabaseTest::getPDOConfig();
+		$config = MyDatabaseTestSuite::getRealPDOConfig();
 		$this->assertInstanceOf('MyPDO', MyDB::loadDB($config));
 	}
 
@@ -154,12 +152,12 @@ class MyDBTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testLoadAReplicatedPdoDb()
 	{
-		$config = MyDatabaseTest::getReplicatedPDOConfig();
+		$config = MyDatabaseTestSuite::getReplicatedPDOConfig();
 		$this->assertInstanceOf('MyReplicatedPDO', MyDB::loadDB($config));
 	}
 }
 
-class MyPDOTest extends PHPUnit_Framework_TestCase
+class MyPDOTest extends \PHPUnit\Framework\TestCase
 {
 	/**
 	 * @var MyPDO
@@ -168,7 +166,7 @@ class MyPDOTest extends PHPUnit_Framework_TestCase
 
 	protected function setUp()
 	{
-		$config = MyDatabaseTest::getPDOConfig();
+		$config = MyDatabaseTestSuite::getRealPDOConfig();
 		$this->MyPDO = MyDB::loadDB($config);		
 	}
 	
@@ -259,7 +257,7 @@ class MyReplicatedDBTest extends MyPDOTest
 {
 	protected function setUp()
 	{
-		$config = MyDatabaseTest::getReplicatedPDOConfig();
+		$config = MyDatabaseTestSuite::getReplicatedPDOConfig();
 		$this->MyPDO = MyDB::loadDB($config);
 	}
 	

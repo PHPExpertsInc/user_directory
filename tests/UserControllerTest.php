@@ -15,14 +15,14 @@
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
 
-require_once dirname(__FILE__) . '/../controllers/UserController.inc.php';
-require_once dirname(__FILE__) . '/../tests/UserManagerTest.php';
-require_once 'PHPUnit/Framework/TestCase.php';
+//require_once dirname(__FILE__) . '/../controllers/UserController.inc.php';
+//require_once __DIR__ . '/UserManagerTest.php';
+//require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * UserController test case.
  */
-class UserControllerTest extends PHPUnit_Framework_TestCase
+class UserControllerTest extends \PHPUnit\Framework\TestCase
 {	
 	/**
 	 * @var UserController
@@ -36,7 +36,7 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 		$this->assertArrayHasKey('userInfo', $_SESSION, 'userInfo is not set in $_SESSION');
 		$this->assertInstanceOf('UserInfoStruct', $_SESSION['userInfo'], '$_SESSION[\'userInfo\'] is not a UserInfoStruct object');
 	}
-	
+
 	/**
 	 * Prepares the environment before running a test.
 	 */
@@ -46,12 +46,12 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 
           ob_start();
 		session_start();
-		
+
 		unset($_SESSION);
 		$_SERVER['HTTP_HOST'] = 'localhost';
 		$this->UserController = new UserController();
 	}
-	
+
 	/**
 	 * Cleans up the environment after running a test.
 	 */
@@ -63,10 +63,10 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 
 		parent::tearDown ();
 	}
-	
+
 	/**
 	 * Tests UserController->__construct()
-	 * 
+	 *
 	 * @covers UserController::__construct
 	 */
 	public function test__construct()
@@ -76,7 +76,7 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 
 	/**
 	 * Tests UserController->register()
-	 * 
+	 *
 	 * @covers UserController::register
 	 * @covers UserController::createUserSession
 	 */
@@ -84,23 +84,23 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 	{
 		// Test without providing any data.
 		$this->assertFalse($this->UserController->register(), 'worked without any input :o');
-	
+
 		$_POST['profile'] = true;
 		// Test empty input
 		$_POST['username'] = $_POST['password'] = $_POST['confirm'] = $_POST['firstName'] = $_POST['lastName'] = $_POST['email'] = '';
 		$this->assertSame(UserManager::ERROR_BLANK_USER, $this->UserController->register(), 'worked with blank input');
-		
+
 		// Set up most data
 		$_POST['username'] = uniqid();
 		$_POST['password'] = uniqid();
 		$_POST['firstName'] = uniqid();
 		$_POST['lastName'] = uniqid();
 		$_POST['email'] = uniqid();
- 
+
 		// Test with bad input
 		$_POST['confirm'] = 'non-matching password';
 		$this->assertSame(UserManager::ERROR_PASS_MISMATCH, $this->UserController->register(), 'worked with bad input');
-		
+
 		// Test with good input
 		$_POST['confirm'] = $_POST['password'];
 		$this->userPassword = $_POST['password'];
@@ -109,54 +109,54 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 		$this->myCreateUserSessionTest();
 	}
 
-	
+
 	/**
 	 * Tests UserController->login()
-	 * 
+	 *
 	 * @covers UserController::login
 	 * @covers UserController::createUserSession
-	 * 
+	 *
 	 */
 	public function testLogin()
 	{
 		$_POST['login'] = true;
 		$old_POST = $_POST;
 		$_POST = array();
-		
+
 		// Test login wihout data
 		if (session_id() != '') { session_destroy(); }
 		$this->assertFalse($this->UserController->login(), 'logged in without any input.');
-		
+
 		// Test login with missing password
 		$_POST = $old_POST;
 		$_POST['password'] = '';
 		$this->assertEquals(UserManager::ERROR_BLANK_PASS, $this->UserController->login(), 'logged in without a password.');
-		
+
 		// Test login with bad password
 		$_POST['password'] = uniqid();
 		$this->assertEquals(UserManager::ERROR_INCORRECT_PASS, $this->UserController->login(), 'logged in with a bad password.');
-		
+
 		// Test login via SQL inject
 		$_POST['password'] = '\' OR 1=1; -- ';
 		$this->assertEquals(UserManager::ERROR_INCORRECT_PASS, $this->UserController->login(), 'logged in with a bad password.');
-		
+
 		// Test valid login
 		$_POST = $old_POST;
 		$this->assertEquals(UserManager::LOGGED_IN, $this->UserController->login(), 'would not log in with right info.');
 
 		// Test with session created
 		$this->myCreateUserSessionTest();
-		
+
 		// Test with no session created
 		session_destroy();
 		$this->assertEquals(UserManager::LOGGED_IN, $this->UserController->login(), 'would not log in with right info.');
 		$this->myCreateUserSessionTest();
 
 	}
-	
+
 	/**
 	 * Tests UserController->browse()
-	 * 
+	 *
 	 * @covers UserController::browse
 	 */
 	public function testBrowse()
@@ -192,10 +192,10 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 		$this->assertInternalType('array', $users, 'result was not an array');
 		$this->assertTrue(print_r($lastRegistered, true) == print_r($users[0], true), 'returned incorrect results');
 	}
-	
+
 	/**
 	 * Tests UserController->editProfile()
-	 * 
+	 *
 	 * @covers UserController::editProfile
 	 */
 	public function testEditProfile()
@@ -214,34 +214,34 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 		{
 			$this->assertSame(UserManager::NOT_LOGGED_IN, $e->getCode(), 'Didn\'t expect exception "' . $e->getMessage() . '".');
 		}
-		
+
 		$headers_list = headers_list();
 		if (!empty($headers_list))
 		{
 			$this->assertContains('Location: http://' . $_SERVER['HTTP_HOST'] . '/user_directory/', $headers_list);
 		}
-		
+
 		// 2. Test with being logged in.
 		$_POST = $old_POST;
 		$this->UserController->login();
-		
+
 		// 2a. Test with no input
 		unset($_POST['profile']);
 		unset($_POST['username']);
 		unset($_POST['password']);
 		$this->assertFalse($this->UserController->editProfile(), 'worked with no input.');
-		
+
 		$_POST = $old_POST;
-		
+
 		// 2b. with bad input.
 		$_POST['password'] = uniqid();
 		$this->assertEquals(UserManager::ERROR_PASS_MISMATCH, $this->UserController->editProfile(), 'worked with bad input.');
-		
+
 		// 2c. with correct input
 		$_POST['password'] = $_POST['confirm'];
 		$this->assertSame(UserManager::UPDATED_PROFILE, $this->UserController->editProfile(), 'did not work with correct input');
 	}
-	
+
 	/**
 	 * @covers UserController::execute
 	 */
@@ -249,7 +249,7 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 	{
 		$this->assertFalse($this->UserController->execute('non-existing action'));
 	}
-	
+
 	/**
 	 * @covers UserController::execute
 	 */
@@ -258,7 +258,7 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 		$data = $this->UserController->execute('register');
 		$this->assertInternalType('array', $data);
 	}
-	
+
 	/**
 	 * @covers UserController::execute
 	 */
@@ -268,7 +268,7 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 		$this->assertInternalType('array', $data);
 		$this->assertEquals(UserManager::LOGGED_IN, $data['login_status']);
 	}
-	
+
 	/**
 	 * @covers UserController::execute
 	 */
@@ -280,7 +280,7 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 		$this->assertFalse(empty($data['users']));
 		$this->assertTrue($data['users'][0]->username == $_POST['username']);
 	}
-	
+
 	/**
 	 * @covers UserController::execute
 	 */
@@ -291,9 +291,9 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 
 		$this->assertInternalType('array', $data);
 		$this->assertTrue(UserManager::UPDATED_PROFILE == $data['registration_status']);
-		
+
 	}
-	
+
 	/**
 	 * @covers UserController::execute
 	 */

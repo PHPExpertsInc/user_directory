@@ -16,12 +16,13 @@
 **/
 
 //require_once dirname(__FILE__) . '/../controllers/ControllerCommandFactory.inc.php';
-require_once 'PHPUnit/Framework/TestCase.php';
+//require_once 'PHPUnit/Framework/TestCase.php';
+
 
 /**
  * SearchController test case.
  */
-class ControllerCommandTest extends PHPUnit_Framework_TestCase
+class ControllerCommandTest extends \PHPUnit\Framework\TestCase
 {
 	/**
 	 * @covers ControllerCommandFactory::execute

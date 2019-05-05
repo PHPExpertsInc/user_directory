@@ -117,7 +117,7 @@ class MyDB
 				throw new MyDBException('Couldn\'t successfully parse database.config.', MyDBException::BAD_CONFIG_FILE);
 			}
 		}
-		
+
 		$_config = $config;
 
 		if (!isset($config->engine))
@@ -126,21 +126,20 @@ class MyDB
 		}
 
 		$useReplication = isset($config->useReplication) ? $config->useReplication : false;
-
-		$className = '';
+        $className = 'MyDB_Engine_' . $config->engine;
 		if ($useReplication)
 		{
 			$className = 'MyReplicated' . $config->engine;
-		}
-		else
-		{
-			$className = 'MyDB_Engine_' . $config->engine;
+
+			return new $className($config);
 		}
 
 		if (!class_exists($className))
 		{
 			throw new MyDBException('database.config: Could not find the DB Engine ' . $className . '.', MyDBException::NO_DB_ENGINE);
 		}
+
+		$dbConfig = MyDBConfigStruct::fromStd($_config);
 
 		return new $className($dbConfig);
 	}
@@ -240,7 +239,7 @@ abstract class MyReplicatedDB implements MyDBI
 /**
  * MyDB interface for PDO 
  */
-class My_Engine_PDO implements MyDBI
+class MyPDO implements MyDBI
 {
 	/** @var PDO **/
 	private $pdo;
@@ -253,7 +252,7 @@ class My_Engine_PDO implements MyDBI
 		$dsn = sprintf('mysql:dbname=%s;host=%s;port=%d;', $config->database, $config->hostname, $config->port);
 		$this->pdo = new PDO($dsn, $config->username, $config->password);	
 	}
-	
+
 	// Accessors
 	public function getPDO()
 	{
@@ -315,6 +314,10 @@ class My_Engine_PDO implements MyDBI
 	{
 		return $this->pdo->lastInsertId();
 	}
+}
+
+class MyDB_Engine_PDO extends MyPDO
+{
 }
 
 class MyReplicatedPDO extends MyReplicatedDB implements MyDBI 
