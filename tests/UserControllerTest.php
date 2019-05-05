@@ -1,7 +1,7 @@
 <?php
 /**
 * User Directory
-*   Copyright(c) 2008 Theodore R. Smith <theodore@phpexperts.pro>
+*   Copyright (c) 2008, 2019 Theodore R. Smith <theodore@phpexperts.pro>
 * 
 * The following code is licensed under a modified BSD License.
 * All of the terms and conditions of the BSD License apply with one
@@ -15,13 +15,8 @@
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
 
-//require_once dirname(__FILE__) . '/../controllers/UserController.inc.php';
-//require_once __DIR__ . '/UserManagerTest.php';
-//require_once 'PHPUnit/Framework/TestCase.php';
+require_once __DIR__ . '/UserManagerTest.php';
 
-/**
- * UserController test case.
- */
 class UserControllerTest extends \PHPUnit\Framework\TestCase
 {	
 	/**
@@ -44,7 +39,6 @@ class UserControllerTest extends \PHPUnit\Framework\TestCase
 	{
 		parent::setUp();
 
-          ob_start();
 		session_start();
 
 		unset($_SESSION);
@@ -52,7 +46,7 @@ class UserControllerTest extends \PHPUnit\Framework\TestCase
 		$this->UserController = new UserController();
 	}
 
-	/**
+    /**
 	 * Cleans up the environment after running a test.
 	 */
 	protected function tearDown()

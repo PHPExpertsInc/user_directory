@@ -1,7 +1,7 @@
 <?php
 /**
 * User Directory
-*   Copyright � 2008 Theodore R. Smith <theodore@phpexperts.pro>
+*   Copyright (c) 2008, 2019 Theodore R. Smith <theodore@phpexperts.pro>
 *
 * The following code is licensed under a modified BSD License.
 * All of the terms and conditions of the BSD License apply with one
@@ -15,16 +15,6 @@
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
 
-//require_once dirname(__FILE__) . '/../lib/UserInfoStruct.inc.php';
-//require_once dirname(__FILE__) . '/../controllers/ControllerCommand.inc.php';
-//require_once dirname(__FILE__) . '/../managers/UserManager.inc.php';
-//require_once dirname(__FILE__) . '/../controllers/SecurityController.inc.php';
-
-//require_once 'PHPUnit/Framework/TestCase.php';
-
-/**
- * SecurityController test case.
- */
 class SecurityControllerTest extends \PHPUnit\Framework\TestCase
 {
 	/** @var SecurityController **/
@@ -41,7 +31,6 @@ class SecurityControllerTest extends \PHPUnit\Framework\TestCase
 	protected function setUp()
 	{
 		$_SERVER['HTTP_HOST'] = 'localhost';
-		//ob_start();
 		session_start();
 		parent::setUp();
 
@@ -65,8 +54,6 @@ class SecurityControllerTest extends \PHPUnit\Framework\TestCase
 	 */
 	public function testIsLoggedIn()
 	{
-	    $this->markTestIncomplete('Bugged test');
-
 		// 1. Test with no input
 		$this->assertFalse($this->guard->isLoggedIn(), 'worked with no input.');
 

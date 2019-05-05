@@ -1,7 +1,7 @@
 <?php
 /**
 * User Directory
-*   Copyright(c) 2008, 2011 Theodore R. Smith <theodore@phpexperts.pro>
+*   Copyright (c) 2008, 2011, 2019 Theodore R. Smith <theodore@phpexperts.pro>
 * 
 * The following code is licensed under a modified BSD License.
 * All of the terms and conditions of the BSD License apply with one
@@ -15,14 +15,6 @@
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
 
-//require_once dirname(__FILE__) . '/../tests/SecurityControllerTest.php';
-//require_once 'PHPUnit/Framework/TestCase.php';
-
-
-
-/**
- * SearchController test case.
- */
 class SearchControllerTest extends \PHPUnit\Framework\TestCase {
 	
 	/** @var SearchController */
