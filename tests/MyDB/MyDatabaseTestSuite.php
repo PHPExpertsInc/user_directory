@@ -15,14 +15,18 @@
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
 
-require_once dirname(__FILE__) . '/../../lib/MyDB.inc.php';
+namespace Tests\PHPExperts\MyDB;
 
-class MyDatabaseTestSuite extends \PHPUnit\Framework\TestCase
+use PHPExperts\MyDB\MyDBConfigStruct;
+use PHPUnit\Framework\TestCase;
+use stdClass;
+
+class MyDatabaseTestSuite extends TestCase
 {
 	protected $backupGlobals = false;
 
 	/**
-	 * @return MyDBConfigStruct
+	 * @return MyDBConfigStruct|stdClass
 	 */
 	public static function getPDOConfig()
 	{

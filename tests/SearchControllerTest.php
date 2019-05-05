@@ -15,7 +15,17 @@
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
 
-class SearchControllerTest extends \PHPUnit\Framework\TestCase {
+namespace Tests\PHPExperts\UserDirectory;
+
+use Exception;
+use PHPExperts\UserDirectory\Controllers\SearchController;
+use PHPExperts\UserDirectory\Managers\UserInfoStruct;
+use PHPExperts\UserDirectory\Managers\UserManager;
+use PHPUnit\Framework\TestCase;
+use Tests\PHPExperts\UserDirectory\Mocks\SecurityControllerMock;
+use Tests\PHPExperts\UserDirectory\Mocks\UserManagerMock;
+
+class SearchControllerTest extends TestCase {
 	
 	/** @var SearchController */
 	private $SearchController;
@@ -60,7 +70,7 @@ class SearchControllerTest extends \PHPUnit\Framework\TestCase {
 	public function test__construct()
 	{
 		// just make sure nothing goes wrong
-		$this->assertInstanceOf('SearchController', new SearchController());
+		$this->assertInstanceOf(SearchController::class, new SearchController());
 	}
 
 	/**
@@ -111,7 +121,7 @@ class SearchControllerTest extends \PHPUnit\Framework\TestCase {
 		$_REQUEST['username'] = 'testuser';
 		$users = $this->SearchController->search();
 		$this->assertInternalType('array', $users);
-		$this->assertInstanceOf('UserInfoStruct', $users[0]);
+		$this->assertInstanceOf(UserInfoStruct::class, $users[0]);
 	}
 
 	/**
@@ -153,4 +163,3 @@ class SearchControllerTest extends \PHPUnit\Framework\TestCase {
 		$this->assertInternalType('array', $data);
 	}
 }
-

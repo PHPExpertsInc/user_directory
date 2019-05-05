@@ -1,7 +1,7 @@
 <?php
 /**
 * User Directory
-*   Copyright © 2008 Theodore R. Smith <theodore@phpexperts.pro>
+*   Copyright ï¿½ 2008 Theodore R. Smith <theodore@phpexperts.pro>
 * 
 * The following code is licensed under a modified BSD License.
 * All of the terms and conditions of the BSD License apply with one
@@ -14,6 +14,12 @@
 *
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
+
+namespace PHPExperts\UserDirectory\Controllers;
+
+use PHPExperts\UserDirectory\Managers\UserManager;
+use PHPExperts\UserDirectory\Managers\UserManagerI;
+
 class SearchController implements ControllerCommand
 {
 	protected $searchParams = array();
@@ -23,6 +29,11 @@ class SearchController implements ControllerCommand
 	/** @var UserManager **/
 	protected $userManager;
 
+    /**
+     * SearchController constructor.
+     * @param SecurityControllerI|null $guard
+     * @param UserManagerI|null $userManager
+     */
 	public function __construct(SecurityControllerI $guard = null, UserManagerI $userManager = null)
 	{
 		if ($userManager === null) { $userManager = new UserManager; }

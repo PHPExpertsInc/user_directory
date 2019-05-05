@@ -15,7 +15,13 @@
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
 
-class ControllerCommandTest extends \PHPUnit\Framework\TestCase
+namespace Tests\PHPExperts\UserDirectory;
+
+use Exception;
+use PHPExperts\UserDirectory\Controllers\ControllerCommandFactory;
+use PHPUnit\Framework\TestCase;
+
+class ControllerCommandTest extends TestCase
 {
 	/**
 	 * @covers ControllerCommandFactory::execute

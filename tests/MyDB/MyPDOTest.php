@@ -16,7 +16,15 @@
  * BSD License: http://www.opensource.org/licenses/bsd-license.php
  **/
 
-class MyPDOTest extends \PHPUnit\Framework\TestCase
+namespace Tests\PHPExperts\MyDB;
+
+use PDOStatement;
+use PHPExperts\MyDB\MyDB;
+use PHPExperts\MyDB\MyPDO;
+use PHPUnit\Framework\TestCase;
+use stdClass;
+
+class MyPDOTest extends TestCase
 {
     private static $userInfo;
 
@@ -54,7 +62,7 @@ class MyPDOTest extends \PHPUnit\Framework\TestCase
         ];
 
         $qs = 'INSERT INTO Users (username, password) VALUES (?, ?)';
-        $this->assertInstanceOf('PDOStatement', $this->MyPDO->query($qs, array(self::$userInfo['name'], self::$userInfo['pass'])));
+        $this->assertInstanceOf(PDOStatement::class, $this->MyPDO->query($qs, array(self::$userInfo['name'], self::$userInfo['pass'])));
     }
 
     /**
@@ -65,10 +73,10 @@ class MyPDOTest extends \PHPUnit\Framework\TestCase
         $user = self::$userInfo;
         $qs = 'SELECT * FROM Users WHERE username=?';
         $stmt = $this->MyPDO->query($qs, array($user['name']));
-        $this->assertInstanceOf('PDOStatement', $stmt);
+        $this->assertInstanceOf(PDOStatement::class, $stmt);
 
         $userInfo = $stmt->fetchObject();
-        $this->assertInstanceOf('stdClass', $userInfo);
+        $this->assertInstanceOf(stdClass::class, $userInfo);
         $this->assertObjectHasAttribute('username', $userInfo);
         $this->assertEquals($user['name'], $userInfo->username);
     }
@@ -83,7 +91,7 @@ class MyPDOTest extends \PHPUnit\Framework\TestCase
         $GLOBALS['users'] = $user['pass'];
 
         $qs = 'UPDATE Users SET password=? WHERE username=?';
-        $this->assertInstanceOf('PDOStatement', $this->MyPDO->query($qs, array($user['name'], $user['pass'])));
+        $this->assertInstanceOf(PDOStatement::class, $this->MyPDO->query($qs, array($user['name'], $user['pass'])));
 
         // Verify
         $this->testCanReadData();
@@ -115,7 +123,7 @@ class MyPDOTest extends \PHPUnit\Framework\TestCase
         $this->MyPDO->query($qs, array($user['name']));
 
         $userInfo = $this->MyPDO->fetchObject();
-        $this->assertInstanceOf('stdClass', $userInfo);
+        $this->assertInstanceOf(stdClass::class, $userInfo);
         $this->assertEquals($user['name'], $userInfo->username);
     }
 }

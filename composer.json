@@ -1,5 +1,17 @@
 {
     "require": {
+        "php": ">=7.1",
+        "ext-json": "*",
+        "ext-pdo": "*",
         "phpunit/phpunit": "6.4.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "PHPExperts\\UserDirectory\\": "",
+            "Tests\\PHPExperts\\UserDirectory\\": "tests/",
+            "PHPExperts\\MyDB\\": "lib/MyDB/",
+            "Tests\\PHPExperts\\MyDB\\": "tests/MyDB/"
+        },
+        "files": ["lib/MyDB/helpers.php"]
     }
 }

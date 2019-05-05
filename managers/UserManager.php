@@ -15,16 +15,11 @@
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
 
-interface UserManagerI
-{
-	public function setUsername($username);
-	public function getUserInfo();
-	public function createProfile($username, $password, $confirm, $firstName, $lastName, $email);
-	public function updateProfile($username, $password, $confirm, $firstName, $lastName, $email);
-	public function validatePassword($password);
-	public function searchUsers(array $searchParams);
-	public function getAllUsers();
-}
+namespace PHPExperts\UserDirectory\Managers;
+
+use Exception;
+use function PHPExperts\MyDB\getDBHandler;
+use function PHPExperts\MyDB\queryDB;
 
 class UserManager implements UserManagerI
 {
@@ -64,6 +59,7 @@ class UserManager implements UserManagerI
      * Returns the private userInfo
      *
      * @return UserInfoStruct
+     * @throws Exception
      */
     public function getUserInfo()
     {
@@ -128,12 +124,12 @@ class UserManager implements UserManagerI
         $q2s = 'INSERT INTO Users (username, password) VALUES (?, PASSWORD(?))';
         // b. The only way this could fail is due to unexpected SQL queries; assume success.
         queryDB($q2s, array($username, $password));
-        
+
         // 5. Insert their profile.
         $userID = $pdo->lastInsertId();
         $q3s = 'INSERT INTO Profiles (userID, firstName, lastName, email) VALUES (' . $userID . ', ?, ?, ?)';
         queryDB($q3s, array($firstName, $lastName, $email));
-        
+
         // If we have gotten this far, it means that we were successful; woohoo!
         // 6. Commit the transaction to the database.
         $pdo->commit();
@@ -180,7 +176,7 @@ class UserManager implements UserManagerI
             $password = substr($password, 0, 2) . $password;
             $q1s = 'UPDATE Users SET password=PASSWORD(?) WHERE userID=' . $userID;
             queryDB($q1s, array($password));
-            
+
             $q2s = 'UPDATE Profiles SET firstName=?, lastName=?, email=? WHERE userID=' . $userID;
             queryDB($q2s, array($firstName, $lastName, $email));
         }
@@ -220,7 +216,7 @@ class UserManager implements UserManagerI
         $password = substr($password, 0, 2) . $password;
         $q1s = 'SELECT userID FROM Users WHERE username=? AND password=PASSWORD(?)';
         $stmt = queryDB($q1s, array($username, $password));
-        
+
 		if ($stmt === false || ($userID = $stmt->fetchColumn()) === false)
 		{
 			return self::ERROR_INCORRECT_PASS;
@@ -230,7 +226,7 @@ class UserManager implements UserManagerI
         // Get profile data.
         $q2s = 'SELECT * FROM vw_UserInfo WHERE userID=?';
         $stmt = queryDB($q2s, array($userID));
-        $this->userInfo = $stmt->fetchObject('UserInfoStruct');
+        $this->userInfo = $stmt->fetchObject(UserInfoStruct::class);
         
         return self::CORRECT_PASSWORD;
     }
@@ -250,9 +246,9 @@ class UserManager implements UserManagerI
         
         $q1s = 'SELECT * FROM vw_UserInfo WHERE ' . join($where, ' AND ') . ' ORDER BY username';
         $stmt = queryDB($q1s, $params);
-        
+
         $users = array();
-        while (($userInfo = $stmt->fetchObject('UserInfoStruct')))
+        while (($userInfo = $stmt->fetchObject(UserInfoStruct::class)))
         {
             $users[] = $userInfo;
         }
@@ -264,8 +260,8 @@ class UserManager implements UserManagerI
     {
         $q1s = 'SELECT * FROM vw_UserInfo ORDER BY username';
         $stmt = queryDB($q1s);
-        
-        while (($userInfo = $stmt->fetchObject('UserInfoStruct')))
+
+        while (($userInfo = $stmt->fetchObject(UserInfoStruct::class)))
         {
             $users[] = $userInfo;
         }

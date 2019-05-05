@@ -1,7 +1,7 @@
 <?php
 /**
 * User Directory
-*   Copyright © 2008 Theodore R. Smith <theodore@phpexperts.pro>
+*   Copyright (c) 2008, 2019 Theodore R. Smith <theodore@phpexperts.pro>
 * 
 * The following code is licensed under a modified BSD License.
 * All of the terms and conditions of the BSD License apply with one
@@ -14,19 +14,22 @@
 *
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
-	global $action, $login_status, $username;
+
+use PHPExperts\UserDirectory\Managers\UserManager;
+
+global $action, $login_status, $username;
     
-	$login_potentials = array(UserManager::LOGGED_IN => 'Successfully logged in.',
-                              UserManager::ERROR_BLANK_PASS => 'Error: No password was entered.',
-                              UserManager::ERROR_INCORRECT_PASS => 'Error: Invalid username or password.');
+$login_potentials = array(UserManager::LOGGED_IN => 'Successfully logged in.',
+                          UserManager::ERROR_BLANK_PASS => 'Error: No password was entered.',
+                          UserManager::ERROR_INCORRECT_PASS => 'Error: Invalid username or password.');
 
 
-    if ($login_status != '')
-    {
+if ($login_status != '')
+{
 ?>
-            <h3><?php echo $login_potentials[$login_status]; ?></h3>
+        <h3><?php echo $login_potentials[$login_status]; ?></h3>
 <?php
-    }
+}
 ?>
         <div id="login">
             <form method="post" class="classyform" action="?action=login">

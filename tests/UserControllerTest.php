@@ -15,13 +15,17 @@
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
 
-require_once __DIR__ . '/UserManagerTest.php';
+namespace Tests\PHPExperts\UserDirectory;
 
-class UserControllerTest extends \PHPUnit\Framework\TestCase
+use Exception;
+use PHPExperts\UserDirectory\Controllers\UserController;
+use PHPExperts\UserDirectory\Managers\UserInfoStruct;
+use PHPExperts\UserDirectory\Managers\UserManager;
+use PHPUnit\Framework\TestCase;
+
+class UserControllerTest extends TestCase
 {	
-	/**
-	 * @var UserController
-	 */
+	/**@var UserController */
 	private $UserController;
 	protected $backupGlobals = false;
 
@@ -29,7 +33,7 @@ class UserControllerTest extends \PHPUnit\Framework\TestCase
 	{
 		$this->assertTrue(session_id() != '', 'session was not created after successful registration');
 		$this->assertArrayHasKey('userInfo', $_SESSION, 'userInfo is not set in $_SESSION');
-		$this->assertInstanceOf('UserInfoStruct', $_SESSION['userInfo'], '$_SESSION[\'userInfo\'] is not a UserInfoStruct object');
+		$this->assertInstanceOf(UserInfoStruct::class, $_SESSION['userInfo'], '$_SESSION[\'userInfo\'] is not a UserInfoStruct object');
 	}
 
 	/**
@@ -65,7 +69,7 @@ class UserControllerTest extends \PHPUnit\Framework\TestCase
 	 */
 	public function test__construct()
 	{
-		$this->assertInstanceOf('UserController', new UserController());
+		$this->assertInstanceOf(UserController::class, new UserController());
 	}
 
 	/**
@@ -293,7 +297,7 @@ class UserControllerTest extends \PHPUnit\Framework\TestCase
 	 */
 	public function testHandlesLogoutAction()
 	{
-		$data = $this->UserController->execute('logout');
+		$this->UserController->execute('logout');
 		$this->assertEmpty(session_id());
 	}
 }

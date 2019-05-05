@@ -16,6 +16,10 @@
  * BSD License: http://www.opensource.org/licenses/bsd-license.php
  **/
 
+namespace Tests\PHPExperts\MyDB;
+
+use PHPExperts\MyDB\MyDB;
+
 class MyReplicatedDBTest extends MyPDOTest
 {
     protected function setUp()

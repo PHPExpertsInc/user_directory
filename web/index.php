@@ -1,7 +1,7 @@
 <?php
 /**
 * User Directory
-*   Copyright © 2008 Theodore R. Smith <theodore@phpexperts.pro>
+*   Copyright (c) 2008, 2012, 2019 Theodore R. Smith <theodore@phpexperts.pro>
 * 
 * The following code is licensed under a modified BSD License.
 * All of the terms and conditions of the BSD License apply with one
@@ -15,12 +15,12 @@
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
 
-// Change root directory
+use PHPExperts\UserDirectory\Controllers\ControllerCommandFactory;
+use PHPExperts\UserDirectory\Controllers\SecurityController;
+use PHPExperts\UserDirectory\Managers\UserManager;
 
+require '../vendor/autoload.php';
 
-require '../lib/bootstrap.inc.php';
-
- 
 $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
 $view = isset($_GET['view']) ? $_GET['view'] : 'index';
 

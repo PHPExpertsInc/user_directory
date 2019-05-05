@@ -16,7 +16,14 @@
  * BSD License: http://www.opensource.org/licenses/bsd-license.php
  **/
 
-class MyDBTest extends \PHPUnit\Framework\TestCase
+namespace Tests\PHPExperts\MyDB;
+
+use PHPExperts\MyDB\MyDB;
+use PHPExperts\MyDB\MyPDO;
+use PHPExperts\MyDB\MyReplicatedPDO;
+use PHPUnit\Framework\TestCase;
+
+class MyDBTest extends TestCase
 {
     /**
      * @covers MyDB::loadDB
@@ -24,7 +31,7 @@ class MyDBTest extends \PHPUnit\Framework\TestCase
     public function testLoadAPdoDb()
     {
         $config = MyDatabaseTestSuite::getRealPDOConfig();
-        $this->assertInstanceOf('MyPDO', MyDB::loadDB($config));
+        $this->assertInstanceOf(MyPDO::class, MyDB::loadDB($config));
     }
 
     /**
@@ -33,6 +40,6 @@ class MyDBTest extends \PHPUnit\Framework\TestCase
     public function testLoadAReplicatedPdoDb()
     {
         $config = MyDatabaseTestSuite::getReplicatedPDOConfig();
-        $this->assertInstanceOf('MyReplicatedPDO', MyDB::loadDB($config));
+        $this->assertInstanceOf(MyReplicatedPDO::class, MyDB::loadDB($config));
     }
 }
