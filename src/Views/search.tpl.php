@@ -1,8 +1,8 @@
 <?php
 /**
 * User Directory
-*   Copyright (c) 2008, 2019 Theodore R. Smith <theodore@phpexperts.pro>
-* 
+*   Copyright (c) 2008, 2019 Theodore R. Smith <theodore@phpexperts.pro>.
+*
 * The following code is licensed under a modified BSD License.
 * All of the terms and conditions of the BSD License apply with one
 * exception:
@@ -14,7 +14,6 @@
 *
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
-
 global $users;
 
 ?>
@@ -52,7 +51,6 @@ global $users;
             </form>
         </div>
 <?php
-if (!empty($users))
-{
-	require __DIR__ . '/browse.tpl.php';
+if (!empty($users)) {
+    require __DIR__ . '/browse.tpl.php';
 }

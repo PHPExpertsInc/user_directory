@@ -1,7 +1,12 @@
 <?php
+
 /**
  * User Directory
  *   Copyright (c) 2008, 2011, 2019 Theodore R. Smith <theodore@phpexperts.pro>
+ *   GPG Fingerprint: 4BF8 2613 1C34 87AC D28F  2AD8 EB24 A91D D612 5690
+ *
+ *   https://www.phpexperts.pro/
+ *   https://gitlab.com/phpexperts/user_directory
  *
  * The following code is licensed under a modified BSD License.
  * All of the terms and conditions of the BSD License apply with one
@@ -13,7 +18,7 @@
  *    deritvative work or stand-alone.
  *
  * BSD License: http://www.opensource.org/licenses/bsd-license.php
- **/
+ */
 
 namespace Tests\PHPExperts\UserDirectory\Mocks;
 
@@ -24,6 +29,7 @@ use RuntimeException;
 class SecurityControllerMock implements SecurityControllerI
 {
     public $isLoggedIn = true;
+
     public function isLoggedIn()
     {
         return $this->isLoggedIn;
@@ -31,14 +37,12 @@ class SecurityControllerMock implements SecurityControllerI
 
     public function ensureHasAccess()
     {
-        if (!$this->isLoggedIn())
-        {
+        if (!$this->isLoggedIn()) {
             throw new RuntimeException('User is not logged in', UserManager::NOT_LOGGED_IN);
         }
     }
 
     public function execute($action)
     {
-
     }
 }

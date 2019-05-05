@@ -1,7 +1,12 @@
 <?php
+
 /**
  * User Directory
- *   Copyright (c) 2008, 2012, 2019 Theodore R. Smith <theodore@phpexperts.pro>
+ *   Copyright (c) 2008, 2011, 2019 Theodore R. Smith <theodore@phpexperts.pro>
+ *   GPG Fingerprint: 4BF8 2613 1C34 87AC D28F  2AD8 EB24 A91D D612 5690
+ *
+ *   https://www.phpexperts.pro/
+ *   https://gitlab.com/phpexperts/user_directory
  *
  * The following code is licensed under a modified BSD License.
  * All of the terms and conditions of the BSD License apply with one
@@ -13,7 +18,7 @@
  *    deritvative work or stand-alone.
  *
  * BSD License: http://www.opensource.org/licenses/bsd-license.php
- **/
+ */
 
 namespace PHPExperts\MyDB;
 
@@ -22,15 +27,15 @@ use PDOStatement;
 
 class MyPDO implements MyDBI
 {
-    /** @var PDO **/
+    /** @var PDO * */
     private $pdo;
 
-    /** @var PDOStatement **/
+    /** @var PDOStatement * */
     private $stmt;
 
     public function __construct(MyDBConfigStruct $config)
     {
-        $dsn = sprintf('mysql:dbname=%s;host=%s;port=%d;', $config->database, $config->hostname, $config->port);
+        $dsn       = sprintf('mysql:dbname=%s;host=%s;port=%d;', $config->database, $config->hostname, $config->port);
         $this->pdo = new PDO($dsn, $config->username, $config->password);
     }
 
@@ -41,19 +46,20 @@ class MyPDO implements MyDBI
     }
 
     /**
-     * Queries the database
+     * Queries the database.
      *
-     * @param string $sql
+     * @param string     $sql
      * @param array|null $params
+     *
      * @return bool|PDOStatement
+     *
      * @throws MyDBException
      */
     public function query($sql, array $params = null)
     {
         $stmt = $this->pdo->prepare($sql);
 
-        if (!$stmt->execute($params))
-        {
+        if (!$stmt->execute($params)) {
             // Do NOT show SQL errors (security risk)
             $errorInfo = $stmt->errorInfo();
             error_log(sprintf('SQL error: (%s) - %s',

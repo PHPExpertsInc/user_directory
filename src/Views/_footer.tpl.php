@@ -1,8 +1,8 @@
 <?php
 /**
 * User Directory
-*   Copyright (c) 2008, 2019 Theodore R. Smith <theodore@phpexperts.pro>
-* 
+*   Copyright (c) 2008, 2019 Theodore R. Smith <theodore@phpexperts.pro>.
+*
 * The following code is licensed under a modified BSD License.
 * All of the terms and conditions of the BSD License apply with one
 * exception:
@@ -14,7 +14,6 @@
 *
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
-
 use PHPExperts\UserDirectory\Managers\UserManager;
 
 ?>
@@ -37,9 +36,8 @@ use PHPExperts\UserDirectory\Managers\UserManager;
 <?php
 global $login_status, $registration_status;
 
-if (isset($login_status) && $login_status == UserManager::LOGGED_IN)
-{
-?>
+if (isset($login_status) && $login_status == UserManager::LOGGED_IN) {
+    ?>
                 <li><a href="?action=edit_profile" accesskey="e">Edit Profile</a></li>
                 <li><a href="?action=logout" accesskey="l">Logout</a></li>
 <?php

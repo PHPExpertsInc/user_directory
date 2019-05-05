@@ -1,8 +1,8 @@
 <?php
 /**
 * User Directory
-*   Copyright (c) 2008, 2019 Theodore R. Smith <theodore@phpexperts.pro>
-* 
+*   Copyright (c) 2008, 2019 Theodore R. Smith <theodore@phpexperts.pro>.
+*
 * The following code is licensed under a modified BSD License.
 * All of the terms and conditions of the BSD License apply with one
 * exception:
@@ -14,7 +14,6 @@
 *
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
-
 use PHPExperts\UserDirectory\Managers\UserManager;
 
 echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
@@ -36,9 +35,8 @@ echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
 <?php
 global $login_status;
 
-if (isset($login_status) && $login_status == UserManager::LOGGED_IN)
-{
-?>
+if (isset($login_status) && $login_status == UserManager::LOGGED_IN) {
+    ?>
                 <li><a href="?view=browse" accesskey="b">Browse</a></li>
                 <li><a href="?view=search" accesskey="s">Search</a></li>
 <?php

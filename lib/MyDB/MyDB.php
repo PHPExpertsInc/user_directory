@@ -1,7 +1,12 @@
 <?php
+
 /**
  * User Directory
- *   Copyright (c) 2008, 2012, 2019 Theodore R. Smith <theodore@phpexperts.pro>
+ *   Copyright (c) 2008, 2011, 2019 Theodore R. Smith <theodore@phpexperts.pro>
+ *   GPG Fingerprint: 4BF8 2613 1C34 87AC D28F  2AD8 EB24 A91D D612 5690
+ *
+ *   https://www.phpexperts.pro/
+ *   https://gitlab.com/phpexperts/user_directory
  *
  * The following code is licensed under a modified BSD License.
  * All of the terms and conditions of the BSD License apply with one
@@ -13,7 +18,7 @@
  *    deritvative work or stand-alone.
  *
  * BSD License: http://www.opensource.org/licenses/bsd-license.php
- **/
+ */
 
 namespace PHPExperts\MyDB;
 
@@ -23,13 +28,18 @@ use stdClass;
 class MyDB
 {
     // @codeCoverageIgnoreStart
-    private function __construct() { }
+    private function __construct()
+    {
+    }
+
     // @codeCoverageIgnoreStop
 
     /**
      * @param stdClass|null $config
-     * @param string|null $engineName
+     * @param string|null   $engineName
+     *
      * @return MyDBI
+     *
      * @throws MyDBException
      */
     public static function loadDB(stdClass $config = null, string $engineName = null)
@@ -37,54 +47,46 @@ class MyDB
         static $_config;
 
         // Auto-return the last config
-        if (is_null($config) && !is_null($_config))
-        {
+        if (is_null($config) && !is_null($_config)) {
             $config = $_config;
         }
 
         // Never store passes in plaintext!!
-        if (is_null($config))
-        {
-            if (!file_exists(__DIR__ . '/../../database.config'))
-            {
+        if (is_null($config)) {
+            if (!file_exists(__DIR__ . '/../../database.config')) {
                 throw new MyDBException('Couldn\'t find database.config.', MyDBException::CANT_LOAD_CONFIG_FILE);
             }
 
             $data = file_get_contents(__DIR__ . '/../../database.config');
 
-            if ($data === false)
-            {
+            if ($data === false) {
                 throw new MyDBException('Couldn\'t load database.config.', MyDBException::CANT_LOAD_CONFIG_FILE);
             }
 
-            $data = base64_decode($data);
+            $data   = base64_decode($data);
             $config = json_decode($data);
 
-            if ($config === false || is_null($config))
-            {
+            if ($config === false || is_null($config)) {
                 throw new MyDBException('Couldn\'t successfully parse database.config.', MyDBException::BAD_CONFIG_FILE);
             }
         }
 
         $_config = $config;
 
-        if (!isset($config->engine))
-        {
+        if (!isset($config->engine)) {
             throw new MyDBException('database.config: No database engine specified.', MyDBException::NO_DB_ENGINE);
         }
 
         $useReplication = isset($config->useReplication) ? $config->useReplication : false;
-        $className = $engineName ?? 'PHPExperts\MyDB\MyDB_Engine_' . $config->engine;
+        $className      = $engineName ?? 'PHPExperts\MyDB\MyDB_Engine_' . $config->engine;
 
-        if ($useReplication)
-        {
+        if ($useReplication) {
             $className = 'PHPExperts\MyDB\MyReplicated' . $config->engine;
 
             return new $className($config);
         }
 
-        if (!class_exists($className))
-        {
+        if (!class_exists($className)) {
             throw new MyDBException('database.config: Could not find the DB Engine ' . $className . '.', MyDBException::NO_DB_ENGINE);
         }
 
@@ -97,10 +99,10 @@ class MyDB
     {
         $keys = array();
 
-        # build a regular expression for each parameter
+        // build a regular expression for each parameter
         foreach ($params as $key => &$value) {
             if (is_string($key)) {
-                $keys[] = '/:'.$key.'/';
+                $keys[] = '/:' . $key . '/';
             } else {
                 $keys[] = '/[?]/';
             }
@@ -111,7 +113,9 @@ class MyDB
         }
 
         $query = preg_replace($keys, $params, $query, 1, $count);
-        if (substr($query, -1) != ';') { $query .= ';'; }
+        if (substr($query, -1) != ';') {
+            $query .= ';';
+        }
 
         return $query;
     }

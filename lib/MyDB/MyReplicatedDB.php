@@ -1,7 +1,12 @@
 <?php
+
 /**
  * User Directory
- *   Copyright (c) 2008, 2012, 2019 Theodore R. Smith <theodore@phpexperts.pro>
+ *   Copyright (c) 2008, 2011, 2019 Theodore R. Smith <theodore@phpexperts.pro>
+ *   GPG Fingerprint: 4BF8 2613 1C34 87AC D28F  2AD8 EB24 A91D D612 5690
+ *
+ *   https://www.phpexperts.pro/
+ *   https://gitlab.com/phpexperts/user_directory
  *
  * The following code is licensed under a modified BSD License.
  * All of the terms and conditions of the BSD License apply with one
@@ -13,7 +18,7 @@
  *    deritvative work or stand-alone.
  *
  * BSD License: http://www.opensource.org/licenses/bsd-license.php
- **/
+ */
 
 namespace PHPExperts\MyDB;
 
@@ -22,22 +27,23 @@ use PDOStatement;
 abstract class MyReplicatedDB implements MyDBI
 {
     /**
-     * DB handle that does all the reading
+     * DB handle that does all the reading.
+     *
      * @var MyDBI
-     * @access protected
      */
     protected $dbReader;
 
     /**
-     * DB handle that does all the writing
+     * DB handle that does all the writing.
+     *
      * @var MyDBI
-     * @access protected
      */
     protected $dbWriter;
 
     /**
      * @param string $sql
-     * @param array $params
+     * @param array  $params
+     *
      * @return PDOStatement
      */
     public function query($sql, array $params = null)
@@ -45,12 +51,9 @@ abstract class MyReplicatedDB implements MyDBI
         $operation = strtoupper(substr($sql, 0, 6));
 
         // Detect read operation
-        if ($operation == 'SELECT')
-        {
+        if ($operation == 'SELECT') {
             return $this->dbReader->query($sql, $params);
-        }
-        else
-        {
+        } else {
             return $this->dbWriter->query($sql, $params);
         }
     }
@@ -84,5 +87,4 @@ abstract class MyReplicatedDB implements MyDBI
     {
         return $this->dbWriter->lastInsertId();
     }
-
 }

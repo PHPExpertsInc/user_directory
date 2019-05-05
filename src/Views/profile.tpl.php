@@ -1,8 +1,8 @@
 <?php
 /**
 * User Directory
-*   Copyright (c) 2010, 2019 Theodore R. Smith <theodore@phpexperts.pro>
-* 
+*   Copyright (c) 2010, 2019 Theodore R. Smith <theodore@phpexperts.pro>.
+*
 * The following code is licensed under a modified BSD License.
 * All of the terms and conditions of the BSD License apply with one
 * exception:
@@ -14,7 +14,6 @@
 *
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
-
 use PHPExperts\UserDirectory\Managers\UserManager;
 
 global $action, $registration_status, $username;
@@ -22,28 +21,25 @@ global $action, $registration_status, $username;
         <div id="profile">
 <?php
 
-if (isset($_SESSION['userInfo']))
-{
-	$username = $_SESSION['userInfo']->username;
-	$firstName = $_SESSION['userInfo']->firstName;
-	$lastName = $_SESSION['userInfo']->lastName;
-	$email = $_SESSION['userInfo']->email;
+if (isset($_SESSION['userInfo'])) {
+    $username  = $_SESSION['userInfo']->username;
+    $firstName = $_SESSION['userInfo']->firstName;
+    $lastName  = $_SESSION['userInfo']->lastName;
+    $email     = $_SESSION['userInfo']->email;
 }
 
-$registration_potentials = array(UserManager::LOGGED_IN => 'Successfully registered.',
-                                 UserManager::UPDATED_PROFILE => 'Profile successfully updated.', 
-                                 UserManager::ERROR_BLANK_USER => 'A username is required.',
-                                 UserManager::ERROR_BLANK_PASS => 'Error: No password was entered.',
-                                 UserManager::ERROR_BLANK_FNAME => 'Error: First name is required.',
-                                 UserManager::ERROR_BLANK_LNAME => 'Error: Last name is required.',
-                                 UserManager::ERROR_BLANK_EMAIL => 'Error: Email is required.',
-                                 UserManager::ERROR_USER_EXISTS => 'Error: Username exists. Please try again.',
-                                 UserManager::ERROR_PASS_MISMATCH => 'Error: The passwords do not match.');
+$registration_potentials = array(UserManager::LOGGED_IN           => 'Successfully registered.',
+                                 UserManager::UPDATED_PROFILE     => 'Profile successfully updated.',
+                                 UserManager::ERROR_BLANK_USER    => 'A username is required.',
+                                 UserManager::ERROR_BLANK_PASS    => 'Error: No password was entered.',
+                                 UserManager::ERROR_BLANK_FNAME   => 'Error: First name is required.',
+                                 UserManager::ERROR_BLANK_LNAME   => 'Error: Last name is required.',
+                                 UserManager::ERROR_BLANK_EMAIL   => 'Error: Email is required.',
+                                 UserManager::ERROR_USER_EXISTS   => 'Error: Username exists. Please try again.',
+                                 UserManager::ERROR_PASS_MISMATCH => 'Error: The passwords do not match.', );
 
-
-if ($registration_status != '')
-{
-?>
+if ($registration_status != '') {
+    ?>
             <h3><?php echo $registration_potentials[$registration_status]; ?></h3>
 <?php
 }

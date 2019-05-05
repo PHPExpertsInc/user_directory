@@ -1,7 +1,12 @@
 <?php
+
 /**
  * User Directory
- *   Copyright (c) 2008, 2019 Theodore R. Smith <theodore@phpexperts.pro>
+ *   Copyright (c) 2008, 2011, 2019 Theodore R. Smith <theodore@phpexperts.pro>
+ *   GPG Fingerprint: 4BF8 2613 1C34 87AC D28F  2AD8 EB24 A91D D612 5690
+ *
+ *   https://www.phpexperts.pro/
+ *   https://gitlab.com/phpexperts/user_directory
  *
  * The following code is licensed under a modified BSD License.
  * All of the terms and conditions of the BSD License apply with one
@@ -13,21 +18,23 @@
  *    deritvative work or stand-alone.
  *
  * BSD License: http://www.opensource.org/licenses/bsd-license.php
- **/
+ */
 
 namespace PHPExperts\UserDirectory\Managers;
-
-use Exception;
-use function PHPExperts\MyDB\getDBHandler;
-use function PHPExperts\MyDB\queryDB;
 
 interface UserManagerI
 {
     public function setUsername($username);
+
     public function getUserInfo();
+
     public function createProfile($username, $password, $confirm, $firstName, $lastName, $email);
+
     public function updateProfile($username, $password, $confirm, $firstName, $lastName, $email);
+
     public function validatePassword($password);
+
     public function searchUsers(array $searchParams);
+
     public function getAllUsers();
 }
