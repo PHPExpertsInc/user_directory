@@ -41,19 +41,19 @@ class MyDBHelperFunctionsTest extends TestCase
         }
         catch (MyDBException $e)
         {
-            $this->assertEquals(MyDBException::CANT_LOAD_CONFIG_FILE, $e->getCode());
+            self::assertEquals(MyDBException::CANT_LOAD_CONFIG_FILE, $e->getCode());
         }
 
         // Test create MyDB from scratch
         // (change current directory to be able to find config path)
         chdir(dirname(__FILE__) . '/..');
         $pdo = getDBHandler();
-        $this->assertInstanceOf(MyDBI::class, $pdo, 'PDO object is not of type PDO');;
+        self::assertInstanceOf(MyDBI::class, $pdo, 'PDO object is not of type PDO');;
 
         // Test with custom config
         $config = MyDatabaseTestSuite::getPDOConfig();
         $new_pdo = getDBHandler($config, MyDB_Engine_Mock::class);
-        $this->assertInstanceOf(MyDBI::class, $new_pdo, 'PDO object is not of type PDO');;
+        self::assertInstanceOf(MyDBI::class, $new_pdo, 'PDO object is not of type PDO');;
     }
 
     /**
@@ -71,14 +71,14 @@ class MyDBHelperFunctionsTest extends TestCase
         // Test select w/o parameters
         $stmt = queryDB('SELECT * FROM Users WHERE username=\'' . $username . '\'');
         $userInfo = $stmt->fetchObject();
-        $this->assertNotNull($userInfo, 'Unsuccessful query');
-        $this->assertSame($username, $userInfo->username);
+        self::assertNotNull($userInfo, 'Unsuccessful query');
+        self::assertSame($username, $userInfo->username);
 
         // Test select w/ parameters
         $stmt = queryDB('SELECT * FROM Users WHERE username=?', array($username));
         $userInfo = $stmt->fetchObject();
-        $this->assertNotNull($userInfo, 'Unsuccessful query');
-        $this->assertSame($username, $userInfo->username);
+        self::assertNotNull($userInfo, 'Unsuccessful query');
+        self::assertSame($username, $userInfo->username);
 
         // Test select w/ malformed SQL
         $this->expectException(MyDBException::class);

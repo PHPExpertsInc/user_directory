@@ -66,7 +66,7 @@ class MyPDOTest extends TestCase
         ];
 
         $qs = 'INSERT INTO Users (username, password) VALUES (?, ?)';
-        $this->assertInstanceOf(PDOStatement::class, $this->MyPDO->query($qs, array(self::$userInfo['name'], self::$userInfo['pass'])));
+        self::assertInstanceOf(PDOStatement::class, $this->MyPDO->query($qs, array(self::$userInfo['name'], self::$userInfo['pass'])));
     }
 
     /**
@@ -77,12 +77,12 @@ class MyPDOTest extends TestCase
         $user = self::$userInfo;
         $qs = 'SELECT * FROM Users WHERE username=?';
         $stmt = $this->MyPDO->query($qs, array($user['name']));
-        $this->assertInstanceOf(PDOStatement::class, $stmt);
+        self::assertInstanceOf(PDOStatement::class, $stmt);
 
         $userInfo = $stmt->fetchObject();
-        $this->assertInstanceOf(stdClass::class, $userInfo);
-        $this->assertObjectHasAttribute('username', $userInfo);
-        $this->assertEquals($user['name'], $userInfo->username);
+        self::assertInstanceOf(stdClass::class, $userInfo);
+        self::assertObjectHasAttribute('username', $userInfo);
+        self::assertEquals($user['name'], $userInfo->username);
     }
 
     /**
@@ -95,7 +95,7 @@ class MyPDOTest extends TestCase
         $GLOBALS['users'] = $user['pass'];
 
         $qs = 'UPDATE Users SET password=? WHERE username=?';
-        $this->assertInstanceOf(PDOStatement::class, $this->MyPDO->query($qs, array($user['name'], $user['pass'])));
+        self::assertInstanceOf(PDOStatement::class, $this->MyPDO->query($qs, array($user['name'], $user['pass'])));
 
         // Verify
         $this->testCanReadData();
@@ -112,8 +112,8 @@ class MyPDOTest extends TestCase
         $this->MyPDO->query($qs, array($user['name']));
 
         $userInfo = $this->MyPDO->fetchArray();
-        $this->assertIsArray($userInfo);
-        $this->assertEquals($user['name'], $userInfo['username']);
+        self::assertIsArray($userInfo);
+        self::assertEquals($user['name'], $userInfo['username']);
     }
 
     /**
@@ -127,7 +127,7 @@ class MyPDOTest extends TestCase
         $this->MyPDO->query($qs, array($user['name']));
 
         $userInfo = $this->MyPDO->fetchObject();
-        $this->assertInstanceOf(stdClass::class, $userInfo);
-        $this->assertEquals($user['name'], $userInfo->username);
+        self::assertInstanceOf(stdClass::class, $userInfo);
+        self::assertEquals($user['name'], $userInfo->username);
     }
 }

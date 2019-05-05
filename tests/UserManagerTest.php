@@ -100,7 +100,7 @@ class UserManagerTest extends TestCase {
 	public function test__construct()
 	{
 		// Test without username
-		$this->assertInstanceOf(UserManager::class, new UserManager());
+		self::assertInstanceOf(UserManager::class, new UserManager());
 	}
 
 	/**
@@ -119,28 +119,28 @@ class UserManagerTest extends TestCase {
 		$ui->password = uniqid();
 		
 		// Test for blank username
-		$this->assertEquals($this->UserManager->createProfile('', '', '', '', '', ''), UserManager::ERROR_BLANK_USER, 'Blank user test');
+		self::assertEquals($this->UserManager->createProfile('', '', '', '', '', ''), UserManager::ERROR_BLANK_USER, 'Blank user test');
 
 		// Test for blank password
-		$this->assertEquals($this->UserManager->createProfile($ui->username, '', '', '', '', ''), UserManager::ERROR_BLANK_PASS, 'Blank password test');
+		self::assertEquals($this->UserManager->createProfile($ui->username, '', '', '', '', ''), UserManager::ERROR_BLANK_PASS, 'Blank password test');
 
 		// Test for non-matching passwords
-		$this->assertEquals($this->UserManager->createProfile($ui->username, $ui->password, '', '', '', ''), UserManager::ERROR_PASS_MISMATCH, 'Password mismatch test');
+		self::assertEquals($this->UserManager->createProfile($ui->username, $ui->password, '', '', '', ''), UserManager::ERROR_PASS_MISMATCH, 'Password mismatch test');
 
 		// Test for blank first name
-		$this->assertEquals($this->UserManager->createProfile($ui->username, $ui->password, $ui->password, '', '', ''), UserManager::ERROR_BLANK_FNAME, 'Blank first name test');
+		self::assertEquals($this->UserManager->createProfile($ui->username, $ui->password, $ui->password, '', '', ''), UserManager::ERROR_BLANK_FNAME, 'Blank first name test');
 
 		// Test for blank last name
-		$this->assertEquals($this->UserManager->createProfile($ui->username, $ui->password, $ui->password, $ui->firstName, '', ''), UserManager::ERROR_BLANK_LNAME, 'Blank last name test');
+		self::assertEquals($this->UserManager->createProfile($ui->username, $ui->password, $ui->password, $ui->firstName, '', ''), UserManager::ERROR_BLANK_LNAME, 'Blank last name test');
 								
 		// Test for blank email
-		$this->assertEquals($this->UserManager->createProfile($ui->username, $ui->password, $ui->password, $ui->firstName, $ui->lastName, ''), UserManager::ERROR_BLANK_EMAIL, 'Blank email test');
+		self::assertEquals($this->UserManager->createProfile($ui->username, $ui->password, $ui->password, $ui->firstName, $ui->lastName, ''), UserManager::ERROR_BLANK_EMAIL, 'Blank email test');
 		
 		// Test for succesful registration
-		$this->assertEquals($this->UserManager->createProfile($ui->username, $ui->password, $ui->password, $ui->firstName, $ui->lastName, $ui->email), UserManager::REGISTERED, 'Successful registration test');
+		self::assertEquals($this->UserManager->createProfile($ui->username, $ui->password, $ui->password, $ui->firstName, $ui->lastName, $ui->email), UserManager::REGISTERED, 'Successful registration test');
 		
 		// Test for duplicate registration
-		$this->assertEquals($this->UserManager->createProfile($ui->username, $ui->password, $ui->password, $ui->firstName, $ui->lastName, $ui->email), UserManager::ERROR_USER_EXISTS, 'Duplicate registration test');
+		self::assertEquals($this->UserManager->createProfile($ui->username, $ui->password, $ui->password, $ui->firstName, $ui->lastName, $ui->email), UserManager::ERROR_USER_EXISTS, 'Duplicate registration test');
 	}
 	
 	/**
@@ -170,16 +170,16 @@ class UserManagerTest extends TestCase {
 		
 		$lastRegistered = self::getLastRegistered();
 		$userInfo = $this->UserManager->getUserInfo();
-		$this->assertInstanceOf(UserInfoStruct::class, $userInfo);
+		self::assertInstanceOf(UserInfoStruct::class, $userInfo);
 
-		$this->assertTrue(print_r($lastRegistered, true) == print_r($userInfo, true), 'getUserInfo() is not identical to last registration');
+		self::assertTrue(print_r($lastRegistered, true) == print_r($userInfo, true), 'getUserInfo() is not identical to last registration');
 
 		// Test getting userInfo from the session
 		$_SESSION['userInfo'] = $lastRegistered;
 
 		$userManager = new UserManager;
 		$newUserInfo = $userManager->getUserInfo();
-		$this->assertTrue(print_r($lastRegistered, true) == print_r($newUserInfo, true), 'getUserInfo() did not retrieve the last registration via the _SESSION data');
+		self::assertTrue(print_r($lastRegistered, true) == print_r($newUserInfo, true), 'getUserInfo() did not retrieve the last registration via the _SESSION data');
 	}
 	
 	/**
@@ -200,11 +200,11 @@ class UserManagerTest extends TestCase {
 		
 		$info = $this->UserManager->getAllUsers();
 
-		$this->assertTrue(is_array($info), 'UserInfo is not an array');
+		self::assertTrue(is_array($info), 'UserInfo is not an array');
 		$count = count($info);
-		$this->assertTrue($count > 0, 'UserInfo is empty');
-		$this->assertInstanceOf(UserInfoStruct::class, $info[$count - 1], 'Last UserInfo item is not an UserInfoStruct object');
-		$this->assertTrue(print_r($lastRegistered, true) == print_r($info[$count - 1], true), 'Last UserInfo item is not the same as the registered user');
+		self::assertTrue($count > 0, 'UserInfo is empty');
+		self::assertInstanceOf(UserInfoStruct::class, $info[$count - 1], 'Last UserInfo item is not an UserInfoStruct object');
+		self::assertTrue(print_r($lastRegistered, true) == print_r($info[$count - 1], true), 'Last UserInfo item is not the same as the registered user');
 	}
 	
 	/**
@@ -219,13 +219,13 @@ class UserManagerTest extends TestCase {
 		
 		// Find something that we know exists (last registered username)
 		$userInfoArray = $this->UserManager->searchUsers(array('username' => $lastRegistered->username));
-		$this->assertTrue(is_array($userInfoArray));
-		$this->assertTrue(count($userInfoArray) == 1);
-		$this->assertSame($lastRegistered->username, $userInfoArray[0]->username);
+		self::assertTrue(is_array($userInfoArray));
+		self::assertTrue(count($userInfoArray) == 1);
+		self::assertSame($lastRegistered->username, $userInfoArray[0]->username);
 
 		// Find something that we know doesn't exist (new uniqid())
 		$userInfoArray = $this->UserManager->searchUsers(array('username' => uniqid()));
-		$this->assertSame(null, $userInfoArray, 'unsuccessful search did not return null');		
+		self::assertSame(null, $userInfoArray, 'unsuccessful search did not return null');		
 	}
 	
 	/**
@@ -240,7 +240,7 @@ class UserManagerTest extends TestCase {
 		$this->UserManager->setUsername($username);
 	
 		$userInfo = $this->UserManager->getUserInfo();
-		$this->assertSame($username, $userInfo->username);
+		self::assertSame($username, $userInfo->username);
 	}
 	
 	/**
@@ -253,25 +253,25 @@ class UserManagerTest extends TestCase {
 		$this->registerRandomUser();
 		
 		// Test for blank username
-		$this->assertEquals($this->UserManager->updateProfile('', '', '', '', '', ''), UserManager::ERROR_BLANK_USER, 'Blank user test');
+		self::assertEquals($this->UserManager->updateProfile('', '', '', '', '', ''), UserManager::ERROR_BLANK_USER, 'Blank user test');
 
 		// Test for blank password
-		$this->assertEquals($this->UserManager->updateProfile('tsmith', '', '', '', '', ''), UserManager::ERROR_BLANK_PASS, 'Blank password test');
+		self::assertEquals($this->UserManager->updateProfile('tsmith', '', '', '', '', ''), UserManager::ERROR_BLANK_PASS, 'Blank password test');
 
 		// Test for non-matching passwords
-		$this->assertEquals($this->UserManager->updateProfile('tsmith', 'potato', '', '', '', ''), UserManager::ERROR_PASS_MISMATCH, 'Password mismatch test');
+		self::assertEquals($this->UserManager->updateProfile('tsmith', 'potato', '', '', '', ''), UserManager::ERROR_PASS_MISMATCH, 'Password mismatch test');
 
 		// Test for blank first name
-		$this->assertEquals($this->UserManager->updateProfile('tsmith', 'potato', 'potato', '', '', ''), UserManager::ERROR_BLANK_FNAME, 'Blank first name test');
+		self::assertEquals($this->UserManager->updateProfile('tsmith', 'potato', 'potato', '', '', ''), UserManager::ERROR_BLANK_FNAME, 'Blank first name test');
 
 		// Test for blank last name
-		$this->assertEquals($this->UserManager->updateProfile('tsmith', 'potato', 'potato', 'Ted', '', ''), UserManager::ERROR_BLANK_LNAME, 'Blank last name test');
+		self::assertEquals($this->UserManager->updateProfile('tsmith', 'potato', 'potato', 'Ted', '', ''), UserManager::ERROR_BLANK_LNAME, 'Blank last name test');
 
 		// Test for blank email
-		$this->assertEquals($this->UserManager->updateProfile('tsmith', 'potato', 'potato', 'Ted', 'Smith', ''), UserManager::ERROR_BLANK_EMAIL, 'Blank email test');
+		self::assertEquals($this->UserManager->updateProfile('tsmith', 'potato', 'potato', 'Ted', 'Smith', ''), UserManager::ERROR_BLANK_EMAIL, 'Blank email test');
 
 		// Test for succesful registration
-		$this->assertEquals($this->UserManager->updateProfile('tsmith', 'potato', 'potato', 'Ted', 'Smith', 'tsmith@brokertools.us'), UserManager::UPDATED_PROFILE, 'Successful registration test');
+		self::assertEquals($this->UserManager->updateProfile('tsmith', 'potato', 'potato', 'Ted', 'Smith', 'tsmith@brokertools.us'), UserManager::UPDATED_PROFILE, 'Successful registration test');
 
 		// Test for duplicate registration
 		$this->registerRandomUser();
@@ -281,7 +281,7 @@ class UserManagerTest extends TestCase {
 		}
 		catch(Exception $e)
 		{
-			$this->assertSame(101, $e->getCode(), 'inserted a duplicate email address');
+			self::assertSame(101, $e->getCode(), 'inserted a duplicate email address');
 		}
 	}
 	
@@ -296,11 +296,11 @@ class UserManagerTest extends TestCase {
 		try
 		{
 			$this->UserManager->validatePassword(uniqid());
-			$this->assertTrue(false, 'validating worked without login attempt');
+			self::assertTrue(false, 'validating worked without login attempt');
 		}
 		catch (Exception $e)
 		{
-			$this->assertSame(UserManager::ERROR_BLANK_USER, $e->getCode(), 'Incorrect password validated');
+			self::assertSame(UserManager::ERROR_BLANK_USER, $e->getCode(), 'Incorrect password validated');
 		}
 		
 		// Make sure we set the password
@@ -308,10 +308,10 @@ class UserManagerTest extends TestCase {
 		$this->registerRandomUser($password);
 		
 		// Test incorrect password
-		$this->assertSame(UserManager::ERROR_INCORRECT_PASS, $this->UserManager->validatePassword(uniqid()), 'Incorrect password validated');
+		self::assertSame(UserManager::ERROR_INCORRECT_PASS, $this->UserManager->validatePassword(uniqid()), 'Incorrect password validated');
 
 		// Test correct password
-		$this->assertSame(UserManager::CORRECT_PASSWORD, $this->UserManager->validatePassword($password), 'Correct password did not validate');
+		self::assertSame(UserManager::CORRECT_PASSWORD, $this->UserManager->validatePassword($password), 'Correct password did not validate');
 	}
 
 }

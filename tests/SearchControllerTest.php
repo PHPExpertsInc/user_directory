@@ -70,7 +70,7 @@ class SearchControllerTest extends TestCase {
 	public function test__construct()
 	{
 		// just make sure nothing goes wrong
-		$this->assertInstanceOf(SearchController::class, new SearchController());
+		self::assertInstanceOf(SearchController::class, new SearchController());
 	}
 
 	/**
@@ -89,17 +89,17 @@ class SearchControllerTest extends TestCase {
 		try
 		{
 			$this->SearchController->search();
-			$this->assertTrue(false, 'worked without being logged in.');
+			self::assertTrue(false, 'worked without being logged in.');
 		}
 		catch(Exception $e)
 		{
-			$this->assertSame(UserManager::NOT_LOGGED_IN, $e->getCode(), 'Didn\'t expect exception "' . $e->getMessage() . '".');
+			self::assertSame(UserManager::NOT_LOGGED_IN, $e->getCode(), 'Didn\'t expect exception "' . $e->getMessage() . '".');
 		}
 		
 		$headers_list = headers_list();
 		if (!empty($headers_list))
 		{
-			$this->assertContains('Location: http://' . $_SERVER['HTTP_HOST'] . '/user_directory/', $headers_list);
+			self::assertContains('Location: http://' . $_SERVER['HTTP_HOST'] . '/user_directory/', $headers_list);
 		}
 		
 		// 2. Test with being logged in
@@ -108,20 +108,20 @@ class SearchControllerTest extends TestCase {
 
 		
 		// 2a. Test with no input
-		$this->assertFalse($this->SearchController->search(), 'worked with no input.');
+		self::assertFalse($this->SearchController->search(), 'worked with no input.');
 		
 		// 2b. Test with bad input
 		$_POST['search'] = true;
 		$_POST['username'] = uniqid();
 		$_REQUEST = $_POST;
 		
-		$this->assertNull($this->SearchController->search(), 'worked with bad input.');
+		self::assertNull($this->SearchController->search(), 'worked with bad input.');
 		
 		// 2c. Test with good input
 		$_REQUEST['username'] = 'testuser';
 		$users = $this->SearchController->search();
-		$this->assertIsArray($users);
-		$this->assertInstanceOf(UserInfoStruct::class, $users[0]);
+		self::assertIsArray($users);
+		self::assertInstanceOf(UserInfoStruct::class, $users[0]);
 	}
 
 	/**
@@ -130,7 +130,7 @@ class SearchControllerTest extends TestCase {
 	public function testGetSearchQueryString()
 	{
 		// 1. Test in an improper context.
-		$this->assertEmpty($this->SearchController->getSearchQueryString());
+		self::assertEmpty($this->SearchController->getSearchQueryString());
 
 		// 2. Test in a proper context.
 		$_GET['page'] = 1;
@@ -140,7 +140,7 @@ class SearchControllerTest extends TestCase {
 		$_POST['firstName'] = 'Ted';
 
 		$this->SearchController->search();
-		$this->assertEquals('username=testuser&firstName=Ted', $this->SearchController->getSearchQueryString());
+		self::assertEquals('username=testuser&firstName=Ted', $this->SearchController->getSearchQueryString());
 	}
 
 	/**
@@ -148,7 +148,7 @@ class SearchControllerTest extends TestCase {
 	 */
 	public function testHooksIntoControllerCommandPattern()
 	{
-		$this->assertFalse($this->SearchController->execute('non-existing action'));
+		self::assertFalse($this->SearchController->execute('non-existing action'));
 	}
 
 
@@ -160,6 +160,6 @@ class SearchControllerTest extends TestCase {
 		$this->guard->isLoggedIn = true;
 
 		$data = $this->SearchController->execute('search');
-		$this->assertIsArray($data);
+		self::assertIsArray($data);
 	}
 }

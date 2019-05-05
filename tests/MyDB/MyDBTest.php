@@ -31,7 +31,7 @@ class MyDBTest extends TestCase
     public function testLoadAPdoDb()
     {
         $config = MyDatabaseTestSuite::getRealPDOConfig();
-        $this->assertInstanceOf(MyPDO::class, MyDB::loadDB($config));
+        self::assertInstanceOf(MyPDO::class, MyDB::loadDB($config));
     }
 
     /**
@@ -40,6 +40,6 @@ class MyDBTest extends TestCase
     public function testLoadAReplicatedPdoDb()
     {
         $config = MyDatabaseTestSuite::getReplicatedPDOConfig();
-        $this->assertInstanceOf(MyReplicatedPDO::class, MyDB::loadDB($config));
+        self::assertInstanceOf(MyReplicatedPDO::class, MyDB::loadDB($config));
     }
 }

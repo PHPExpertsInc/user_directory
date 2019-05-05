@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1ab68a7e-47cc-4431-b8d4-1fe89a511d11" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitattributes" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/controllers/SecurityControllerI.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor-bin/phpunit8/composer.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor-bin/phpunit8/composer.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor-bin/require/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/user_directory.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/user_directory.iml" afterDir="false" />
@@ -772,7 +776,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14618000" />
+    <option name="totallyTimeSpent" value="14966000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1920" y="0" width="1920" height="1080" extended-state="6" />
