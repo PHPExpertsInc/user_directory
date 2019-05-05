@@ -22,14 +22,18 @@ use PHPExperts\MyDB\MyDB;
 
 class MyReplicatedDBTest extends MyPDOTest
 {
-    protected function setUp()
+    protected function setUp(): void
     {
+        parent::setUp();
+
         $config = MyDatabaseTestSuite::getReplicatedPDOConfig();
         $this->MyPDO = MyDB::loadDB($config);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
+        parent::tearDown();
+
         $this->MyPDO = null;
     }
 

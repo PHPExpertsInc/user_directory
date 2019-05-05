@@ -36,11 +36,12 @@ class SecurityControllerTest extends TestCase
 	/**
 	 * Prepares the environment before running a test.
 	 */
-	protected function setUp()
-	{
-		$_SERVER['HTTP_HOST'] = 'localhost';
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $_SERVER['HTTP_HOST'] = 'localhost';
 		session_start();
-		parent::setUp();
 
 		$this->guard = new SecurityController;
 	}
@@ -48,11 +49,12 @@ class SecurityControllerTest extends TestCase
 	/**
 	 * Cleans up the environment after running a test.
 	 */
-	protected function tearDown()
-	{
-		session_destroy();
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        session_destroy();
 		header_remove();
-		parent::tearDown();
 	}
 
 	/**
@@ -63,15 +65,15 @@ class SecurityControllerTest extends TestCase
 	public function testIsLoggedIn()
 	{
 		// 1. Test with no input
-		$this->assertFalse($this->guard->isLoggedIn(), 'worked with no input.');
+		self::assertFalse($this->guard->isLoggedIn(), 'worked with no input.');
 
 		// 2. Test with bad input
 		$_SESSION['userInfo'] = uniqid();
-		$this->assertFalse($this->guard->isLoggedIn(), 'worked with bad input.');
+		self::assertFalse($this->guard->isLoggedIn(), 'worked with bad input.');
 
 		// 3. Test with good input
 		self::simulateLogin();
-		$this->assertTrue($this->guard->isLoggedIn(), 'didn\'t work with good input.');
+		self::assertTrue($this->guard->isLoggedIn(), 'didn\'t work with good input.');
 	}
 
 	/**
@@ -85,22 +87,22 @@ class SecurityControllerTest extends TestCase
 		try
 		{
 			$this->guard->ensureHasAccess();
-			$this->assertTrue(false, 'worked without being logged in.');
+			self::assertTrue(false, 'worked without being logged in.');
 		}
 		catch(Exception $e)
 		{
-			$this->assertEquals(UserManager::NOT_LOGGED_IN, $e->getCode(), 'Didn\'t expect exception "' . $e->getMessage() . '".');
+			self::assertEquals(UserManager::NOT_LOGGED_IN, $e->getCode(), 'Didn\'t expect exception "' . $e->getMessage() . '".');
 		}
 
 		$headers_list = headers_list();
 		if (!empty($headers_list))
 		{
-			$this->assertContains('Location: http://' . $_SERVER['HTTP_HOST'] . '/user_directory/', $headers_list);
+			self::assertContains('Location: http://' . $_SERVER['HTTP_HOST'] . '/user_directory/', $headers_list);
 		}
 
 		// 2. Test while being logged in
 		self::simulateLogin();
-		$this->assertEquals(null, $this->guard->ensureHasAccess());
+		self::assertEquals(null, $this->guard->ensureHasAccess());
 	}
 
 }

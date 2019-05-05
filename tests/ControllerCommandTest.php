@@ -28,7 +28,7 @@ class ControllerCommandTest extends TestCase
 	 */
 	public function testHandleMissingCommand()
 	{
-		$this->assertNull(ControllerCommandFactory::execute(''));
+		self::assertNull(ControllerCommandFactory::execute(''));
 	}
 
 	public function testHandleInvalidCommand()
@@ -39,16 +39,16 @@ class ControllerCommandTest extends TestCase
 		}
 		catch (Exception $e)
 		{
-			$this->assertEquals($e->getCode(), ControllerCommandFactory::ERROR_INVALID_ACTION);
+			self::assertEquals($e->getCode(), ControllerCommandFactory::ERROR_INVALID_ACTION);
 		}
 	}
 	
 	public function testExecuteValidCommand()
 	{
 		$data = ControllerCommandFactory::execute('login');
-		$this->assertInternalType('array', $data);
-		$this->assertTrue(isset($data['login_status']));
-		$this->assertEquals($data['login_status'], false);
+		self::assertIsArray($data);
+		self::assertTrue(isset($data['login_status']));
+		self::assertEquals($data['login_status'], false);
 	}
 }
 
