@@ -2,7 +2,11 @@
 
 /**
  * User Directory
- *   Copyright (c) 2008, 2019 Theodore R. Smith <theodore@phpexperts.pro>
+ *   Copyright (c) 2008, 2011, 2019 Theodore R. Smith <theodore@phpexperts.pro>
+ *   GPG Fingerprint: 4BF8 2613 1C34 87AC D28F  2AD8 EB24 A91D D612 5690
+ *
+ *   https://www.phpexperts.pro/
+ *   https://gitlab.com/phpexperts/user_directory
  *
  * The following code is licensed under a modified BSD License.
  * All of the terms and conditions of the BSD License apply with one
@@ -14,7 +18,7 @@
  *    deritvative work or stand-alone.
  *
  * BSD License: http://www.opensource.org/licenses/bsd-license.php
- **/
+ */
 
 namespace Tests\PHPExperts\MyDB;
 
@@ -28,17 +32,14 @@ use Tests\PHPExperts\UserDirectory\Mocks\MyDB_Engine_Mock;
 class MyDBHelperFunctionsTest extends TestCase
 {
     /**
-     * Tests getDBHandler()
+     * Tests getDBHandler().
      */
     public function testGetDbHandler()
     {
         // Test with a missing config file
-        try
-        {
+        try {
             getDBHandler();
-        }
-        catch (MyDBException $e)
-        {
+        } catch (MyDBException $e) {
             self::assertEquals(MyDBException::CANT_LOAD_CONFIG_FILE, $e->getCode());
         }
 
@@ -46,16 +47,16 @@ class MyDBHelperFunctionsTest extends TestCase
         // (change current directory to be able to find config path)
         chdir(dirname(__FILE__) . '/..');
         $pdo = getDBHandler();
-        self::assertInstanceOf(MyDBI::class, $pdo, 'PDO object is not of type PDO');;
+        self::assertInstanceOf(MyDBI::class, $pdo, 'PDO object is not of type PDO');
 
         // Test with custom config
-        $config = MyDatabaseTestSuite::getPDOConfig();
+        $config  = MyDatabaseTestSuite::getPDOConfig();
         $new_pdo = getDBHandler($config, MyDB_Engine_Mock::class);
-        self::assertInstanceOf(MyDBI::class, $new_pdo, 'PDO object is not of type PDO');;
+        self::assertInstanceOf(MyDBI::class, $new_pdo, 'PDO object is not of type PDO');
     }
 
     /**
-     * Tests queryDB()
+     * Tests queryDB().
      */
     public function testQueryDb()
     {
@@ -67,13 +68,13 @@ class MyDBHelperFunctionsTest extends TestCase
         queryDB('INSERT INTO Users (username, password) VALUES (\'' . $username . '\', \'' . uniqid() . '\')');
 
         // Test select w/o parameters
-        $stmt = queryDB('SELECT * FROM Users WHERE username=\'' . $username . '\'');
+        $stmt     = queryDB('SELECT * FROM Users WHERE username=\'' . $username . '\'');
         $userInfo = $stmt->fetchObject();
         self::assertNotNull($userInfo, 'Unsuccessful query');
         self::assertSame($username, $userInfo->username);
 
         // Test select w/ parameters
-        $stmt = queryDB('SELECT * FROM Users WHERE username=?', array($username));
+        $stmt     = queryDB('SELECT * FROM Users WHERE username=?', array($username));
         $userInfo = $stmt->fetchObject();
         self::assertNotNull($userInfo, 'Unsuccessful query');
         self::assertSame($username, $userInfo->username);

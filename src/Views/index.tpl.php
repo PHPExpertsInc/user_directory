@@ -1,8 +1,8 @@
 <?php
 /**
 * User Directory
-*   Copyright (c) 2008, 2019 Theodore R. Smith <theodore@phpexperts.pro>
-* 
+*   Copyright (c) 2008, 2019 Theodore R. Smith <theodore@phpexperts.pro>.
+*
 * The following code is licensed under a modified BSD License.
 * All of the terms and conditions of the BSD License apply with one
 * exception:
@@ -14,13 +14,16 @@
 *
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
-
 use PHPExperts\UserDirectory\Managers\UserManager;
 
 global $action, $login_status, $registration_status;
 
-if (!isset($login_status)) { $login_status = ''; }
-if (!isset($registration_status)) { $registration_status = ''; }
+if (!isset($login_status)) {
+    $login_status = '';
+}
+if (!isset($registration_status)) {
+    $registration_status = '';
+}
 ?>
 <script type="text/javascript">
     function show(name)
@@ -36,35 +39,29 @@ if (!isset($registration_status)) { $registration_status = ''; }
     }
 </script>
 <?php
-if ($login_status == UserManager::LOGGED_IN)
-{
-?>
+if ($login_status == UserManager::LOGGED_IN) {
+    ?>
             <p>Hi, <?php echo $_SESSION['userInfo']->firstName; ?>. You are now logged in.</p>
 <?php
 }
 ?>
             <p>Welcome to the Portal user directory.</p>
 <?php
-if ($login_status != UserManager::LOGGED_IN && $registration_status != UserManager::REGISTERED)
-{
+if ($login_status != UserManager::LOGGED_IN && $registration_status != UserManager::REGISTERED) {
     $instructions = 'Before you get started, be sure to ';
 
-    if ($login_status != UserManager::LOGGED_IN)
-    {
+    if ($login_status != UserManager::LOGGED_IN) {
         $instructions .= '<a onclick="show(\'login\'); this.href=\'#\';" href="?view=login" accesskey="l">log in</a>';
     }
 
-    if ($registration_status != UserManager::REGISTERED)
-    {
+    if ($registration_status != UserManager::REGISTERED) {
         $instructions .= ' or <a onclick="show(\'profile\'); this.href=\'#\';" href="?view=profile" accesskey="r">register</a>';
-    }
-?>
+    } ?>
             <p><?php echo $instructions; ?></p>
 <?php
 }
-    if (isset($login_status) && $login_status == UserManager::LOGGED_IN)
-    {
-?>
+    if (isset($login_status) && $login_status == UserManager::LOGGED_IN) {
+        ?>
             <p>You may either <a href="?view=browse" accesskey="b">browse</a> all of our users or <a href="?view=search" accesskey="s">search</a> for a specific user.</p>
 <?php
     }
@@ -79,19 +76,16 @@ if ($login_status != UserManager::LOGGED_IN && $registration_status != UserManag
                 </ul>
             </div>
 <?php
-if ($login_status != UserManager::LOGGED_IN)
-{
+if ($login_status != UserManager::LOGGED_IN) {
     require __DIR__ . '/login.tpl.php';
 }
 
-if ($login_status != UserManager::LOGGED_IN && $registration_status != UserManager::REGISTERED)
-{
+if ($login_status != UserManager::LOGGED_IN && $registration_status != UserManager::REGISTERED) {
     require __DIR__ . '/profile.tpl.php';
 }
 
-if ($action != 'login')
-{
-?>
+if ($action != 'login') {
+    ?>
         <script type="text/javascript">
             // default action:
             document.getElementById('login').style.display = 'none';

@@ -2,8 +2,8 @@
 <?php
 /**
 * User Directory
-*   Copyright © 2008 Theodore R. Smith <theodore@phpexperts.pro>
-* 
+*   Copyright © 2008 Theodore R. Smith <theodore@phpexperts.pro>.
+*
 * The following code is licensed under a modified BSD License.
 * All of the terms and conditions of the BSD License apply with one
 * exception:
@@ -15,28 +15,24 @@
 *
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
-
-if (!isset($argv[1]))
-{
-   echo 'Error: Missing filename to encode.' . "\n";
-   exit -1;
+if (!isset($argv[1])) {
+    echo 'Error: Missing filename to encode.' . "\n";
+    exit -1;
 }
 
-if (!file_exists($argv[1]))
-{
-   echo 'Error: File not found.' . "\n";
-   exit -1;
+if (!file_exists($argv[1])) {
+    echo 'Error: File not found.' . "\n";
+    exit -1;
 }
 
-$input = base64_decode(file_get_contents($argv[1]));
+$input    = base64_decode(file_get_contents($argv[1]));
 $filename = $argv[1] . '.plain';
 
 //print_r(json_decode($input));
 //exit;
 
-if (isset($argv[2]))
-{
-   $filename = $argv[2];
+if (isset($argv[2])) {
+    $filename = $argv[2];
 }
 
 $fh = fopen($filename, 'w');
