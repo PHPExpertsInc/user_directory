@@ -12,6 +12,7 @@
       <change afterPath="$PROJECT_DIR$/lib/MyDB/MyReplicatedPDO.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/lib/MyDB/helpers.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/managers/UserManagerI.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/Mocks/MyDB_Engine_Mock.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/tests/Mocks/SecurityControllerMock.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/tests/Mocks/UserManagerMock.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
@@ -25,6 +26,7 @@
       <change beforePath="$PROJECT_DIR$/lib/UserInfoStruct.inc.php" beforeDir="false" afterPath="$PROJECT_DIR$/managers/UserInfoStruct.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/bootstrap.inc.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/managers/UserManager.inc.php" beforeDir="false" afterPath="$PROJECT_DIR$/managers/UserManager.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpunit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/phpunit.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/ControllerCommandTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/ControllerCommandTest.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/MyDB/MyDBHelperFunctionsTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/MyDB/MyDBHelperFunctionsTest.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/MyDB/MyDBTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/MyDB/MyDBTest.php" afterDir="false" />
@@ -36,7 +38,7 @@
       <change beforePath="$PROJECT_DIR$/tests/UserControllerTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/UserControllerTest.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/UserManagerTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/UserManagerTest.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/bootstrap.inc.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/bootstrap.inc.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/mocks.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Mocks/MyDB_Engine_Mock.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/mocks.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/views/404.tpl.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/404.tpl.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/browse.tpl.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/browse.tpl.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/footer.tpl.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/footer.tpl.php" afterDir="false" />
@@ -757,12 +759,12 @@
       <option name="presentableId" value="Default" />
       <updated>1557072436706</updated>
       <workItem from="1557072441615" duration="3949000" />
-      <workItem from="1557076528911" duration="5647000" />
+      <workItem from="1557076528911" duration="5997000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9596000" />
+    <option name="totallyTimeSpent" value="9946000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1920" y="0" width="1920" height="1080" extended-state="6" />

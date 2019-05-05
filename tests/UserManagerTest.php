@@ -15,9 +15,15 @@
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
 
-require_once __DIR__ . '/MyDB/MyDatabaseTestSuite.php';
-require_once dirname(__FILE__) . '/../lib/UserInfoStruct.inc.php';
-require_once dirname(__FILE__) . '/../managers/UserManager.inc.php';
+namespace Tests\PHPExperts\UserDirectory;
+
+use Exception;
+use PHPExperts\MyDB\MyDB;
+use PHPExperts\MyDB\MyDBException;
+use PHPExperts\UserDirectory\Managers\UserInfoStruct;
+use PHPExperts\UserDirectory\Managers\UserManager;
+use PHPUnit\Framework\TestCase;
+use Tests\PHPExperts\MyDB\MyDatabaseTestSuite;
 
 /**
  * UserManager test case.
@@ -25,7 +31,7 @@ require_once dirname(__FILE__) . '/../managers/UserManager.inc.php';
  * @covers MyReplicatedDB
  * @covers MyReplicatedPDO
  */
-class UserManagerTest extends \PHPUnit\Framework\TestCase {
+class UserManagerTest extends TestCase {
 	
 	/**
 	 * @var UserManager
@@ -63,13 +69,14 @@ class UserManagerTest extends \PHPUnit\Framework\TestCase {
 	/**
 	 * Helper functions
 	 * @return UserInfoStruct
-	 */ 
+     * @throws MyDBException
+     */
 	public static function getLastRegistered()
 	{
 		// Get last-inserted user
 		$DB = MyDB::loadDB(MyDatabaseTestSuite::getReplicatedPDOConfig());
 		$DB->query('SELECT * FROM vw_UserInfo ORDER BY userID DESC LIMIT 1');
-		$userInfo = $DB->fetchObject('UserInfoStruct');
+		$userInfo = $DB->fetchObject(UserInfoStruct::class);
 		
 		return $userInfo;
 	}
@@ -78,9 +85,7 @@ class UserManagerTest extends \PHPUnit\Framework\TestCase {
 	 * Registers a totally random user
 	 *
 	 * @param string $password
-	 * @return UserInfoStruct
 	 */
-	
 	private function registerRandomUser($password = null)
 	{
 		$pass = is_null($password) ? uniqid() : $password;
@@ -95,7 +100,7 @@ class UserManagerTest extends \PHPUnit\Framework\TestCase {
 	public function test__construct()
 	{
 		// Test without username
-		$this->assertInstanceOf('UserManager', new UserManager());
+		$this->assertInstanceOf(UserManager::class, new UserManager());
 	}
 
 	/**
@@ -165,7 +170,7 @@ class UserManagerTest extends \PHPUnit\Framework\TestCase {
 		
 		$lastRegistered = self::getLastRegistered();
 		$userInfo = $this->UserManager->getUserInfo();
-		$this->assertInstanceOf('UserInfoStruct', $userInfo);
+		$this->assertInstanceOf(UserInfoStruct::class, $userInfo);
 
 		$this->assertTrue(print_r($lastRegistered, true) == print_r($userInfo, true), 'getUserInfo() is not identical to last registration');
 
@@ -198,7 +203,7 @@ class UserManagerTest extends \PHPUnit\Framework\TestCase {
 		$this->assertTrue(is_array($info), 'UserInfo is not an array');
 		$count = count($info);
 		$this->assertTrue($count > 0, 'UserInfo is empty');
-		$this->assertInstanceOf('UserInfoStruct', $info[$count - 1], 'Last UserInfo item is not an UserInfoStruct object');
+		$this->assertInstanceOf(UserInfoStruct::class, $info[$count - 1], 'Last UserInfo item is not an UserInfoStruct object');
 		$this->assertTrue(print_r($lastRegistered, true) == print_r($info[$count - 1], true), 'Last UserInfo item is not the same as the registered user');
 	}
 	
@@ -310,4 +315,3 @@ class UserManagerTest extends \PHPUnit\Framework\TestCase {
 	}
 
 }
-

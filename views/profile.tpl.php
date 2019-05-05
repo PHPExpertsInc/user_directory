@@ -1,7 +1,7 @@
 <?php
 /**
 * User Directory
-*   Copyright © 2010 Theodore R. Smith <theodore@phpexperts.pro>
+*   Copyright (c) 2010, 2019 Theodore R. Smith <theodore@phpexperts.pro>
 * 
 * The following code is licensed under a modified BSD License.
 * All of the terms and conditions of the BSD License apply with one
@@ -15,10 +15,12 @@
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
 
+use PHPExperts\UserDirectory\Managers\UserManager;
+
+global $action, $registration_status, $username;
 ?>
         <div id="profile">
 <?php
-global $action, $registration_status, $username;
 
 if (isset($_SESSION['userInfo']))
 {

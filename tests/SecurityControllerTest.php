@@ -15,7 +15,15 @@
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
 
-class SecurityControllerTest extends \PHPUnit\Framework\TestCase
+namespace Tests\PHPExperts\UserDirectory;
+
+use Exception;
+use PHPExperts\UserDirectory\Controllers\SecurityController;
+use PHPExperts\UserDirectory\Managers\UserInfoStruct;
+use PHPExperts\UserDirectory\Managers\UserManager;
+use PHPUnit\Framework\TestCase;
+
+class SecurityControllerTest extends TestCase
 {
 	/** @var SecurityController **/
 	protected $guard;
@@ -50,7 +58,7 @@ class SecurityControllerTest extends \PHPUnit\Framework\TestCase
 	/**
 	 * Tests $this->guard->isLoggedIn()
 	 *
-	 * @covers $this->guard->isLoggedIn
+	 * @covers \PHPExperts\UserDirectory\Controllers\SecurityController::isLoggedIn
 	 */
 	public function testIsLoggedIn()
 	{
@@ -69,7 +77,7 @@ class SecurityControllerTest extends \PHPUnit\Framework\TestCase
 	/**
 	 * Tests $this->guard->ensureHasAccess()
 	 *
-	 * @covers $this->guard->ensureHasAccess
+	 * @covers \PHPExperts\UserDirectory\Controllers\SecurityController::ensureHasAccess
 	 */
 	public function testEnsureHasAccess()
 	{
