@@ -1,5 +1,6 @@
 .idea/
 vendor/
 /vendor-bin/**/vendor
+/web/tests/
 .php_cs.*
 .phpunit.result.cache

@@ -1,7 +1,7 @@
 <?php
 /**
 * User Directory
-*   Copyright © 2008 Theodore R. Smith <theodore@phpexperts.pro>.
+*   Copyright ï¿½ 2008 Theodore R. Smith <theodore@phpexperts.pro>.
 *
 * The following code is licensed under a modified BSD License.
 * All of the terms and conditions of the BSD License apply with one
@@ -35,6 +35,12 @@ h1 { margin-top: 0; text-align: center; }
             <div style="text-align: center">
                 <img src="portal.png" alt="Mockup"/>
             </div>
+        </div>
+        <div class="box">
+<?php
+$usecasesHTML = file_get_contents('usecases.html');
+echo str_replace("<h2", "<h3", $usecasesHTML);
+?>
         </div>
     </body>
 </html>
