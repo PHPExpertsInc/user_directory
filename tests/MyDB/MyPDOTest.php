@@ -28,9 +28,7 @@ class MyPDOTest extends TestCase
 {
     private static $userInfo;
 
-    /**
-     * @var MyPDO
-     */
+    /** @var MyPDO */
     protected  $MyPDO;
 
     protected function setUp(): void
@@ -55,9 +53,6 @@ class MyPDOTest extends TestCase
         $this->MyPDO = null;
     }
 
-    /**
-     * @covers MyPDO::query
-     */
     public function testCanInsertData()
     {
         self::$userInfo = [
@@ -69,9 +64,6 @@ class MyPDOTest extends TestCase
         self::assertInstanceOf(PDOStatement::class, $this->MyPDO->query($qs, array(self::$userInfo['name'], self::$userInfo['pass'])));
     }
 
-    /**
-     * @covers MyPDO::query
-     */
     public function testCanReadData()
     {
         $user = self::$userInfo;
@@ -85,9 +77,6 @@ class MyPDOTest extends TestCase
         self::assertEquals($user['name'], $userInfo->username);
     }
 
-    /**
-     * @covers MyPDO::query
-     */
     public function testCanUpdateData()
     {
         $user = self::$userInfo;
@@ -101,9 +90,6 @@ class MyPDOTest extends TestCase
         $this->testCanReadData();
     }
 
-    /**
-     * @covers MyPDO::fetchArray
-     */
     public function testCanFetchAnArray()
     {
         $user = self::$userInfo;
@@ -116,9 +102,6 @@ class MyPDOTest extends TestCase
         self::assertEquals($user['name'], $userInfo['username']);
     }
 
-    /**
-     * @covers MyPDO::fetchObject
-     */
     public function testCanFetchAnObject()
     {
         $user = self::$userInfo;

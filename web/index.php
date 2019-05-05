@@ -24,11 +24,11 @@ require '../vendor/autoload.php';
 $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
 $view = isset($_GET['view']) ? $_GET['view'] : 'index';
 
-$view_file = 'views/' . $view . '.tpl.php';
+$view_file = $view . '.tpl.php';
 
-if (!file_exists($view_file))
+if (!file_exists("../src/Views/$view_file"))
 {
-    $view_file = 'views/404.tpl.php';
+    $view_file = '404.tpl.php';
 }
 
 if ($view == 'browse')
@@ -56,6 +56,6 @@ $data = ControllerCommandFactory::execute($action);
 
 // Extract $data to global namespace.
 if (!is_null($data)) { extract($data); }
-require 'views/header.tpl.php';
-require $view_file;
-require 'views/footer.tpl.php';
+require '../src/Views/_header.tpl.php';
+require '../src/Views/' . $view_file;
+require '../src/Views/_footer.tpl.php';

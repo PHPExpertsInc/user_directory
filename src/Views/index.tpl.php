@@ -81,12 +81,12 @@ if ($login_status != UserManager::LOGGED_IN && $registration_status != UserManag
 <?php
 if ($login_status != UserManager::LOGGED_IN)
 {
-    require 'views/login.tpl.php';
+    require __DIR__ . '/login.tpl.php';
 }
 
 if ($login_status != UserManager::LOGGED_IN && $registration_status != UserManager::REGISTERED)
 {
-    require 'views/profile.tpl.php';
+    require __DIR__ . '/profile.tpl.php';
 }
 
 if ($action != 'login')

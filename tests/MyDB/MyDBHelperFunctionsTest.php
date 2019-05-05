@@ -29,8 +29,6 @@ class MyDBHelperFunctionsTest extends TestCase
 {
     /**
      * Tests getDBHandler()
-     *
-     * @covers MyDBException
      */
     public function testGetDbHandler()
     {

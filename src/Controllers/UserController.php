@@ -158,7 +158,7 @@ class UserController implements ControllerCommand
 		}
 		else if ($action == 'edit_profile')
 		{
-		    $data['view_file'] = 'views/profile.tpl.php';
+		    $data['view_file'] = 'profile.tpl.php';
 		    $data['registration_status'] = $this->editProfile();
 		}
 

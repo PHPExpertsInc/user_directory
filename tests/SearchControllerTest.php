@@ -62,22 +62,12 @@ class SearchControllerTest extends TestCase {
 		header_remove();
 	}
 	
-	/**
-	 * Tests SearchController->__construct()
-	 * 
-	 * @covers SearchController::__construct
-	 */
 	public function test__construct()
 	{
 		// just make sure nothing goes wrong
 		self::assertInstanceOf(SearchController::class, new SearchController());
 	}
 
-	/**
-	 * Tests SearchController->search()
-	 * 
-	 * @covers SearchController::search
-	 */
 	public function testSearch()
 	{
 		// 1. Test without being logged in
@@ -124,9 +114,6 @@ class SearchControllerTest extends TestCase {
 		self::assertInstanceOf(UserInfoStruct::class, $users[0]);
 	}
 
-	/**
-	 * @covers SearchController::getSearchQueryString
-	 */
 	public function testGetSearchQueryString()
 	{
 		// 1. Test in an improper context.
@@ -143,18 +130,11 @@ class SearchControllerTest extends TestCase {
 		self::assertEquals('username=testuser&firstName=Ted', $this->SearchController->getSearchQueryString());
 	}
 
-	/**
-	 * @covers SearchController::execute
-	 */
 	public function testHooksIntoControllerCommandPattern()
 	{
 		self::assertFalse($this->SearchController->execute('non-existing action'));
 	}
 
-
-	/**
-	 * @covers SearchController::execute
-	 */
 	public function testHandlesSearchAction()
 	{
 		$this->guard->isLoggedIn = true;

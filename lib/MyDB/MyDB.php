@@ -45,12 +45,12 @@ class MyDB
         // Never store passes in plaintext!!
         if (is_null($config))
         {
-            if (!file_exists('database.config'))
+            if (!file_exists(__DIR__ . '/../../database.config'))
             {
                 throw new MyDBException('Couldn\'t find database.config.', MyDBException::CANT_LOAD_CONFIG_FILE);
             }
 
-            $data = file_get_contents('database.config');
+            $data = file_get_contents(__DIR__ . '/../../database.config');
 
             if ($data === false)
             {

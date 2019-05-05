@@ -17,10 +17,12 @@
 		</testsuite>
 	</testsuites>
     <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./controllers</directory>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./src</directory>
             <directory suffix=".php">./lib</directory>
-            <directory suffix=".php">./managers</directory>
+            <exclude>
+                <directory>./src/Views</directory>
+            </exclude>
         </whitelist>
     </filter>
 </phpunit>
