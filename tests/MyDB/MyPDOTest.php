@@ -33,8 +33,10 @@ class MyPDOTest extends TestCase
      */
     protected  $MyPDO;
 
-    protected function setUp()
+    protected function setUp(): void
     {
+        parent::setUp();
+
         $config = MyDatabaseTestSuite::getRealPDOConfig();
         $this->MyPDO = MyDB::loadDB($config);
 
@@ -46,8 +48,10 @@ class MyPDOTest extends TestCase
         }
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
+        parent::tearDown();
+
         $this->MyPDO = null;
     }
 
@@ -108,7 +112,7 @@ class MyPDOTest extends TestCase
         $this->MyPDO->query($qs, array($user['name']));
 
         $userInfo = $this->MyPDO->fetchArray();
-        $this->assertInternalType('array', $userInfo);
+        $this->assertIsArray($userInfo);
         $this->assertEquals($user['name'], $userInfo['username']);
     }
 

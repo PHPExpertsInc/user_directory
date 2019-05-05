@@ -21,13 +21,6 @@ use PHPExperts\UserDirectory\Managers\UserInfoStruct;
 use PHPExperts\UserDirectory\Managers\UserManager;
 use RuntimeException;
 
-interface SecurityControllerI
-{
-	public function isLoggedIn();
-	public function ensureHasAccess();
-	public function execute($action);
-}
-
 class SecurityController implements ControllerCommand, SecurityControllerI
 {
 	public function isLoggedIn()

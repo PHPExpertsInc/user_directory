@@ -39,11 +39,11 @@ class UserControllerTest extends TestCase
 	/**
 	 * Prepares the environment before running a test.
 	 */
-	protected function setUp()
-	{
-		parent::setUp();
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		session_start();
+        session_start();
 
 		unset($_SESSION);
 		$_SERVER['HTTP_HOST'] = 'localhost';
@@ -53,13 +53,13 @@ class UserControllerTest extends TestCase
     /**
 	 * Cleans up the environment after running a test.
 	 */
-	protected function tearDown()
-	{
-		if (session_id() != '') { session_destroy(); }
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        if (session_id() != '') { session_destroy(); }
 		$this->UserController = null;
 		header_remove();
-
-		parent::tearDown ();
 	}
 
 	/**
@@ -187,7 +187,7 @@ class UserControllerTest extends TestCase
 
 		$users = $this->UserController->browse();
 		$lastRegistered = UserManagerTest::getLastRegistered();
-		$this->assertInternalType('array', $users, 'result was not an array');
+		$this->assertIsArray($users, 'result was not an array');
 		$this->assertTrue(print_r($lastRegistered, true) == print_r($users[0], true), 'returned incorrect results');
 	}
 
@@ -254,7 +254,7 @@ class UserControllerTest extends TestCase
 	public function testHandlesRegisterAction()
 	{
 		$data = $this->UserController->execute('register');
-		$this->assertInternalType('array', $data);
+		$this->assertIsArray($data);
 	}
 
 	/**
@@ -263,7 +263,7 @@ class UserControllerTest extends TestCase
 	public function testHandlesLoginAction()
 	{
 		$data = $this->UserController->execute('login');
-		$this->assertInternalType('array', $data);
+		$this->assertIsArray($data);
 		$this->assertEquals(UserManager::LOGGED_IN, $data['login_status']);
 	}
 
@@ -274,7 +274,7 @@ class UserControllerTest extends TestCase
 	{
 		$this->UserController->login();
 		$data = $this->UserController->execute('browse');
-		$this->assertInternalType('array', $data);
+		$this->assertIsArray($data);
 		$this->assertFalse(empty($data['users']));
 		$this->assertTrue($data['users'][0]->username == $_POST['username']);
 	}
@@ -287,7 +287,7 @@ class UserControllerTest extends TestCase
 		$this->UserController->login();
 		$data = $this->UserController->execute('edit_profile');
 
-		$this->assertInternalType('array', $data);
+		$this->assertIsArray($data);
 		$this->assertTrue(UserManager::UPDATED_PROFILE == $data['registration_status']);
 
 	}

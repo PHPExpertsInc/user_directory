@@ -46,7 +46,7 @@ class ControllerCommandTest extends TestCase
 	public function testExecuteValidCommand()
 	{
 		$data = ControllerCommandFactory::execute('login');
-		$this->assertInternalType('array', $data);
+		$this->assertIsArray($data);
 		$this->assertTrue(isset($data['login_status']));
 		$this->assertEquals($data['login_status'], false);
 	}

@@ -36,11 +36,11 @@ class SearchControllerTest extends TestCase {
 	/**
 	 * Prepares the environment before running a test.
 	 */
-	protected function setUp()
-	{
-		parent::setUp();
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		session_start();
+        session_start();
 		
 		unset($_SESSION);
 		$_SERVER['HTTP_HOST'] = 'localhost';
@@ -53,13 +53,13 @@ class SearchControllerTest extends TestCase {
 	/**
 	 * Cleans up the environment after running a test.
 	 */
-	protected function tearDown()
-	{
-		if (session_id() != '') { session_destroy(); }
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        if (session_id() != '') { session_destroy(); }
 		$this->SearchController = null;
 		header_remove();
-		
-		parent::tearDown();
 	}
 	
 	/**
@@ -120,7 +120,7 @@ class SearchControllerTest extends TestCase {
 		// 2c. Test with good input
 		$_REQUEST['username'] = 'testuser';
 		$users = $this->SearchController->search();
-		$this->assertInternalType('array', $users);
+		$this->assertIsArray($users);
 		$this->assertInstanceOf(UserInfoStruct::class, $users[0]);
 	}
 
@@ -160,6 +160,6 @@ class SearchControllerTest extends TestCase {
 		$this->guard->isLoggedIn = true;
 
 		$data = $this->SearchController->execute('search');
-		$this->assertInternalType('array', $data);
+		$this->assertIsArray($data);
 	}
 }

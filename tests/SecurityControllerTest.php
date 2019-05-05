@@ -36,11 +36,12 @@ class SecurityControllerTest extends TestCase
 	/**
 	 * Prepares the environment before running a test.
 	 */
-	protected function setUp()
-	{
-		$_SERVER['HTTP_HOST'] = 'localhost';
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $_SERVER['HTTP_HOST'] = 'localhost';
 		session_start();
-		parent::setUp();
 
 		$this->guard = new SecurityController;
 	}
@@ -48,11 +49,12 @@ class SecurityControllerTest extends TestCase
 	/**
 	 * Cleans up the environment after running a test.
 	 */
-	protected function tearDown()
-	{
-		session_destroy();
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        session_destroy();
 		header_remove();
-		parent::tearDown();
 	}
 
 	/**

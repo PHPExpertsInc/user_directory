@@ -41,19 +41,21 @@ class UserManagerTest extends TestCase {
 	/**
 	 * Prepares the environment before running a test.
 	 */
-	protected function setUp()
-	{
-		parent::setUp ();
-		
-		$this->UserManager = new UserManager;
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->UserManager = new UserManager;
 	}
 	
 	/**
 	 * Cleans up the environment after running a test.
 	 */
-	protected function tearDown()
-	{
-		// Clean up database
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        // Clean up database
 		$DB = MyDB::loadDB(MyDatabaseTestSuite::getRealPDOConfig());
 
 		$DB->beginTransaction();
@@ -62,8 +64,6 @@ class UserManagerTest extends TestCase {
 		$DB->commit();
 
 		$this->UserManager = null;
-
-		parent::tearDown ();
 	}
 	
 	/**

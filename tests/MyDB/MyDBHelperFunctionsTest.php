@@ -25,8 +25,6 @@ use function PHPExperts\MyDB\queryDB;
 use PHPUnit\Framework\TestCase;
 use Tests\PHPExperts\UserDirectory\Mocks\MyDB_Engine_Mock;
 
-require_once __DIR__ . '/MyDatabaseTestSuite.php';
-
 class MyDBHelperFunctionsTest extends TestCase
 {
     /**

@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/tests/MyDB" isTestSource="false" packagePrefix="Tests\PHPExperts\MyDB\" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="false" packagePrefix="Tests\PHPExperts\UserDirectory\" />
       <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" packagePrefix="PHPExperts\UserDirectory\" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/bamarni/composer-bin-plugin" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/instantiator" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/myclabs/deep-copy" />
