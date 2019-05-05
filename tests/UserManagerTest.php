@@ -1,7 +1,7 @@
 <?php
 /**
 * User Directory
-*   Copyright(c) 2008 Theodore R. Smith <theodore@phpexperts.pro>
+*   Copyright (c) 2008, 2019 Theodore R. Smith <theodore@phpexperts.pro>
 * 
 * The following code is licensed under a modified BSD License.
 * All of the terms and conditions of the BSD License apply with one
@@ -15,10 +15,9 @@
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
 
+require_once __DIR__ . '/MyDB/MyDatabaseTestSuite.php';
 require_once dirname(__FILE__) . '/../lib/UserInfoStruct.inc.php';
 require_once dirname(__FILE__) . '/../managers/UserManager.inc.php';
-
-require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * UserManager test case.
@@ -26,7 +25,7 @@ require_once 'PHPUnit/Framework/TestCase.php';
  * @covers MyReplicatedDB
  * @covers MyReplicatedPDO
  */
-class UserManagerTest extends PHPUnit_Framework_TestCase {
+class UserManagerTest extends \PHPUnit\Framework\TestCase {
 	
 	/**
 	 * @var UserManager
@@ -49,7 +48,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 	protected function tearDown()
 	{
 		// Clean up database
-		$DB = MyDB::loadDB(MyDatabaseTest::getPDOConfig());
+		$DB = MyDB::loadDB(MyDatabaseTestSuite::getRealPDOConfig());
 
 		$DB->beginTransaction();
 		$DB->query('DELETE FROM Users');
@@ -68,7 +67,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 	public static function getLastRegistered()
 	{
 		// Get last-inserted user
-		$DB = MyDB::loadDB(MyDatabaseTest::getReplicatedPDOConfig());
+		$DB = MyDB::loadDB(MyDatabaseTestSuite::getReplicatedPDOConfig());
 		$DB->query('SELECT * FROM vw_UserInfo ORDER BY userID DESC LIMIT 1');
 		$userInfo = $DB->fetchObject('UserInfoStruct');
 		
@@ -88,11 +87,6 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 		$this->UserManager->createProfile(uniqid(), $pass, $pass, uniqid(), uniqid(), uniqid());
 	}
 	
-	/**
-	 * Constructs the test case.
-	 */
-	public function __construct() {}
-
 	/**
 	 * Tests UserManager->__construct()
 	 * 
