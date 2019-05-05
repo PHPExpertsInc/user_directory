@@ -37,41 +37,26 @@ class MyReplicatedDBTest extends MyPDOTest
         $this->MyPDO = null;
     }
 
-    /**
-     * @covers MyReplicatedDB::query
-     */
     public function testCanInsertData()
     {
         parent::testCanInsertData();
     }
 
-    /**
-     * @covers MyReplicatedDB::query
-     */
     public function testCanReadData()
     {
         parent::testCanReadData();
     }
 
-    /**
-     * @covers MyReplicatedDB::query
-     */
     public function testCanUpdateData()
     {
         parent::testCanUpdateData();
     }
 
-    /**
-     * @covers MyReplicatedDB::fetchArray
-     */
     public function testCanFetchAnArray()
     {
         parent::testCanFetchAnArray();
     }
 
-    /**
-     * @covers MyReplicatedDB::fetchObject
-     */
     public function testCanFetchAnObject()
     {
         parent::testCanFetchAnObject();

@@ -25,18 +25,12 @@ use PHPUnit\Framework\TestCase;
 
 class MyDBTest extends TestCase
 {
-    /**
-     * @covers MyDB::loadDB
-     */
     public function testLoadAPdoDb()
     {
         $config = MyDatabaseTestSuite::getRealPDOConfig();
         self::assertInstanceOf(MyPDO::class, MyDB::loadDB($config));
     }
 
-    /**
-     * @covers MyDB::loadDB
-     */
     public function testLoadAReplicatedPdoDb()
     {
         $config = MyDatabaseTestSuite::getReplicatedPDOConfig();

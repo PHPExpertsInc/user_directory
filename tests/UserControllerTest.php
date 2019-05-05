@@ -62,22 +62,11 @@ class UserControllerTest extends TestCase
 		header_remove();
 	}
 
-	/**
-	 * Tests UserController->__construct()
-	 *
-	 * @covers UserController::__construct
-	 */
 	public function test__construct()
 	{
 		self::assertInstanceOf(UserController::class, new UserController());
 	}
 
-	/**
-	 * Tests UserController->register()
-	 *
-	 * @covers UserController::register
-	 * @covers UserController::createUserSession
-	 */
 	public function testRegister()
 	{
 		// Test without providing any data.
@@ -108,13 +97,6 @@ class UserControllerTest extends TestCase
 	}
 
 
-	/**
-	 * Tests UserController->login()
-	 *
-	 * @covers UserController::login
-	 * @covers UserController::createUserSession
-	 *
-	 */
 	public function testLogin()
 	{
 		$_POST['login'] = true;
@@ -152,11 +134,6 @@ class UserControllerTest extends TestCase
 
 	}
 
-	/**
-	 * Tests UserController->browse()
-	 *
-	 * @covers UserController::browse
-	 */
 	public function testBrowse()
 	{
 		// 1. Test without being logged in.
@@ -191,11 +168,6 @@ class UserControllerTest extends TestCase
 		self::assertTrue(print_r($lastRegistered, true) == print_r($users[0], true), 'returned incorrect results');
 	}
 
-	/**
-	 * Tests UserController->editProfile()
-	 *
-	 * @covers UserController::editProfile
-	 */
 	public function testEditProfile()
 	{
 		// 1. Test without being logged in.
@@ -240,26 +212,17 @@ class UserControllerTest extends TestCase
 		self::assertSame(UserManager::UPDATED_PROFILE, $this->UserController->editProfile(), 'did not work with correct input');
 	}
 
-	/**
-	 * @covers UserController::execute
-	 */
 	public function testHooksIntoControllerCommandPattern()
 	{
 		self::assertFalse($this->UserController->execute('non-existing action'));
 	}
 
-	/**
-	 * @covers UserController::execute
-	 */
 	public function testHandlesRegisterAction()
 	{
 		$data = $this->UserController->execute('register');
 		self::assertIsArray($data);
 	}
 
-	/**
-	 * @covers UserController::execute
-	 */
 	public function testHandlesLoginAction()
 	{
 		$data = $this->UserController->execute('login');
@@ -267,9 +230,6 @@ class UserControllerTest extends TestCase
 		self::assertEquals(UserManager::LOGGED_IN, $data['login_status']);
 	}
 
-	/**
-	 * @covers UserController::execute
-	 */
 	public function testHandlesBrowseAction()
 	{
 		$this->UserController->login();
@@ -279,9 +239,6 @@ class UserControllerTest extends TestCase
 		self::assertTrue($data['users'][0]->username == $_POST['username']);
 	}
 
-	/**
-	 * @covers UserController::execute
-	 */
 	public function testHandlesEditProfileAction()
 	{
 		$this->UserController->login();
@@ -292,9 +249,6 @@ class UserControllerTest extends TestCase
 
 	}
 
-	/**
-	 * @covers UserController::execute
-	 */
 	public function testHandlesLogoutAction()
 	{
 		$this->UserController->execute('logout');

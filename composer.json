@@ -6,7 +6,7 @@
     },
     "autoload": {
         "psr-4": {
-            "PHPExperts\\UserDirectory\\": "",
+            "PHPExperts\\UserDirectory\\": "src/",
             "Tests\\PHPExperts\\UserDirectory\\": "tests/",
             "PHPExperts\\MyDB\\": "lib/MyDB/",
             "Tests\\PHPExperts\\MyDB\\": "tests/MyDB/"

@@ -23,9 +23,6 @@ use PHPUnit\Framework\TestCase;
 
 class ControllerCommandTest extends TestCase
 {
-	/**
-	 * @covers ControllerCommandFactory::execute
-	 */
 	public function testHandleMissingCommand()
 	{
 		self::assertNull(ControllerCommandFactory::execute(''));
@@ -51,4 +48,3 @@ class ControllerCommandTest extends TestCase
 		self::assertEquals($data['login_status'], false);
 	}
 }
-

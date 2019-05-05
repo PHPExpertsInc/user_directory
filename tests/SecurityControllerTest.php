@@ -57,11 +57,6 @@ class SecurityControllerTest extends TestCase
 		header_remove();
 	}
 
-	/**
-	 * Tests $this->guard->isLoggedIn()
-	 *
-	 * @covers \PHPExperts\UserDirectory\Controllers\SecurityController::isLoggedIn
-	 */
 	public function testIsLoggedIn()
 	{
 		// 1. Test with no input
@@ -76,11 +71,6 @@ class SecurityControllerTest extends TestCase
 		self::assertTrue($this->guard->isLoggedIn(), 'didn\'t work with good input.');
 	}
 
-	/**
-	 * Tests $this->guard->ensureHasAccess()
-	 *
-	 * @covers \PHPExperts\UserDirectory\Controllers\SecurityController::ensureHasAccess
-	 */
 	public function testEnsureHasAccess()
 	{
 		// 1. Test while not being logged in

@@ -48,6 +48,5 @@ if (isset($login_status) && $login_status == UserManager::LOGGED_IN)
         </div>
         <div id="header">
             <h1>Portal User Directory</h1>
-            <h4>via server <?php echo $_SERVER['SERVER_ADDR']; ?></h4>
         </div>
         <div id="main_content">

@@ -25,12 +25,6 @@ use PHPExperts\UserDirectory\Managers\UserManager;
 use PHPUnit\Framework\TestCase;
 use Tests\PHPExperts\MyDB\MyDatabaseTestSuite;
 
-/**
- * UserManager test case.
- *
- * @covers MyReplicatedDB
- * @covers MyReplicatedPDO
- */
 class UserManagerTest extends TestCase {
 	
 	/**
@@ -92,22 +86,12 @@ class UserManagerTest extends TestCase {
 		$this->UserManager->createProfile(uniqid(), $pass, $pass, uniqid(), uniqid(), uniqid());
 	}
 	
-	/**
-	 * Tests UserManager->__construct()
-	 * 
-	 * @covers UserManager::__construct
-	 */
 	public function test__construct()
 	{
 		// Test without username
 		self::assertInstanceOf(UserManager::class, new UserManager());
 	}
 
-	/**
-	 * Tests UserManager->createProfile()
-	 * 
-	 * @covers UserManager::createProfile
-	 */
 	public function testCreateProfile()
 	{
 		// Generate random data for test
@@ -143,14 +127,9 @@ class UserManagerTest extends TestCase {
 		self::assertEquals($this->UserManager->createProfile($ui->username, $ui->password, $ui->password, $ui->firstName, $ui->lastName, $ui->email), UserManager::ERROR_USER_EXISTS, 'Duplicate registration test');
 	}
 	
-	/**
-	 * Tests UserManager->getUserInfo()
-	 * 
-	 * @covers UserManager::getUserInfo
-	 */
 	public function testGetUserInfo()
 	{
-                // Test when there's no _SESSION data.
+        // Test when there's no _SESSION data.
 		try
 		{
 			// Since there's no sessio with user data, we expect the exception to be thrown.
@@ -182,11 +161,6 @@ class UserManagerTest extends TestCase {
 		self::assertTrue(print_r($lastRegistered, true) == print_r($newUserInfo, true), 'getUserInfo() did not retrieve the last registration via the _SESSION data');
 	}
 	
-	/**
-	 * Tests UserManager->getAllUsers()
-	 * 
-	 * @covers UserManager::getAllUsers
-	 */
 	public function testGetAllUsers()
 	{
 		// Register multiple users
@@ -207,11 +181,6 @@ class UserManagerTest extends TestCase {
 		self::assertTrue(print_r($lastRegistered, true) == print_r($info[$count - 1], true), 'Last UserInfo item is not the same as the registered user');
 	}
 	
-	/**
-	 * Tests UserManager->searchUsers()
-	 * 
-	 * @covers UserManager::searchUsers
-	 */
 	public function testSearchUsers()
 	{
 		$this->registerRandomUser();
@@ -228,11 +197,6 @@ class UserManagerTest extends TestCase {
 		self::assertSame(null, $userInfoArray, 'unsuccessful search did not return null');		
 	}
 	
-	/**
-	 * Tests UserManager->setUsername()
-	 * 
-	 * @covers UserManager::setUsername
-	 */
 	public function testSetUsername()
 	{
 		$username = 'Random User';
@@ -243,11 +207,6 @@ class UserManagerTest extends TestCase {
 		self::assertSame($username, $userInfo->username);
 	}
 	
-	/**
-	 * Tests UserManager->updateProfile()
-	 * 
-	 * @covers UserManager::updateProfile
-	 */
 	public function testUpdateProfile()
 	{
 		$this->registerRandomUser();
@@ -285,11 +244,6 @@ class UserManagerTest extends TestCase {
 		}
 	}
 	
-	/**
-	 * Tests UserManager->validatePassword()
-	 * 
-	 * @covers UserManager::validatePassword
-	 */
 	public function testValidatePassword()
 	{
 		// Test validation without login attempt

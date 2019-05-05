@@ -54,5 +54,5 @@ global $users;
 <?php
 if (!empty($users))
 {
-	require 'views/browse.tpl.php';
+	require __DIR__ . '/browse.tpl.php';
 }
