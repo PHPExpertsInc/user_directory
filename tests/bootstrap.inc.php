@@ -2,7 +2,10 @@
 
 ob_start();
 
-require_once realpath(dirname(__FILE__) . '/../lib/bootstrap.inc.php');
+// Use composer's autoload.
+require_once __DIR__ . '/../vendor/autoload.php';
+
+require_once __DIR__ . '/../lib/bootstrap.inc.php';
 //require_once 'PHPUnit/Framework/TestSuite.php';
 
 
